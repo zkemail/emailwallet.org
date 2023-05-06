@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ZK Email Wallet Demo</title>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+  </head>
+  <div id="body">
+    <h1>ZK Email Wallet Demo</h1>
+    Welcome to ZK Email wallet (pending an actual UI). This service will let you send an email from your inbox in order to transfer money on Ethereum automatically. We support gmail and hotmail right now, and are adding more email providers very soon.
+    <br /><br />
+    This works because our email server creates a ZK proof proving that you authorized this transfer, and automatically parses out the transfer information from the subject. If you don't have an account, we will create an empty one for you automatically: if you've never received money before, you'll have to top it up via crypto.
+    <br /><br />
+    <a href="mailto:relayer@sendeth.org?subject=Send 1 dai to a@b.com">Click here</a>  to automatically populate a valid email in your inbox.
+  </div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
