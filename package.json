@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-  },
+  },  
+  "engines": {
+    "node": ">17 <19"
+  }
   "dependencies": {
     "@types/node": "20.5.0",
     "@types/react": "18.2.20",
