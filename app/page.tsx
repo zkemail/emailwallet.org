@@ -17,12 +17,13 @@ function getCurrencyOptionClass(selected: boolean): string {
 enum Currency {
   USDC,
   DAI,
+  TEST
 }
 
 export default function Home() {
   const [email, setEmail] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
-  const [currency, setCurrency] = useState<Currency>(Currency.USDC);
+  const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
 
@@ -119,6 +120,18 @@ export default function Home() {
                       }}
                     >
                       DAI
+                    </span>
+                    <span
+                      className={getCurrencyOptionClass(
+                        currency === Currency.TEST
+                      )}
+                      role="menuitem"
+                      onClick={() => {
+                        setCurrency(Currency.TEST);
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      TEST
                     </span>
                   </div>
                 </div>
