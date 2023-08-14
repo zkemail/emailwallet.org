@@ -17,12 +17,12 @@ function getCurrencyOptionClass(selected: boolean): string {
 enum Currency {
   USDC,
   DAI,
-  TEST
+  TEST,
 }
 
 export default function Home() {
   const [email, setEmail] = useState<string>("");
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number | undefined>(undefined);
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
@@ -59,8 +59,24 @@ export default function Home() {
             <input
               type="number"
               placeholder="Amount to send"
-              onChange={(e) => setAmount(Number(e.target.value))}
+              // onChange={(e) => {
+              //   setAmount(Math.round(Number(e.target.value)));
+              // }}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === "") {
+                  setAmount(undefined);
+                  return;
+                }
+                if (!Number.isInteger(Number(value))) {
+                  const roundedValue = Math.floor(Number(value));
+                  setAmount(roundedValue);
+                } else {
+                  setAmount(Number(value));
+                }
+              }}
               className="text-sm bg-slate-200 focus:outline-none"
+              value={amount}
             />
 
             <div className="relative inline-block text-left" ref={dropdownRef}>
@@ -155,7 +171,7 @@ export default function Home() {
           <a
             href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
             className={
-              amount > 0 && isValidEmail(email)
+              amount && amount > 0 && isValidEmail(email)
                 ? "bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
                 : "bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
             }
