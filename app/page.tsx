@@ -169,15 +169,27 @@ export default function Home() {
           />
 
           <a
-            href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=relayer@sendeth.org&su=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+            target="_blank"
             className={
               amount && amount > 0 && isValidEmail(email)
                 ? "bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
                 : "bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
             }
           >
-            Send
+            Send via Gmail
           </a>
+          {amount && amount > 0 && isValidEmail(email) && (
+            <div className="flex flex-col gap-2 mt-4 p-4 bg-slate-100 rounded-md items-start">
+              <span>
+                <span className="text-slate-500">To:</span> relayer@sendeth.org
+              </span>
+              <span>
+                <span className="text-slate-500">Subject: </span>
+                {`Send ${amount} ${Currency[currency]} to ${email}`}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>
