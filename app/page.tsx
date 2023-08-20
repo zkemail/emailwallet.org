@@ -7,8 +7,11 @@ function isValidEmail(email: string): boolean {
 }
 
 function getCurrencyOptionClass(selected: boolean): string {
-  const baseClasses = "text-gray-700 block px-4 py-2 text-sm m-2 rounded-md cursor-pointer hover:transition-all";
-  return selected ? `${baseClasses} bg-slate-100` : `${baseClasses} hover:bg-slate-100`;
+  const baseClasses =
+    "text-gray-700 block px-4 py-2 text-sm m-2 rounded-md cursor-pointer hover:transition-all";
+  return selected
+    ? `${baseClasses} bg-slate-100`
+    : `${baseClasses} hover:bg-slate-100`;
 }
 
 enum Currency {
@@ -37,11 +40,14 @@ export default function Home() {
       setAmount(Number(value));
     }
   }
-  
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: any) {
-      if (dropdownRef.current && !(dropdownRef.current as any).contains(event.target)) {
+      if (
+        dropdownRef.current &&
+        !(dropdownRef.current as any).contains(event.target)
+      ) {
         setDropdownOpen(false);
       }
     }
@@ -54,13 +60,19 @@ export default function Home() {
 
   return (
     <div>
-      <nav className="flex justify-between p-4 bg-slate-200">
-        <div className="text-xl font-bold">Sendeth</div>
+      <nav className="flex justify-between py-4 px-6">
+        <div className="text-lg font-bold">Sendeth</div>
         <div className="flex gap-4">
-          <a href="https://docs.sendeth.org" className="text-blue-500 hover:underline">
+          <a
+            href="https://docs.sendeth.org"
+            className="text-blue-500 hover:underline"
+          >
             Docs
           </a>
-          <a href="https://github.com/zkemail/sendeth" className="text-blue-500 hover:underline">
+          <a
+            href="https://github.com/zkemail/sendeth"
+            className="text-blue-500 hover:underline"
+          >
             GitHub
           </a>
         </div>
@@ -69,7 +81,9 @@ export default function Home() {
         <div className="max-w-3xl mx-auto p-4">
           <div className="flex flex-col gap-2 pb-8">
             <h1 className="text-4xl font-medium">Send money</h1>
-            <h2 className="text-slate-500">All you need to do is email the relayer!</h2>
+            <h2 className="text-slate-500">
+              All you need to do is email the relayer!
+            </h2>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -83,10 +97,13 @@ export default function Home() {
                 onChange={handleAmountChange}
                 onBlur={handleAmountChange}
                 className="text-sm bg-slate-200 focus:outline-none"
-                value={amount || ''}
+                value={amount || ""}
               />
 
-              <div className="relative inline-block text-left" ref={dropdownRef}>
+              <div
+                className="relative inline-block text-left"
+                ref={dropdownRef}
+              >
                 <div>
                   <button
                     type="button"
@@ -97,7 +114,12 @@ export default function Home() {
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                   >
                     {Currency[currency]}
-                    <svg className="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <svg
+                      className="-mr-1 h-5 w-5 text-gray-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
                       <path
                         fillRule="evenodd"
                         d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
@@ -116,7 +138,9 @@ export default function Home() {
                   >
                     <div className="py-1" role="none">
                       <span
-                        className={getCurrencyOptionClass(currency === Currency.USDC)}
+                        className={getCurrencyOptionClass(
+                          currency === Currency.USDC
+                        )}
                         role="menuitem"
                         onClick={() => {
                           setCurrency(Currency.USDC);
@@ -126,7 +150,9 @@ export default function Home() {
                         USDC
                       </span>
                       <span
-                        className={getCurrencyOptionClass(currency === Currency.DAI)}
+                        className={getCurrencyOptionClass(
+                          currency === Currency.DAI
+                        )}
                         role="menuitem"
                         onClick={() => {
                           setCurrency(Currency.DAI);
@@ -136,7 +162,9 @@ export default function Home() {
                         DAI
                       </span>
                       <span
-                        className={getCurrencyOptionClass(currency === Currency.TEST)}
+                        className={getCurrencyOptionClass(
+                          currency === Currency.TEST
+                        )}
                         role="menuitem"
                         onClick={() => {
                           setCurrency(Currency.TEST);
@@ -173,7 +201,7 @@ export default function Home() {
               className={
                 amount && amount > 0 && isValidEmail(email)
                   ? "bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
-                  : "bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
+                  : "bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-gray-500 justify-center pointer-events-none"
               }
             >
               Send via Gmail
