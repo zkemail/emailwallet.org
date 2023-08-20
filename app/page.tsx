@@ -60,7 +60,7 @@ export default function Home() {
           <a href="https://docs.sendeth.org" className="text-blue-500 hover:underline">
             Docs
           </a>
-          <a href="https://github.com/sendeth" className="text-blue-500 hover:underline">
+          <a href="https://github.com/zkemail/sendeth" className="text-blue-500 hover:underline">
             GitHub
           </a>
         </div>
