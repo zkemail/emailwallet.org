@@ -69,7 +69,7 @@ export default function Home() {
         <div className="max-w-3xl mx-auto p-4">
           <div className="flex flex-col gap-2 pb-8">
             <h1 className="text-4xl font-medium">Send money</h1>
-            <h2 className="text-slate-500">All you need to do is email the relayer!</h2>
+            <h2 className="text-slate-500">This tool will send money from your currently logged-in email address, by formatting an email to the relayer and including the amount and recipient in your subject! Everyone starts with 10 TEST tokens.</h2>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -158,7 +158,7 @@ export default function Home() {
             disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
             invalid:border-pink-500 invalid:text-pink-600
             focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-              placeholder="friend@email.com"
+              placeholder="recipient@email.address"
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -168,12 +168,24 @@ export default function Home() {
             />
 
             <a
-              href={`https://mail.google.com/mail/?view=cm&fs=1&to=relayer@sendeth.org&su=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+              href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
               target="_blank"
+              // Hidden hides it on large screens
               className={
                 amount && amount > 0 && isValidEmail(email)
-                  ? "bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
-                  : "bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
+                  ? "sm:hidden bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
+                  : "sm:hidden bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
+              }
+            >
+              Send via Mail App
+            </a>
+            <a
+              href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+              // Default hidden in small screens
+              className={
+                amount && amount > 0 && isValidEmail(email)
+                  ? "hidden sm:block bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
+                  : "hidden sm:block bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
               }
             >
               Send via Gmail
