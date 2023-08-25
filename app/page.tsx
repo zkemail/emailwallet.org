@@ -206,7 +206,7 @@ export default function Home() {
               Send via Mail App
             </a>
             <a
-              href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=relayer@sendeth.org&su=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
               // Default hidden in small screens
               className={
                 amount && amount > 0 && isValidEmail(email)
