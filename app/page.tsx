@@ -81,7 +81,12 @@ export default function Home() {
         <div className="max-w-3xl mx-auto p-4">
           <div className="flex flex-col gap-2 pb-8">
             <h1 className="text-4xl font-medium">Send money</h1>
-            <h2 className="text-slate-500">This tool will send money from your currently logged-in email address, by formatting an email to the relayer and including the amount and recipient in your subject! Everyone starts with 10 TEST tokens.</h2>
+            <h2 className="text-slate-500">
+              This tool will send money from your currently logged-in email
+              address, by formatting an email to the relayer and including the
+              amount and recipient in your subject! Everyone starts with 10 TEST
+              tokens.
+            </h2>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -137,7 +142,7 @@ export default function Home() {
                     <div className="py-1" role="none">
                       <span
                         className={getCurrencyOptionClass(
-                          currency === Currency.USDC
+                          currency === Currency.USDC,
                         )}
                         role="menuitem"
                         onClick={() => {
@@ -149,7 +154,7 @@ export default function Home() {
                       </span>
                       <span
                         className={getCurrencyOptionClass(
-                          currency === Currency.DAI
+                          currency === Currency.DAI,
                         )}
                         role="menuitem"
                         onClick={() => {
@@ -161,7 +166,7 @@ export default function Home() {
                       </span>
                       <span
                         className={getCurrencyOptionClass(
-                          currency === Currency.TEST
+                          currency === Currency.TEST,
                         )}
                         role="menuitem"
                         onClick={() => {
@@ -210,8 +215,8 @@ export default function Home() {
               // Default hidden in small screens
               className={
                 amount && amount > 0 && isValidEmail(email)
-                  ? "hidden sm:block bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
-                  : "hidden sm:block bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
+                  ? "hidden sm:flex bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
+                  : "hidden sm:flex bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 text-slate-50 justify-center pointer-events-none"
               }
             >
               Send via Gmail
