@@ -36,8 +36,7 @@ const Header = () => {
             href={"#"}
             className={cn(
               buttonVariants({
-                variant: "outline",
-                className: "hidden font-semibold md:flex",
+                className: "hidden px-6 md:flex",
               }),
             )}
           >

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const AirplaneImages = () => {
   return (
-    <div className="-z-10">
+    <div className="-z-10 overflow-x-clip max-md:hidden">
       <Image
         src={"/paperplane.png"}
         alt={"paper plane image"}

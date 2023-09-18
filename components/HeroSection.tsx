@@ -18,7 +18,6 @@ const HeroSection = () => {
           className="hidden object-fill md:block"
         />
       </div>
-      <Balls />
 
       <div className="flex flex-col items-center gap-10 md:flex-row">
         <motion.div
@@ -38,7 +37,7 @@ const HeroSection = () => {
             We use zk proofs to ensure you own your money.
           </h3>
           <div className="flex gap-4">
-            <Button className="rounded-lg bg-tertiary px-8 text-primary hover:bg-tertiary/80">
+            <Button className="rounded-lg bg-tertiary px-8 text-primary hover:bg-tertiary-foreground">
               Try Demo
             </Button>
             <Button className="rounded-lg border-2 px-8" variant={"outline"}>
@@ -47,6 +46,7 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
+        <Balls />
         <AirplaneImages />
       </div>
     </section>
