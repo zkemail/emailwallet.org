@@ -1,11 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "./ui/button";
 import AirplaneImages from "./AirplaneImages";
 import Balls from "./Balls";
+import { TypingText } from "./TypingText";
+import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="mt-32 flex justify-center">
+    <section className="mx-6 mt-32 flex md:mx-20">
       <div className="absolute inset-0 -z-10">
         <Image
           src={"/backgroundhero.png"}
@@ -16,11 +20,19 @@ const HeroSection = () => {
       </div>
       <Balls />
 
-      <div className="flex flex-col items-center gap-20 px-6 md:flex-row md:px-10">
-        <div className="flex basis-[60%] flex-col gap-y-8">
+      <div className="flex flex-col items-center gap-10 md:flex-row">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: false, amount: 0.25 }}
+          className="flex flex-col items-start gap-y-8"
+        >
           <h1 className="text-6xl font-semibold leading-tight">
             Email money to{" "}
-            <span className="rounded-xl bg-tertiary px-2">anyone.</span>
+            <TypingText
+              className="w-fit rounded-xl bg-tertiary px-2"
+              title={"anyone."}
+            />
           </h1>
           <h3 className="text-lg text-muted-foreground">
             We use zk proofs to ensure you own your money.
@@ -33,7 +45,7 @@ const HeroSection = () => {
               Read Docs
             </Button>
           </div>
-        </div>
+        </motion.div>
 
         <AirplaneImages />
       </div>

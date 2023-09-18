@@ -27,7 +27,7 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger className="lg:hidden">
+      <SheetTrigger className="md:hidden">
         <Menu />
       </SheetTrigger>
       <SheetContent>

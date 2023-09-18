@@ -8,7 +8,7 @@ const AirplaneImages = () => {
         alt={"paper plane image"}
         width={150}
         height={150}
-        className="absolute top-1/4"
+        className="absolute right-1/3 top-1/4"
       />
       <Image
         src={"/paperplane1.png"}
@@ -22,7 +22,7 @@ const AirplaneImages = () => {
         alt={"paper plane image"}
         width={150}
         height={150}
-        className="absolute top-1/2"
+        className="absolute right-1/3 top-2/3"
       />
       <Image
         src={"/paperplane3.png"}
@@ -36,7 +36,7 @@ const AirplaneImages = () => {
         alt={"paper plane image"}
         width={150}
         height={150}
-        className="absolute bottom-[37%] right-24"
+        className="absolute bottom-[37%] right-1/4"
       />
       <Image
         src={"/paperplane6.png"}

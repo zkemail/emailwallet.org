@@ -19,7 +19,7 @@ const Header = () => {
     <header className="bg-transparent">
       <div className="flex w-full items-center justify-between px-4 py-4">
         <Logo />
-        <nav className="hidden gap-4 lg:flex">
+        <nav className="hidden gap-4 md:flex">
           {routes.map((route) => (
             <Link
               className={cn(
@@ -37,7 +37,7 @@ const Header = () => {
             className={cn(
               buttonVariants({
                 variant: "outline",
-                className: "hidden font-semibold lg:flex",
+                className: "hidden font-semibold md:flex",
               }),
             )}
           >
