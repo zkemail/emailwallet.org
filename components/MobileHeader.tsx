@@ -50,7 +50,7 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
           ))}
           {/* <UserMenu className="p-2 hover:bg-secondary rounded-md transition" /> */}
           <Link
-            href={"/profile"}
+            href={"#"}
             className={cn(
               buttonVariants({
                 variant: "outline",
@@ -58,7 +58,7 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
               }),
             )}
           >
-            Become Talent
+            Try Demo
           </Link>
         </nav>
       </SheetContent>

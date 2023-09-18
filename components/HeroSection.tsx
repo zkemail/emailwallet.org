@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 const HeroSection = () => {
   return (
     <section className="mx-6 mt-32 flex md:mx-20">
+      {/* Background image */}
       <div className="absolute inset-0 -z-10">
         <Image
           src={"/backgroundhero.png"}
@@ -19,7 +20,7 @@ const HeroSection = () => {
         />
       </div>
 
-      <div className="flex flex-col items-center gap-10 md:flex-row">
+      <div className="flex w-full flex-col items-center gap-10 md:flex-row">
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -46,6 +47,7 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
+        {/* Balls and airplanes images */}
         <Balls />
         <AirplaneImages />
       </div>
