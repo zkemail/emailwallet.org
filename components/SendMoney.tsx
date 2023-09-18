@@ -20,7 +20,7 @@ enum Currency {
   TEST,
 }
 
-export default function Home() {
+export default function SendMoney() {
   const [email, setEmail] = useState<string>("");
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
@@ -60,7 +60,7 @@ export default function Home() {
 
   return (
     <div>
-      <nav className="flex justify-between py-4 px-6">
+      <nav className="flex justify-between px-6 py-4">
         <div className="text-lg font-bold">Sendeth</div>
         <div className="flex gap-4">
           <a
@@ -77,8 +77,8 @@ export default function Home() {
           </a>
         </div>
       </nav>
-      <div className="flex flex-col text-center py-8 sm:py-24">
-        <div className="max-w-3xl mx-auto p-4">
+      <div className="flex flex-col py-8 text-center sm:py-24">
+        <div className="mx-auto max-w-3xl p-4">
           <div className="flex flex-col gap-2 pb-8">
             <h1 className="text-4xl font-medium">Send money</h1>
             <h2 className="text-slate-500">
@@ -90,7 +90,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <div className="rounded-lg w-full p-2.5 bg-slate-200 flex justify-between">
+            <div className="flex w-full justify-between rounded-lg bg-slate-200 p-2.5">
               <input
                 type="number"
                 placeholder="Amount to send"
@@ -99,7 +99,7 @@ export default function Home() {
                 // }}
                 onChange={handleAmountChange}
                 onBlur={handleAmountChange}
-                className="text-sm bg-slate-200 focus:outline-none"
+                className="bg-slate-200 text-sm focus:outline-none"
                 value={amount || ""}
               />
 
@@ -184,11 +184,11 @@ export default function Home() {
 
             <input
               type="email"
-              className="text-sm rounded-lg block w-full p-2.5 
-            bg-slate-200 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-            disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-            invalid:border-pink-500 invalid:text-pink-600
-            focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+              className="block w-full rounded-lg bg-slate-200 p-2.5 
+            text-sm invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none
+            focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+            disabled:border-slate-200 disabled:bg-slate-50
+            disabled:text-slate-500 disabled:shadow-none"
               placeholder="recipient@email.address"
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -204,8 +204,8 @@ export default function Home() {
               // Hidden hides it on large screens
               className={
                 amount && amount > 0 && isValidEmail(email)
-                  ? "sm:hidden bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 flex border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
-                  : "sm:hidden bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 flex text-slate-50 justify-center pointer-events-none"
+                  ? "flex h-12 items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden"
+                  : "pointer-events-none flex h-12 items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden"
               }
             >
               Send via Mail App
@@ -215,14 +215,14 @@ export default function Home() {
               // Default hidden in small screens
               className={
                 amount && amount > 0 && isValidEmail(email)
-                  ? "hidden sm:flex bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 rounded-lg h-12 border border-blue-500 text-white px-4 py-2 gap-4 items-center justify-center ease-in-out hover:transition-all hover:scale-105"
-                  : "hidden sm:flex bg-gray-300 px-4 py-2 gap-4 items-center rounded-lg h-12 text-slate-50 justify-center pointer-events-none"
+                  ? "hidden h-12 items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:flex"
+                  : "pointer-events-none hidden h-12 items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex"
               }
             >
               Send via Gmail
             </a>
             {amount && amount > 0 && isValidEmail(email) && (
-              <div className="flex flex-col gap-2 mt-4 p-4 bg-slate-100 rounded-md items-start">
+              <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
                 <div className="flex">
                   <span className="text-slate-500">To:</span>
                   <span className="ml-2 text-left">relayer@sendeth.org</span>
