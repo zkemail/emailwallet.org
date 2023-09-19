@@ -70,7 +70,7 @@ const Form = () => {
           // }}
           onChange={handleAmountChange}
           onBlur={handleAmountChange}
-          className="bg-slate-200 text-sm focus:outline-none"
+          className="bg-slate-200 text-sm text-slate-700 focus:outline-none"
           value={amount || ""}
         />
 
@@ -147,7 +147,7 @@ const Form = () => {
       <input
         type="email"
         className="block w-full rounded-lg bg-slate-200 p-2.5 
-  text-sm invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none
+  text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none
   focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
   disabled:border-slate-200 disabled:bg-slate-50
   disabled:text-slate-500 disabled:shadow-none"
@@ -187,11 +187,13 @@ const Form = () => {
         <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
           <div className="flex">
             <span className="text-slate-500">To:</span>
-            <span className="ml-2 text-left">relayer@sendeth.org</span>
+            <span className="ml-2 text-left text-slate-700">
+              relayer@sendeth.org
+            </span>
           </div>
           <div className="flex">
             <span className="text-slate-500">Subject:</span>
-            <span className="ml-2 text-left">{`Send ${amount} ${Currency[currency]} to ${email}`}</span>
+            <span className="ml-2 text-left text-slate-700">{`Send ${amount} ${Currency[currency]} to ${email}`}</span>
           </div>
         </div>
       )}

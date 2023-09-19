@@ -41,7 +41,7 @@ const HeroSection = () => {
               title={"anyone."}
             />
           </h1>
-          <h3 className="text-lg text-muted-foreground">
+          <h3 className="text-lg text-muted-foreground dark:text-slate-200">
             We use zk proofs to ensure you own your money.
           </h3>
           <div className="flex gap-4">

@@ -39,6 +39,7 @@ const Header = () => {
               buttonVariants({
                 className: "hidden px-6 md:flex",
               }),
+              "bg-tertiary text-primary hover:bg-tertiary/80",
             )}
           >
             Try Demo

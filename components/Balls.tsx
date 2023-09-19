@@ -9,7 +9,7 @@ const Balls = () => {
       <motion.div
         transition={{ repeat: Infinity, duration: 4 }}
         animate={{ x: [0, 30, 0] }}
-        className="absolute -bottom-24 -left-40 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/50 max-md:hidden "
+        className="absolute -bottom-24 -left-40 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/60 max-md:hidden "
       />
 
       {/* Bottom right ball */}
