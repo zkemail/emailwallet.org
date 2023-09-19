@@ -9,6 +9,7 @@ const Logo = () => {
         alt={"logo"}
         className="object-cover"
         fill
+        loading="eager"
       />
     </Link>
   );
