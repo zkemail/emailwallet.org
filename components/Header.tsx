@@ -18,7 +18,7 @@ const Header = () => {
 
   return (
     <header className="bg-transparent">
-      <div className="flex w-full items-center justify-between px-4 py-4">
+      <div className="flex w-full items-center justify-between px-4 py-2">
         <Logo />
         <nav className="hidden gap-4 md:flex">
           {routes.map((route) => (

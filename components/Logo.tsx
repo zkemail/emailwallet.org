@@ -3,11 +3,11 @@ import Link from "next/link";
 
 const Logo = () => {
   return (
-    <Link href={"/"} className="relative h-12 w-20">
+    <Link href={"/"} className="relative h-20 w-28">
       <ExportedImage
         src={"/logo.png"}
         alt={"logo"}
-        className="object-contain"
+        className="object-cover"
         fill
       />
     </Link>
