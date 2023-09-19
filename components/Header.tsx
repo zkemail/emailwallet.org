@@ -45,7 +45,10 @@ const Header = () => {
           </Link>
           <ModeToggle />
         </nav>
-        <MobileHeader routes={routes} />
+        <div className="flex items-center gap-x-2 md:hidden">
+          <ModeToggle />
+          <MobileHeader routes={routes} />
+        </div>
       </div>
     </header>
   );

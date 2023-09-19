@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
+import { ModeToggle } from "./ModeToggle";
 
 interface MobileHeaderProps {
   routes: {
@@ -48,7 +49,6 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
               </Link>
             </div>
           ))}
-          {/* <UserMenu className="p-2 hover:bg-secondary rounded-md transition" /> */}
           <Link
             href={"#"}
             className={cn(
