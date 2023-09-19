@@ -1,8 +1,10 @@
+import ExportedImage from "next-image-export-optimizer";
+
 const AirplaneImages = () => {
   return (
     <div className="ml-20 h-[130%] w-1/2 overflow-x-clip max-md:hidden">
       <div className="group absolute right-1/3 top-1/4">
-        <img
+        <ExportedImage
           src={"/paperplane.png"}
           alt={"paper plane image"}
           width={150}

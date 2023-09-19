@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ExportedImage from "next-image-export-optimizer";
 import { Button } from "./ui/button";
 import AirplaneImages from "./AirplaneImages";
 import Balls from "./Balls";
@@ -12,11 +12,12 @@ const HeroSection = () => {
     <section className="mx-6 mt-32 flex md:mx-20">
       {/* Background image */}
       <div className="absolute inset-0 -z-10">
-        <Image
-          src={"/backgroundhero.png"}
+        <ExportedImage
+          src={"/transparent-hero-bg.png"}
           alt={"background image"}
           fill
           className="hidden object-fill md:block"
+          loading="eager"
         />
       </div>
 

@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
+import { ModeToggle } from "./ModeToggle";
 
 const routes = [
   { name: "about", pathname: "/about" },
@@ -42,8 +43,8 @@ const Header = () => {
           >
             Try Demo
           </Link>
+          <ModeToggle />
         </nav>
-
         <MobileHeader routes={routes} />
       </div>
     </header>
