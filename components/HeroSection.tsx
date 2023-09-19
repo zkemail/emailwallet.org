@@ -25,9 +25,9 @@ const HeroSection = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.25 }}
-          className="flex flex-col items-start gap-y-8"
+          className="flex flex-col items-start gap-y-4"
         >
-          <h1 className="text-6xl font-semibold leading-tight">
+          <h1 className="text-4xl font-semibold leading-tight md:text-6xl md:leading-tight">
             Email money to{" "}
             <TypingText
               className="w-fit rounded-xl bg-tertiary px-2"
