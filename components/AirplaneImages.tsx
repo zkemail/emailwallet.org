@@ -4,7 +4,7 @@ const AirplaneImages = () => {
   return (
     <div className="ml-20 h-[130%] w-1/2 overflow-x-clip max-md:hidden">
       <div className="group absolute right-1/3 top-1/4">
-        <ExportedImage
+        <img
           src={"/paperplane.png"}
           alt={"paper plane image"}
           width={150}
