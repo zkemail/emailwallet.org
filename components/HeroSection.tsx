@@ -7,26 +7,16 @@ import Balls from "./Balls";
 import { TypingText } from "./TypingText";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import BgText from "./BgText";
 
 const HeroSection = () => {
   const { resolvedTheme } = useTheme();
 
   return (
     <section className="mx-6 mt-32 flex md:mx-20">
-      {/* Background image */}
-      <div className="absolute inset-0 -z-10">
-        <ExportedImage
-          src={
-            resolvedTheme === "dark"
-              ? "/darkherobackground.png"
-              : "/transparent-hero-bg.png"
-          }
-          alt={"background image"}
-          fill
-          className="hidden object-fill md:block"
-          loading="eager"
-        />
-      </div>
+      {/* Background Text */}
+      <BgText />
+
       <div className="flex w-full flex-col items-center gap-10 md:flex-row">
         <motion.div
           initial="hidden"

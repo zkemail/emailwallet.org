@@ -34,7 +34,7 @@ const Header = () => {
             </Link>
           ))}
           <Link
-            href={"#"}
+            href={"/app"}
             className={cn(
               buttonVariants({
                 className: "hidden px-6 md:flex",
