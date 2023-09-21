@@ -1,6 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 enum Currency {
@@ -169,17 +171,17 @@ const Form = () => {
       >
         Send via Mail App
       </a>
-      <a
+      <Link
         href={`https://mail.google.com/mail/?view=cm&fs=1&to=relayer@sendeth.org&su=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
         // Default hidden in small screens
         className={
-          amount && amount > 0 && isValidEmail(email)
-            ? "hidden h-12 items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:flex"
+          true
+            ? "hidden h-12 items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all sm:flex"
             : "pointer-events-none hidden h-12 items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex"
         }
       >
         Send via Gmail
-      </a>
+      </Link>
       {amount && amount > 0 && isValidEmail(email) && (
         <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
           <div className="flex">
