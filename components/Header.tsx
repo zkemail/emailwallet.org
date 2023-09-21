@@ -7,8 +7,10 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
+import { ExternalLink } from "lucide-react";
 
 const routes = [
+  { name: "docs", pathname: "https://docs.sendeth.org" },
   { name: "about", pathname: "/about" },
   { name: "blog", pathname: "/blog" },
 ];
@@ -18,13 +20,13 @@ const Header = () => {
 
   return (
     <header className="bg-transparent">
-      <div className="flex w-full items-center justify-between px-4 py-2">
+      <div className="flex w-full items-center justify-between px-4 py-1">
         <Logo />
         <nav className="hidden gap-4 md:flex">
           {routes.map((route) => (
             <Link
               className={cn(
-                "rounded-md p-2 capitalize transition hover:bg-secondary",
+                buttonVariants({ variant: "ghost", className: "capitalize" }),
                 pathname === route.pathname && "rounded-md bg-secondary",
               )}
               key={route.name}
@@ -33,6 +35,16 @@ const Header = () => {
               {route.name}
             </Link>
           ))}
+          <Link
+            href={"https://github.com/zkemail/sendeth"}
+            className={cn(
+              buttonVariants({ variant: "ghost" }),
+              "flex items-center gap-1",
+            )}
+          >
+            Github
+            <ExternalLink size={20} />
+          </Link>
           <Link
             href={"/app"}
             className={cn(

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 
 enum Currency {
@@ -61,7 +62,7 @@ const Form = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex w-full justify-between rounded-lg bg-slate-200 p-2.5">
+      <div className="flex w-full justify-between rounded-lg bg-secondary p-2.5">
         <input
           type="number"
           placeholder="Amount to send"
@@ -70,15 +71,15 @@ const Form = () => {
           // }}
           onChange={handleAmountChange}
           onBlur={handleAmountChange}
-          className="bg-slate-200 text-sm text-slate-700 focus:outline-none"
+          className="bg-secondary text-sm text-primary focus:outline-none"
           value={amount || ""}
         />
 
         <div className="relative inline-block text-left" ref={dropdownRef}>
           <div>
-            <button
+            <Button
               type="button"
-              className="inline-flex w-full justify-center gap-x-1.5 rounded-lg bg-slate-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-700"
+              className="gap-x-1 font-semibold shadow-sm"
               id="menu-button"
               aria-expanded="true"
               aria-haspopup="true"
@@ -97,7 +98,7 @@ const Form = () => {
                   clipRule="evenodd"
                 />
               </svg>
-            </button>
+            </Button>
           </div>
           {dropdownOpen && (
             <div
@@ -146,11 +147,7 @@ const Form = () => {
 
       <input
         type="email"
-        className="block w-full rounded-lg bg-slate-200 p-2.5 
-  text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none
-  focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
-  disabled:border-slate-200 disabled:bg-slate-50
-  disabled:text-slate-500 disabled:shadow-none"
+        className="block w-full rounded-lg bg-secondary p-2.5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
         placeholder="recipient@email.address"
         onChange={(e) => {
           setEmail(e.target.value);

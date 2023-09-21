@@ -6,9 +6,9 @@ const Logo = () => {
   const { resolvedTheme } = useTheme();
 
   return (
-    <Link href={"/"} className="relative h-20 w-28">
+    <Link href={"/"} className="relative h-20 w-[120px]">
       <ExportedImage
-        src={resolvedTheme === "dark" ? "/logo.png" : "/light_mode_logo.png"}
+        src={resolvedTheme === "dark" ? "/logo.png" : "/logo_light_mode.png"}
         alt={"logo"}
         className="object-cover"
         fill
