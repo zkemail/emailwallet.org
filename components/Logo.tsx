@@ -8,7 +8,7 @@ const Logo = () => {
   return (
     <Link href={"/"} className="relative h-20 w-[120px]">
       <ExportedImage
-        src={resolvedTheme === "dark" ? "/logo.png" : "/logo_light_mode.png"}
+        src={resolvedTheme === "dark" ? "/logo.png" : "/lightModeLogo.png"}
         alt={"logo"}
         className="object-cover"
         fill
