@@ -1,21 +1,17 @@
 "use client";
 
-import ExportedImage from "next-image-export-optimizer";
 import { Button } from "./ui/button";
 import AirplaneImages from "./AirplaneImages";
 import Balls from "./Balls";
 import { TypingText } from "./TypingText";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
-import BgText from "./BgText";
+import Equations from "./Equations";
 
 const HeroSection = () => {
-  const { resolvedTheme } = useTheme();
-
   return (
     <section className="mx-6 mt-32 flex md:mx-20">
       {/* Background Text */}
-      <BgText />
+      <Equations />
 
       <div className="flex w-full flex-col items-center gap-10 md:flex-row">
         <motion.div
