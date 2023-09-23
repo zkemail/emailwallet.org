@@ -20,10 +20,10 @@ const HeroSection = () => {
           viewport={{ once: false, amount: 0.25 }}
           className="flex flex-col items-start gap-y-6 xl:gap-y-10"
         >
-          <h1 className="text-4xl font-semibold leading-tight md:text-5xl md:leading-tight lg:text-6xl">
+          <h1 className="w-fit text-4xl font-semibold capitalize leading-tight md:text-5xl md:leading-tight lg:text-6xl">
             Email money to{" "}
             <TypingText
-              className="w-fit rounded-xl bg-tertiary px-2"
+              className="w-fit rounded-xl bg-tertiary p-2"
               title={"anyone."}
             />
           </h1>

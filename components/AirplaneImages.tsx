@@ -1,8 +1,26 @@
+import { motion } from "framer-motion";
 import ExportedImage from "next-image-export-optimizer";
 
 const AirplaneImages = () => {
   return (
     <div className="ml-20 h-[130%] w-1/2 overflow-x-clip max-md:hidden">
+      {/* <motion.div
+        animate={{
+          x: [0, 100, 200, 100, 0],
+          y: [0, 200, 100, 50, 0],
+        }}
+        transition={{ repeat: Infinity, duration: 5 }}
+        className="group absolute right-1/3 top-1/4"
+      >
+        <ExportedImage
+          src={"/vector1.png"}
+          alt={"paper plane image"}
+          width={150}
+          height={150}
+          className="-z-10 transition-all"
+        />
+      </motion.div> */}
+
       <div className="group absolute right-1/3 top-1/4">
         <ExportedImage
           src={"/vector1.png"}
