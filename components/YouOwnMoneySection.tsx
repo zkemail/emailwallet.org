@@ -1,7 +1,9 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import ExportedImage from "next-image-export-optimizer";
 import { useTheme } from "next-themes";
+import { useMemo } from "react";
 
 const YouOwnMoneySection = () => {
   const { resolvedTheme } = useTheme();
@@ -12,21 +14,17 @@ const YouOwnMoneySection = () => {
         <h1 className="text-3xl font-semibold md:text-4xl">
           You own your money.
         </h1>
-        <p className="text-sm">
+        <p className="text-sm text-muted-foreground">
           We can&apos;t steal your funds, they can only be authorized by your
           email.
         </p>
       </div>
-      <div className="absolute right-1/4 h-32 w-32">
-        <ExportedImage
-          src={
-            resolvedTheme === "light"
-              ? "/emailLightMode.svg"
-              : "/emailDarkMode.svg"
-          }
-          alt={"email"}
-          fill
-        />
+      <div className="absolute right-1/4 mt-20 h-32 w-32">
+        {resolvedTheme === "light" ? (
+          <ExportedImage src={"/emailLightMode.svg"} alt={"email"} fill />
+        ) : (
+          <ExportedImage src={"/emailDarkMode.svg"} alt={"email"} fill />
+        )}
       </div>
     </section>
   );

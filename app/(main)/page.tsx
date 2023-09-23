@@ -4,7 +4,7 @@ import YouOwnMoneySection from "@/components/YouOwnMoneySection";
 
 const HomePage = () => {
   return (
-    <div className="">
+    <div>
       <HeroSection />
       <YouOwnMoneySection />
       <SendToPeopleSection />
