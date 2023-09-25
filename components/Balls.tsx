@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Parallax } from "react-scroll-parallax";
 
 const Balls = () => {
   return (
-    <div className="-z-10">
+    <Parallax speed={-15} className="absolute -z-10 h-full min-w-full">
       {/* Bottom left ball */}
       <motion.div
         transition={{ repeat: Infinity, duration: 4 }}
@@ -16,7 +17,7 @@ const Balls = () => {
       <motion.div
         transition={{ repeat: Infinity, duration: 3 }}
         animate={{ y: [0, 10, 0], x: [0, 20, 0] }}
-        className="absolute h-[500px] w-[500px] rounded-full border border-primary bg-tertiary/70 max-md:hidden md:-bottom-52 md:-right-40"
+        className="absolute h-[500px] w-[500px] rounded-full border border-primary bg-tertiary/70 max-md:hidden md:-bottom-52 md:left-[65%]"
       />
 
       {/* Top ball */}
@@ -25,7 +26,7 @@ const Balls = () => {
         animate={{ x: [0, 40, 0] }}
         className="absolute -top-[38%] right-1/3 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/40 md:-top-1/3 md:left-1/3"
       />
-    </div>
+    </Parallax>
   );
 };
 
