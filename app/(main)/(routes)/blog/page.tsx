@@ -26,6 +26,7 @@ const BlogPage = () => {
 
           {posts.map((post) => (
             <BlogCard
+              key={post._id}
               href={`/blog/${post.slug}`}
               title={post.title}
               description={post.description || ""}

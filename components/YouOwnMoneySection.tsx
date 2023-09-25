@@ -1,9 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import ExportedImage from "next-image-export-optimizer";
 import { useTheme } from "next-themes";
-import { useMemo } from "react";
 
 const YouOwnMoneySection = () => {
   const { resolvedTheme } = useTheme();
