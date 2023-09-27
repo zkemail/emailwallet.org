@@ -52,6 +52,13 @@ export const Post = defineDocumentType(() => ({
       type: "boolean",
       default: true,
     },
+    aliases: {
+      type: "list",
+      of: { type: "string" },
+    },
+    math: {
+      type: "boolean",
+    },
   },
   computedFields: {
     url: { type: "string", resolve: (post) => `/${post._raw.flattenedPath}` },
