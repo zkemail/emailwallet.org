@@ -50,7 +50,7 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
             </div>
           ))}
           <Link
-            href={"#"}
+            href={"/app"}
             className={cn(
               buttonVariants({
                 variant: "outline",

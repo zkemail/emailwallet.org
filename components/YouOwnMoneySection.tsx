@@ -17,7 +17,7 @@ const YouOwnMoneySection = () => {
           email.
         </p>
       </div>
-      <div className="absolute right-1/4 mt-20 h-32 w-32">
+      <div className="z-back absolute right-1/4 mt-56 h-32 w-32">
         {resolvedTheme === "light" ? (
           <ExportedImage src={"/emailLightMode.svg"} alt={"email"} fill />
         ) : (
