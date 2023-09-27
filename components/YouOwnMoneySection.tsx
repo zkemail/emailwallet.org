@@ -3,10 +3,19 @@
 import ExportedImage from "next-image-export-optimizer";
 import { useTheme } from "next-themes";
 import { motion, useScroll } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const YouOwnMoneySection = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
   const { resolvedTheme } = useTheme();
   const { scrollXProgress, scrollY } = useScroll();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
 
   return (
     <section className="mx-8 mb-60 mt-32 flex max-w-screen-lg items-center md:mx-20 md:my-60">
@@ -37,16 +46,17 @@ const YouOwnMoneySection = () => {
           email.
         </motion.p>
       </div>
-      <motion.div
-        style={{ x: scrollXProgress }}
-        className="absolute -bottom-[100px] right-1/4 -z-10 h-32 w-32 md:-bottom-[250px] md:right-1/4 md:mt-20"
-      >
-        {resolvedTheme === "light" ? (
-          <ExportedImage src={"/emailLightMode.svg"} alt={"email"} fill />
-        ) : (
-          <ExportedImage src={"/emailDarkMode.svg"} alt={"email"} fill />
-        )}
-      </motion.div>
+      <div className="absolute -bottom-[100px] right-1/4 -z-10 h-32 w-32 md:-bottom-[250px] md:right-1/4 md:mt-20">
+        <ExportedImage
+          src={
+            resolvedTheme === "dark"
+              ? "/emailDarkMode.svg"
+              : "/emailLightMode.svg"
+          }
+          alt={"email"}
+          fill
+        />
+      </div>
     </section>
   );
 };
