@@ -55,7 +55,7 @@ const YouOwnMoneySection = () => {
           hidden: { opacity: 0.5, x: 150 },
           visible: {
             opacity: 1,
-            x: isLargeScreen ? -600 : -350,
+            x: isLargeScreen ? -550 : -350,
             y: 120,
             rotateX: 180,
             rotate: 30,
