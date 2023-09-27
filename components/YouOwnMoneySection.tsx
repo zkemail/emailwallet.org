@@ -9,11 +9,10 @@ import { cn } from "@/lib/utils";
 
 const YouOwnMoneySection = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const isLargeScreen = useMediaQuery("(min-width: 1060px)");
+  const isLargeScreen = useMediaQuery("(min-width: 1080px)");
   const isSmallScreen = useMediaQuery("(min-width: 500px)");
 
   const { resolvedTheme } = useTheme();
-  // const { scrollXProgress, scrollY } = useScroll();
 
   useEffect(() => {
     setIsMounted(true);
@@ -58,14 +57,14 @@ const YouOwnMoneySection = () => {
           visible: {
             opacity: 1,
             x: isLargeScreen ? -550 : -350,
-            y: 250,
+            y: 180,
             rotateX: 180,
             rotate: 30,
           },
         }}
         viewport={{ amount: 0.8 }}
         transition={{ duration: 2 }}
-        className="absolute -z-10 h-40 w-40 max-md:hidden md:-bottom-[180px] md:right-1/4"
+        className="absolute -z-10 h-48 w-48 max-md:hidden md:-bottom-[180px] md:right-1/4"
       >
         <ExportedImage
           src={
