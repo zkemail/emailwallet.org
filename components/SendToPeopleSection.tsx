@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const SendToPeopleSection = () => {
   return (
-    <section className="mx-8 flex max-w-screen-lg items-center max-md:text-end md:mx-20">
+    <section className="mx-8 flex max-w-screen-lg items-center max-md:text-end md:mx-10">
       <div className="mb-40 ml-auto flex flex-col gap-6 md:basis-[50%]">
         <motion.h1
           initial="hidden"

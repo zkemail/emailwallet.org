@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import ExportedImage from "next-image-export-optimizer";
 
 const AirplaneImages = () => {
@@ -31,7 +31,7 @@ const AirplaneImages = () => {
         />
       </div>
 
-      <div className="group absolute right-48 top-[60%] max-md:hidden">
+      <div className="group absolute right-48 top-[55%] max-md:hidden">
         <ExportedImage
           src={"/vector2.png"}
           alt={"paper plane image"}
@@ -41,7 +41,7 @@ const AirplaneImages = () => {
         />
       </div>
 
-      <div className="group absolute right-[35%] top-[70%] max-md:hidden">
+      <div className="group absolute right-[%] top-[70%] max-md:hidden">
         <ExportedImage
           src={"/vector3.png"}
           alt={"paper plane image"}
@@ -71,7 +71,7 @@ const AirplaneImages = () => {
         />
       </div> */}
 
-      <div className="group absolute right-10 top-[14%] h-[100px] w-[100px] md:right-36 md:top-[25%] md:h-[150px] md:w-[150px]">
+      <div className="group absolute right-7 top-[22%] h-[100px] w-[100px] md:right-36 md:top-[25%] md:h-[150px] md:w-[150px]">
         <ExportedImage
           src={"/vector6.png"}
           alt={"paper plane image"}

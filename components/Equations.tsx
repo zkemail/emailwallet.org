@@ -10,10 +10,10 @@ const Equations = () => {
       <span className="absolute right-1/4 top-[28%] hidden rotate-[25deg] md:block">
         σ^e mod n = h(m)
       </span>
-      <span className="absolute right-12 top-[17%] md:left-[82%] md:top-[35%]">
+      <span className="absolute left-[88%] top-[28%] md:left-[83%] md:top-[33%]">
         ZK
       </span>
-      <span className="absolute bottom-20 left-[40%] hidden -rotate-12 md:block">
+      <span className="absolute bottom-10 left-[40%] hidden -rotate-12 md:block">
         (a & b) ⊕ (a & c) ⊕ (b & c)
       </span>
     </div>
