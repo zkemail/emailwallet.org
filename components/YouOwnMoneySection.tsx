@@ -46,7 +46,23 @@ const YouOwnMoneySection = () => {
           email.
         </motion.p>
       </div>
-      <div className="absolute -bottom-[100px] right-1/4 -z-10 h-32 w-32 md:-bottom-[250px] md:right-1/4 md:mt-20">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        variants={{
+          hidden: { opacity: 0.5, x: 150 },
+          visible: {
+            opacity: 1,
+            x: -500,
+            y: 120,
+            rotateX: 180,
+            rotate: 30,
+          },
+        }}
+        viewport={{ amount: 0.8 }}
+        transition={{ duration: 2.5 }}
+        className="absolute -z-10 h-40 w-40 max-md:hidden md:-bottom-[250px] md:right-1/4 md:mt-20"
+      >
         <ExportedImage
           src={
             resolvedTheme === "dark"
@@ -56,7 +72,35 @@ const YouOwnMoneySection = () => {
           alt={"email"}
           fill
         />
-      </div>
+      </motion.div>
+
+      {/* Small screen image */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        variants={{
+          hidden: { opacity: 0, x: -50 },
+          visible: {
+            opacity: 1,
+            x: 0,
+            rotateX: 180,
+            rotate: 30,
+          },
+        }}
+        viewport={{ amount: 0.8 }}
+        transition={{ duration: 1 }}
+        className="absolute -bottom-[250px] right-1/3 -z-10 h-32 w-32 md:hidden"
+      >
+        <ExportedImage
+          src={
+            resolvedTheme === "dark"
+              ? "/emailDarkMode.svg"
+              : "/emailLightMode.svg"
+          }
+          alt={"email"}
+          fill
+        />
+      </motion.div>
     </section>
   );
 };

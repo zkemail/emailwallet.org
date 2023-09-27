@@ -4,7 +4,7 @@ import YouOwnMoneySection from "@/components/YouOwnMoneySection";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="max-w-screen-xl md:mx-auto">
       <HeroSection />
       <YouOwnMoneySection />
       <SendToPeopleSection />

@@ -24,7 +24,7 @@ const Balls = () => {
       <motion.div
         transition={{ repeat: Infinity, duration: 5 }}
         animate={{ x: [0, 40, 0] }}
-        className="absolute -top-[38%] right-1/3 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/40 md:-top-1/3 md:left-1/3"
+        className="absolute -top-[55%] right-1/2 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/40 md:-top-1/3 md:left-1/4"
       />
     </Parallax>
   );
