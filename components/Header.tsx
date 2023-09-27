@@ -10,7 +10,7 @@ import { ModeToggle } from "./ModeToggle";
 import { ExternalLink } from "lucide-react";
 
 const routes = [
-  { name: "docs", pathname: "https://docs.sendeth.org" },
+  { name: "docs", pathname: "https://docs.sendeth.org", isExternal: true },
   { name: "about", pathname: "/about" },
   { name: "blog", pathname: "/blog" },
 ];
@@ -31,6 +31,7 @@ const Header = () => {
               )}
               key={route.name}
               href={route.pathname}
+              target={route.isExternal ? "_blank" : ""}
             >
               {route.name}
             </Link>

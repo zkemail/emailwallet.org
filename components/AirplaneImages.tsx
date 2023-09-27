@@ -31,7 +31,7 @@ const AirplaneImages = () => {
         />
       </div>
 
-      <div className="group absolute -right-10 top-1/3 max-md:hidden">
+      <div className="group absolute -right-10 top-[44%] max-md:hidden">
         <ExportedImage
           src={"/vector2.png"}
           alt={"paper plane image"}
@@ -71,7 +71,7 @@ const AirplaneImages = () => {
         />
       </div>
 
-      <div className="group absolute right-10 top-[14%] h-[100px] w-[100px] md:right-36 md:top-[25%] md:h-[150px] md:w-[150px]">
+      <div className="group absolute left-[80%] top-[24%] h-[100px] w-[100px] md:right-36 md:top-[25%] md:h-[150px] md:w-[150px]">
         <ExportedImage
           src={"/vector6.png"}
           alt={"paper plane image"}

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "./ui/button";
 import AirplaneImages from "./AirplaneImages";
 import Balls from "./Balls";
@@ -50,10 +51,12 @@ const HeroSection = () => {
             className="flex gap-4"
           >
             <Button className="rounded-lg bg-tertiary px-8 text-primary hover:bg-tertiary-foreground">
-              Try Demo
+              <Link href="/app">Try Demo</Link>
             </Button>
             <Button className="rounded-lg border-2 px-8" variant={"outline"}>
-              Read Docs
+              <Link href="https://docs.sendeth.org" target="_blank">
+                Read Docs
+              </Link>
             </Button>
           </motion.div>
         </motion.div>

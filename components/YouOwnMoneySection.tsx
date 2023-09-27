@@ -39,7 +39,7 @@ const YouOwnMoneySection = () => {
       </div>
       <motion.div
         style={{ x: scrollXProgress }}
-        className="absolute -bottom-[100px] right-1/4 -z-10 h-32 w-32 md:-bottom-[250px] md:right-1/4 md:mt-20"
+        className="z-back absolute right-1/4 -z-10 mt-56 h-32 w-32 md:-bottom-[250px] md:right-1/4 md:mt-20"
       >
         {resolvedTheme === "light" ? (
           <ExportedImage src={"/emailLightMode.svg"} alt={"email"} fill />
