@@ -195,10 +195,42 @@ const Form = () => {
             <span className="ml-2 text-left text-slate-700">
               relayer@sendeth.org
             </span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText("relayer@sendeth.org");
+                document
+                  .getElementById("copyIcon1")
+                  ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
+              }}
+            >
+              <img
+                id="copyIcon1"
+                src="https://i.imgur.com/yTOO12l.png"
+                alt="Copy to clipboard"
+                style={{ height: "1em", marginLeft: "0.5em" }}
+              />
+            </button>
           </div>
           <div className="flex">
             <span className="text-slate-500">Subject:</span>
             <span className="ml-2 text-left text-slate-700">{`Send ${amount} ${Currency[currency]} to ${email}`}</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `Send ${amount} ${Currency[currency]} to ${email}`,
+                );
+                document
+                  .getElementById("copyIcon2")
+                  ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
+              }}
+            >
+              <img
+                id="copyIcon2"
+                src="https://i.imgur.com/yTOO12l.png"
+                alt="Copy to clipboard"
+                style={{ height: "1em", marginLeft: "0.5em" }}
+              />
+            </button>
           </div>
         </div>
       )}
