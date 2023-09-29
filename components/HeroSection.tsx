@@ -19,7 +19,7 @@ const HeroSection = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.25 }}
-          className="flex flex-col items-start gap-y-6 xl:gap-y-10"
+          className="flex flex-col items-start gap-y-8"
         >
           <h1 className="w-fit text-4xl font-semibold capitalize leading-tight md:text-5xl md:leading-tight lg:text-6xl">
             Email money to{" "}
@@ -50,10 +50,13 @@ const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex gap-4"
           >
-            <Button className="rounded-lg bg-tertiary px-8 text-primary hover:bg-tertiary-foreground">
+            <Button className="rounded-lg bg-tertiary px-8 text-primary drop-shadow hover:bg-tertiary-foreground">
               <Link href="/app">Try Demo</Link>
             </Button>
-            <Button className="rounded-lg border-2 px-8" variant={"outline"}>
+            <Button
+              className="rounded-lg border px-8 drop-shadow"
+              variant={"outline"}
+            >
               <Link href="https://docs.sendeth.org" target="_blank">
                 Read Docs
               </Link>

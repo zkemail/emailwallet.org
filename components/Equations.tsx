@@ -1,13 +1,13 @@
 const Equations = () => {
   return (
-    <div className="font-mono text-xl font-semibold text-slate-300 dark:text-slate-600 md:block">
+    <div className="-z-20 font-mono text-xl font-semibold text-slate-300 dark:text-slate-600 md:block">
       <span className="absolute left-[24%] top-10 hidden rotate-12 md:block">
         ([\w]+@[\w]+.[\w]+)
       </span>
       <span className="absolute left-[15%] top-40 hidden -rotate-12 md:block">
         Az x Bz = Cz
       </span>
-      <span className="absolute right-1/4 top-[28%] hidden rotate-[25deg] md:block">
+      <span className="absolute right-1/4 top-[48%] hidden rotate-[25deg] md:block">
         σ^e mod n = h(m)
       </span>
       <span className="absolute left-[88%] top-[28%] md:left-[83%] md:top-[33%]">

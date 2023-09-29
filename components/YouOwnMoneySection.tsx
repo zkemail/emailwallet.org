@@ -2,15 +2,35 @@
 
 import ExportedImage from "next-image-export-optimizer";
 import { useTheme } from "next-themes";
-import { motion, useScroll } from "framer-motion";
+import { cubicBezier, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
 const YouOwnMoneySection = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const isLargeScreen = useMediaQuery("(min-width: 1080px)");
   const isSmallScreen = useMediaQuery("(min-width: 500px)");
+  const { scrollYProgress } = useScroll();
+  const isLargeScreen = useMediaQuery("(min-width: 900px)");
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [500, isLargeScreen ? -500 : -300],
+    {
+      ease: cubicBezier(0.17, 0.67, 0.83, 0.67),
+    },
+  );
+  const y = useTransform(scrollYProgress, [0, 1], [0, 220], {
+    ease: cubicBezier(0.17, 0.67, 0.83, 0.67),
+  });
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 40], {
+    ease: cubicBezier(0.17, 0.67, 0.83, 0.67),
+  });
+
+  const rotateX = useTransform(scrollYProgress, [0, 1], [-120, 170], {
+    ease: cubicBezier(0.17, 0.67, 0.83, 0.67),
+  });
 
   const { resolvedTheme } = useTheme();
 
@@ -50,21 +70,8 @@ const YouOwnMoneySection = () => {
         </motion.p>
       </div>
       <motion.div
-        initial="hidden"
-        whileInView="visible"
-        variants={{
-          hidden: { opacity: 0.5, x: 150 },
-          visible: {
-            opacity: 1,
-            x: isLargeScreen ? -550 : -350,
-            y: 180,
-            rotateX: 180,
-            rotate: 30,
-          },
-        }}
-        viewport={{ amount: 0.8 }}
-        transition={{ duration: 2 }}
-        className="absolute -z-10 h-48 w-48 max-md:hidden md:-bottom-[180px] md:right-1/4"
+        style={{ x, y, rotate, rotateX }}
+        className="absolute -z-10 h-48 w-48 max-md:hidden md:-bottom-[230px] md:right-1/4"
       >
         <ExportedImage
           src={
@@ -93,8 +100,8 @@ const YouOwnMoneySection = () => {
         viewport={{ amount: 0.8 }}
         transition={{ duration: 1 }}
         className={cn(
-          "absolute -bottom-[250px] right-1/3 -z-10 h-32 w-32 md:hidden",
-          isSmallScreen && "-bottom-[140px]",
+          "absolute -bottom-[400px] right-1/3 -z-10 h-32 w-32 md:hidden",
+          isSmallScreen && "-bottom-[300px]",
         )}
       >
         <ExportedImage
