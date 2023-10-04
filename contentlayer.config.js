@@ -3,23 +3,15 @@ import rehypeAutoLinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
-// const computedFields = {
-//   slug: {
-//     type: "string",
-//     resolve: (post) => `/${post._raw.flattenedPath}`,
-//   },
-//   slugAsParams: {
-//     type: "string",
-//     resolve: (post) => post._raw.flattenedPath.split("/").slice(1).join("/"),
-//   },
-// };
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
   filePathPattern: `posts/**/*.mdx`,
-  contentType: "markdown",
+  contentType: "mdx",
   fields: {
     title: {
       type: "string",
@@ -69,8 +61,9 @@ export default makeSource({
   contentDirPath: "content",
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkGfm, remarkMath],
     rehypePlugins: [
+      rehypeKatex,
       rehypeSlug,
       [
         rehypePrettyCode,

@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ParallaxProvider from "@/provider/ParallaxProvider";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
