@@ -5,12 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "serve out",
+    "start": "next start",
     "lint": "next lint",
     "prepare": "husky install"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">17 <19"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.4",
@@ -53,8 +53,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.2",
-    "prettier-plugin-tailwindcss": "^0.5.4",
-    "serve": "^14.2.1"
+    "prettier-plugin-tailwindcss": "^0.5.4"
   },
   "lint-staged": {
     "*.{ts,js,tsx,jsx,css,md}": "prettier --write"

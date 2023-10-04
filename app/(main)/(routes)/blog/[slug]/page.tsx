@@ -3,15 +3,11 @@ import { format } from "date-fns";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 
-export async function generateStaticParams() {
-  const posts = allPosts;
-
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+interface pageProps {
+  params: { slug: string };
 }
 
-const BlogPostPage = ({ params }: { params: { slug: string } }) => {
+const BlogPostPage = ({ params }: pageProps) => {
   const post = allPosts.find((post) => post.slug === params.slug);
 
   if (!post) return notFound();
