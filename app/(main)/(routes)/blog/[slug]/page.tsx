@@ -1,13 +1,16 @@
 import { allPosts } from "contentlayer/generated";
 import { format } from "date-fns";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
 
-interface pageProps {
-  params: { slug: string };
+export async function generateStaticParams() {
+  const posts = allPosts;
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
-const BlogPostPage = ({ params }: pageProps) => {
+const BlogPostPage = ({ params }: { params: { slug: string } }) => {
   const post = allPosts.find((post) => post.slug === params.slug);
 
   if (!post) return notFound();
@@ -25,10 +28,12 @@ const BlogPostPage = ({ params }: pageProps) => {
           </div>
           <h3>{post.description}</h3>
         </div>
-        asdjfasdfdsf
       </div>
-      {/* <div dangerouslySetInnerHTML={{ __html: post.body.html }} /> */}
-      <ReactMarkdown children={post!.body.raw} />
+      {/* <ReactMarkdown children={post!.body.raw} /> */}
+      <div
+        className="[&>*:last-child]:mb-0 [&>*]:mb-3"
+        dangerouslySetInnerHTML={{ __html: post.body.html }}
+      />
     </div>
   );
 };

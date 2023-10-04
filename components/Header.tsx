@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
 import { ExternalLink } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const routes = [
   { name: "docs", pathname: "https://docs.sendeth.org", isExternal: true },
@@ -17,6 +18,13 @@ const routes = [
 
 const Header = () => {
   const pathname = usePathname();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
 
   return (
     <header className="bg-transparent">
