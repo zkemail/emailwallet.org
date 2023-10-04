@@ -1,4 +1,4 @@
-import { Post, allPosts } from "contentlayer/generated";
+import { allPosts } from "contentlayer/generated";
 import { format } from "date-fns";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
