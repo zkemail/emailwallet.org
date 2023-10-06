@@ -10,7 +10,7 @@ const StayUpToDate = () => {
   const [firstName, setFirstName] = useState("");
 
   return (
-    <section className="mx-auto mt-8 flex w-full flex-col items-center justify-center gap-10 overflow-clip border-t bg-primary-foreground px-4 py-14 max-md:gap-10 md:px-32 lg:flex-row">
+    <section className="mx-auto mt-8 flex w-full flex-col items-center justify-center gap-10 overflow-clip border-t bg-primary-foreground px-4 py-16 max-md:gap-10 md:px-32 lg:flex-row">
       <div className="flex flex-1 flex-col gap-8">
         <div className="flex flex-col items-center gap-y-10 max-lg:text-center lg:items-start">
           <div className="flex flex-col items-center gap-y-3 md:gap-x-2 lg:flex-row">
@@ -23,7 +23,7 @@ const StayUpToDate = () => {
           </p>
         </div>
       </div>
-      <div className="mt-auto flex flex-1 flex-col items-center gap-4 lg:mt-8">
+      <div className="mt-auto flex flex-1 flex-col items-center gap-4 lg:mt-4">
         <div className="flex w-full flex-col gap-3 lg:flex-row">
           <Input
             type="text"

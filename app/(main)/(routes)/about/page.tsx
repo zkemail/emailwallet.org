@@ -1,6 +1,9 @@
 "use client";
 
-import { SchoolIcon, StarIcon, Workflow } from "lucide-react";
+import { FaCoins } from "react-icons/fa";
+import { MdWork } from "react-icons/md";
+import { IoMdCodeWorking } from "react-icons/io";
+import { TbDatabaseDollar } from "react-icons/tb";
 import InfoGraphLg from "./components/InfoGraghLg";
 import InfoGraphSm from "./components/InfoGraphSm";
 import {
@@ -11,6 +14,7 @@ import "react-vertical-timeline-component/style.min.css";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
+import { StarIcon } from "lucide-react";
 
 const AboutPage = () => {
   const { resolvedTheme } = useTheme();
@@ -41,7 +45,7 @@ const AboutPage = () => {
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: resolvedTheme === "dark" ? "white" : "gray",
           }}
-          icon={<Workflow />}
+          icon={<FaCoins />}
           contentStyle={{
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: "#fff",
@@ -66,7 +70,7 @@ const AboutPage = () => {
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: resolvedTheme === "dark" ? "white" : "gray",
           }}
-          icon={<Workflow />}
+          icon={<MdWork />}
           contentStyle={{
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: "#fff",
@@ -91,7 +95,7 @@ const AboutPage = () => {
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: resolvedTheme === "dark" ? "white" : "gray",
           }}
-          icon={<Workflow />}
+          icon={<IoMdCodeWorking />}
           contentStyle={{
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: "#fff",
@@ -116,7 +120,7 @@ const AboutPage = () => {
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: resolvedTheme === "dark" ? "white" : "gray",
           }}
-          icon={<Workflow />}
+          icon={<TbDatabaseDollar />}
           contentStyle={{
             background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
             color: "#fff",
