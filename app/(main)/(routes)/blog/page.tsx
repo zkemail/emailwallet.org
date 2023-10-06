@@ -8,7 +8,7 @@ const BlogPage = () => {
   );
 
   return (
-    <section className="mx-auto flex max-w-screen-lg justify-center">
+    <section className="mx-auto flex min-h-screen max-w-screen-lg justify-center">
       <div className="mx-6 my-16 flex flex-col items-center space-y-12 md:mx-10">
         <h1 className="w-fit bg-gradient-to-r from-blue-700 to-amber-500 bg-clip-text text-5xl font-semibold uppercase text-transparent">
           Blog
