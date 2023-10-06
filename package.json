@@ -41,6 +41,7 @@
     "react-markdown": "^8.0.7",
     "react-router-dom": "^6.16.0",
     "react-scroll-parallax": "^3.4.2",
+    "react-vertical-timeline-component": "^3.6.0",
     "rehype-autolink-headings": "^7.0.0",
     "rehype-katex": "^7.0.0",
     "rehype-pretty-code": "^0.10.1",
@@ -58,6 +59,7 @@
   "devDependencies": {
     "@types/react-katex": "^3.0.1",
     "@types/react-latex": "^2.0.1",
+    "@types/react-vertical-timeline-component": "^3.3.4",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.2",
