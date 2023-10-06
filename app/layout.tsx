@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ParallaxProvider from "@/provider/ParallaxProvider";
 import Head from "next/head";
+import NewBlogPostHeader from "@/components/NewBlogPostHeader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <NewBlogPostHeader />
             <Header />
             {children}
           </ThemeProvider>
