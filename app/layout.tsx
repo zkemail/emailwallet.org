@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import ParallaxProvider from "@/provider/ParallaxProvider";
 import Head from "next/head";
 import NewBlogPostHeader from "@/components/NewBlogPostHeader";
+import StayUpToDate from "@/components/StayUpToDate";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,6 +42,7 @@ export default function RootLayout({
             <NewBlogPostHeader />
             <Header />
             {children}
+            <StayUpToDate />
           </ThemeProvider>
         </ParallaxProvider>
       </body>

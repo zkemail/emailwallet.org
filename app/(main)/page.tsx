@@ -1,6 +1,5 @@
 import HeroSection from "@/components/HeroSection";
 import SendToPeopleSection from "@/components/SendToPeopleSection";
-import StayUpToDate from "@/components/StayUpToDate";
 import YouOwnMoneySection from "@/components/YouOwnMoneySection";
 
 const HomePage = () => {
@@ -9,7 +8,6 @@ const HomePage = () => {
       <HeroSection />
       <YouOwnMoneySection />
       <SendToPeopleSection />
-      <StayUpToDate />
     </div>
   );
 };
