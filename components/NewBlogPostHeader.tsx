@@ -10,7 +10,7 @@ const NewBlogPostHeader = () => {
   );
 
   return (
-    <div className="fixed z-10 mx-auto flex w-full justify-center gap-1 bg-tertiary py-1 text-sm drop-shadow">
+    <div className="fixed inset-x-0 top-0 z-10 mx-auto flex w-full justify-center gap-1 bg-tertiary py-1 text-sm drop-shadow">
       <p className="text-secondary-foreground">
         We&apos;ve dropped a new blog post.
       </p>
