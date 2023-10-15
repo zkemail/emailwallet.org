@@ -6,8 +6,8 @@ import { FaCoins } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import { IoMdCodeWorking } from "react-icons/io";
 import { TbDatabaseDollar } from "react-icons/tb";
-import InfoGraphLg from "./components/InfoGraghLg";
-import InfoGraphSm from "./components/InfoGraphSm";
+import InfoGraphLg from "./_components/InfoGraghLg";
+import InfoGraphSm from "./_components/InfoGraphSm";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
