@@ -1,4 +1,4 @@
-import Form from "./components/Form";
+import Form from "./_components/Form";
 
 export default function SendMoneyPage() {
   return (
