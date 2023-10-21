@@ -31,7 +31,9 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </Head>
-      <body className={cn(inter.className, "overflow-x-clip")}>
+      <body
+        className={cn(inter.className, "overflow-x-clip overflow-y-scroll")}
+      >
         <ParallaxProvider>
           <ThemeProvider
             attribute="class"

@@ -8,13 +8,6 @@ body,
   height: 100%;
 }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: transparent;
-}
-
 @layer base {
   :root {
     --background: 0 0% 100%;
