@@ -34,34 +34,19 @@ const Header = () => {
         <nav className="hidden gap-4 md:flex">
           {routes.map((route) => (
             <div key={route.pathname}>
-              {route.isExternal ? (
-                <a
-                  className={cn(
-                    buttonVariants({
-                      variant: "ghost",
-                      className: "capitalize",
-                    }),
-                    pathname === route.pathname && "rounded-md bg-secondary",
-                  )}
-                  target="_blank"
-                  href={route.pathname}
-                >
-                  {route.name}
-                </a>
-              ) : (
-                <a
-                  className={cn(
-                    buttonVariants({
-                      variant: "ghost",
-                      className: "capitalize",
-                    }),
-                    pathname === route.pathname && "rounded-md bg-secondary",
-                  )}
-                  onClick={() => router.push(route.pathname)}
-                >
-                  {route.name}
-                </a>
-              )}
+              <a
+                className={cn(
+                  buttonVariants({
+                    variant: "ghost",
+                    className: "capitalize",
+                  }),
+                  pathname === route.pathname && "rounded-md bg-secondary",
+                )}
+                target={route.isExternal ? "_blank" : "_self"}
+                href={route.pathname}
+              >
+                {route.name}
+              </a>
             </div>
           ))}
           <Link

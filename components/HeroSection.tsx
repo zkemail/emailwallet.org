@@ -53,12 +53,12 @@ const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex gap-4"
           >
-            <Button
-              onClick={() => router.push("/app")}
+            <a
+              href={"/app"}
               className="rounded-lg bg-tertiary px-8 text-primary drop-shadow hover:bg-tertiary-foreground"
             >
               Try Demo
-            </Button>
+            </a>
             <Button
               className="rounded-lg border px-8 drop-shadow"
               variant={"outline"}
