@@ -7,8 +7,11 @@ import Balls from "./Balls";
 import { TypingText } from "./TypingText";
 import { motion } from "framer-motion";
 import Equations from "./Equations";
+import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
+  const router = useRouter();
+
   return (
     <section className="mx-6 mt-32 flex md:mx-10">
       {/* Background Text */}
@@ -50,8 +53,11 @@ const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex gap-4"
           >
-            <Button className="rounded-lg bg-tertiary px-8 text-primary drop-shadow hover:bg-tertiary-foreground">
-              <Link href="/app">Try Demo</Link>
+            <Button
+              onClick={() => router.push("/app")}
+              className="rounded-lg bg-tertiary px-8 text-primary drop-shadow hover:bg-tertiary-foreground"
+            >
+              Try Demo
             </Button>
             <Button
               className="rounded-lg border px-8 drop-shadow"
