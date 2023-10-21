@@ -1,4 +1,4 @@
-import BlogCard from "./components/BlogCard";
+import BlogCard from "./_components/BlogCard";
 import { allPosts } from "contentlayer/generated";
 import { compareDesc } from "date-fns";
 

@@ -1,7 +1,7 @@
 import { allPosts } from "contentlayer/generated";
 import { format } from "date-fns";
 import { notFound } from "next/navigation";
-import { Mdx } from "../components/Mdx";
+import { Mdx } from "../_components/Mdx";
 
 export async function generateStaticParams() {
   const posts = allPosts;
