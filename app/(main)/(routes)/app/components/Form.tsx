@@ -169,24 +169,24 @@ const Form = () => {
         // TODO: Remove && false to re-enable button
 
         className={
-          amount && amount > 0 && isValidEmail(email) && false
+          amount && amount > 0 && isValidEmail(email)
             ? "flex h-12 items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden"
             : "pointer-events-none flex h-12 items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden"
         }
       >
-        Send via Mail App [Disabled for upgrade, try again in 24 hours]
+        Send via Mail App
       </a>
       <Link
         href={`https://mail.google.com/mail/?view=cm&fs=1&to=relayer@sendeth.org&su=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
         // Default hidden in small screens
         // TODO: Remove && false to re-enable button
         className={
-          amount && amount > 0 && isValidEmail(email) && false
+          amount && amount > 0 && isValidEmail(email)
             ? "hidden h-12 items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:flex"
             : "pointer-events-none hidden h-12 items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex"
         }
       >
-        Send via Gmail [Disabled for upgrade, try again in 24 hours]
+        Send via Gmail
       </Link>
       {amount && amount > 0 && isValidEmail(email) && (
         <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
