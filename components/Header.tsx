@@ -35,7 +35,7 @@ const Header = () => {
           {routes.map((route) => (
             <div key={route.pathname}>
               {route.isExternal ? (
-                <Link
+                <a
                   className={cn(
                     buttonVariants({
                       variant: "ghost",
@@ -47,9 +47,9 @@ const Header = () => {
                   href={route.pathname}
                 >
                   {route.name}
-                </Link>
+                </a>
               ) : (
-                <button
+                <a
                   className={cn(
                     buttonVariants({
                       variant: "ghost",
@@ -60,7 +60,7 @@ const Header = () => {
                   onClick={() => router.push(route.pathname)}
                 >
                   {route.name}
-                </button>
+                </a>
               )}
             </div>
           ))}
@@ -75,8 +75,8 @@ const Header = () => {
             Github
             <ExternalLink size={20} />
           </Link>
-          <button
-            onClick={() => router.push("/app")}
+          <a
+            href={"/app"}
             className={cn(
               buttonVariants({
                 className: "hidden px-6 md:flex",
@@ -85,7 +85,7 @@ const Header = () => {
             )}
           >
             Try Demo
-          </button>
+          </a>
           <ModeToggle />
         </nav>
         <div className="flex items-center gap-x-2 md:hidden">
