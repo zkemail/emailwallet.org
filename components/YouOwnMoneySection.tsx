@@ -71,7 +71,7 @@ const YouOwnMoneySection = () => {
       </div>
       <motion.div
         style={{ x, y, rotate, rotateX }}
-        className="absolute -z-10 h-48 w-48 max-md:hidden md:-bottom-[230px] md:right-1/4"
+        className="absolute -z-10 h-48 w-48 max-md:hidden md:-bottom-[170px] md:right-1/4"
       >
         <ExportedImage
           src={
@@ -100,8 +100,8 @@ const YouOwnMoneySection = () => {
         viewport={{ amount: 0.8 }}
         transition={{ duration: 1 }}
         className={cn(
-          "absolute -bottom-[400px] right-1/3 -z-10 h-32 w-32 md:hidden",
-          isSmallScreen && "-bottom-[300px]",
+          "absolute -bottom-[200px] right-1/3 -z-10 h-32 w-32 md:hidden",
+          isSmallScreen && "-bottom-[200px]",
         )}
       >
         <ExportedImage
