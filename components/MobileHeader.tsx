@@ -40,7 +40,8 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
               key={route.name}
               className={cn(
                 "rounded-md p-2 capitalize transition hover:bg-secondary",
-                pathname === route.pathname && "rounded-md bg-slate-100",
+                pathname === route.pathname &&
+                  "rounded-md bg-slate-100 dark:bg-slate-900",
               )}
             >
               <a href={route.pathname} onClick={() => setIsOpen(false)}>
