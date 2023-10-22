@@ -13,7 +13,6 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { buttonVariants } from "./ui/button";
 import { Menu } from "lucide-react";
-import { ModeToggle } from "./ModeToggle";
 
 interface MobileHeaderProps {
   routes: {
@@ -44,12 +43,12 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
                 pathname === route.pathname && "rounded-md bg-slate-100",
               )}
             >
-              <Link href={route.pathname} onClick={() => setIsOpen(false)}>
+              <a href={route.pathname} onClick={() => setIsOpen(false)}>
                 {route.name}
-              </Link>
+              </a>
             </div>
           ))}
-          <Link
+          <a
             href={"/app"}
             className={cn(
               buttonVariants({
@@ -59,7 +58,7 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
             )}
           >
             Try Demo
-          </Link>
+          </a>
         </nav>
       </SheetContent>
     </Sheet>
