@@ -176,8 +176,9 @@ const Form = () => {
       >
         Send via Mail App
       </a>
-      <Link
+      <a
         href={`https://mail.google.com/mail/?view=cm&fs=1&to=relayer@sendeth.org&su=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+        target="_blank"
         // Default hidden in small screens
         // TODO: Remove && false to re-enable button
         className={
@@ -187,7 +188,7 @@ const Form = () => {
         }
       >
         Send via Gmail
-      </Link>
+      </a>
       {amount && amount > 0 && isValidEmail(email) && (
         <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
           <div className="flex">
