@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { PiLaptopThin } from "react-icons/pi";
 
 const SendToPeopleSection = () => {
   return (
-    <section className="mx-8 flex items-center overflow-x-clip max-md:text-end md:mx-10">
-      <div className="mb-40 ml-auto flex flex-col gap-6 md:basis-[50%]">
+    <section className="relative mx-8 mb-40 flex flex-col items-center gap-20 overflow-x-clip max-md:text-end md:mx-10 md:flex-row-reverse md:gap-48">
+      <div className="flex flex-col gap-6 md:basis-[50%]">
         <motion.h1
           initial="hidden"
           whileInView="visible"
@@ -32,6 +33,29 @@ const SendToPeopleSection = () => {
           account with us yet.
         </motion.p>
       </div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        variants={{
+          hidden: { opacity: 0.5, x: -20, rotateX: 180, rotate: 40 },
+          visible: {
+            opacity: 1,
+            x: 0,
+            rotateX: 0,
+            rotate: -10,
+          },
+        }}
+        viewport={{ amount: 0.8 }}
+        transition={{ duration: 1 }}
+      >
+        <PiLaptopThin size={220} />
+      </motion.div>
+      <motion.div
+        transition={{ repeat: Infinity, duration: 4 }}
+        animate={{ x: [0, 30, 0] }}
+        className="absolute -bottom-[190%] left-2/4 -z-50 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/30 transition-all"
+      />
     </section>
   );
 };
