@@ -43,8 +43,8 @@ const Form = () => {
     } else {
       setAmount(Number(value));
     }
-    if (Number(value) > 10 && currency === Currency.TEST) {
-      setAmount(10);
+    if (Number(value) > 100 && currency === Currency.TEST) {
+      setAmount(100);
     }
   }
 
@@ -66,8 +66,8 @@ const Form = () => {
   }, [dropdownRef]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex w-full justify-between rounded-lg bg-secondary p-2.5">
+    <div className="flex flex-col items-center justify-center gap-4">
+      <div className="h-15 flex w-full justify-between rounded-lg bg-secondary p-2.5 px-5 sm:w-1/2">
         <input
           type="number"
           placeholder="Amount to send"
@@ -152,7 +152,7 @@ const Form = () => {
 
       <input
         type="email"
-        className="block w-full rounded-lg bg-secondary p-2.5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
+        className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary sm:w-1/2"
         placeholder="recipient@email.address"
         onChange={(e) => {
           setEmail(e.target.value);
@@ -170,8 +170,8 @@ const Form = () => {
 
         className={
           amount && amount > 0 && isValidEmail(email)
-            ? "flex h-12 items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden"
-            : "pointer-events-none flex h-12 items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden"
+            ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden sm:w-1/2"
+            : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden sm:w-1/2"
         }
       >
         Send via Mail App
@@ -183,8 +183,8 @@ const Form = () => {
         // TODO: Remove && false to re-enable button
         className={
           amount && amount > 0 && isValidEmail(email)
-            ? "hidden h-12 items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:flex"
-            : "pointer-events-none hidden h-12 items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex"
+            ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:flex sm:w-1/2"
+            : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex sm:w-1/2"
         }
       >
         Send via Gmail

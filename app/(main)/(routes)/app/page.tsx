@@ -8,10 +8,9 @@ export default function SendMoneyPage() {
           <div className="flex flex-col gap-2 pb-8">
             <h1 className="text-4xl font-medium">Send money</h1>
             <h2 className="text-muted-foreground">
-              This tool will send money from your currently logged-in email
-              address, by formatting an email to the relayer and including the
-              amount and recipient in your subject! Everyone starts with 10 TEST
-              tokens.
+              This sends money from your currently logged-in email address, by
+              emailing the relayer with the amount and recipient in your
+              subject! Everyone starts with 100 TEST tokens.
             </h2>
           </div>
           <Form />
