@@ -14,6 +14,8 @@ enum Currency {
 const Form = () => {
   const [fromEmail, setFromEmail] = useState<string>("");
   const [toEmail, setToEmail] = useState<string>("");
+  const [emailSent, setEmailSent] = useState<boolean>(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -37,20 +39,29 @@ const Form = () => {
     const encodedBody = encodeURIComponent(body);
 
     if (fromEmail.endsWith("@gmail.com")) {
-      return `https://mail.google.com/mail/?view=cm&fs=1&to=${fromEmail}&su=${encodedSubject}&body=${encodedBody}`;
+      return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+        "relayer@sendeth.org",
+      )}&su=${encodedSubject}&body=${encodedBody}`;
     } else if (
       fromEmail.endsWith("@outlook.com") ||
       fromEmail.endsWith("@hotmail.com")
     ) {
-      return `https://outlook.live.com/mail/0/compose?to=${fromEmail}&subject=${encodedSubject}&body=${encodedBody}`;
+      return `https://outlook.live.com/mail/0/compose?to=${encodeURIComponent(
+        "relayer@sendeth.org",
+      )}&subject=${encodedSubject}&body=${encodedBody}`;
     } else if (
       fromEmail.endsWith("@protonmail.com") ||
+      fromEmail.endsWith("@proton.me") ||
       fromEmail.endsWith("@pm.me")
     ) {
-      return `https://mail.protonmail.com/compose?to=${fromEmail}&subject=${encodedSubject}&body=${encodedBody}`;
+      return `https://mail.protonmail.com/compose?to=${encodeURIComponent(
+        "relayer@sendeth.org",
+      )}&subject=${encodedSubject}&body=${encodedBody}`;
     } else {
       // Default to mailto: if the domain is not recognized
-      return `https://mail.google.com/mail/?view=cm&fs=1&to=${fromEmail}&su=${encodedSubject}&body=${encodedBody}`;
+      return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+        "relayer@sendeth.org",
+      )}&su=${encodedSubject}&body=${encodedBody}`;
     }
   }
 
@@ -144,6 +155,16 @@ const Form = () => {
             >
               <div className="py-1" role="none">
                 <span
+                  className={getCurrencyOptionClass(currency === Currency.TEST)}
+                  role="menuitem"
+                  onClick={() => {
+                    setCurrency(Currency.TEST);
+                    setDropdownOpen(false);
+                  }}
+                >
+                  TEST
+                </span>
+                <span
                   className={getCurrencyOptionClass(currency === Currency.USDC)}
                   role="menuitem"
                   onClick={() => {
@@ -162,16 +183,6 @@ const Form = () => {
                   }}
                 >
                   DAI
-                </span>
-                <span
-                  className={getCurrencyOptionClass(currency === Currency.TEST)}
-                  role="menuitem"
-                  onClick={() => {
-                    setCurrency(Currency.TEST);
-                    setDropdownOpen(false);
-                  }}
-                >
-                  TEST
                 </span>
               </div>
             </div>
@@ -224,31 +235,70 @@ const Form = () => {
       <a
         href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`}
         target="_blank"
-        // Hidden hides it on large screens
-        // TODO: Remove && false to re-enable button
-
+        onClick={() => {
+          setEmailSent(true);
+          setCountdown(60);
+          const intervalId = setInterval(() => {
+            setCountdown((prevCountdown) =>
+              prevCountdown ? prevCountdown - 1 : null,
+            );
+          }, 1000);
+          setTimeout(() => {
+            clearInterval(intervalId);
+            setCountdown(null);
+          }, 60000);
+        }}
+        // Default hidden on large screens
         className={
           amount && amount > 0 && isValidEmail(toEmail)
             ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden sm:w-1/2"
             : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden sm:w-1/2"
         }
       >
-        Send via Mail App
+        {countdown
+          ? `Please wait ${countdown} seconds for a response...`
+          : "Send via Mail App"}
       </a>
       <a
         href={emailLink}
         target="_blank"
+        onClick={() => {
+          setEmailSent(true);
+          setCountdown(60);
+          const intervalId = setInterval(() => {
+            setCountdown((prevCountdown) =>
+              prevCountdown ? prevCountdown - 1 : null,
+            );
+          }, 1000);
+          setTimeout(() => {
+            clearInterval(intervalId);
+            setCountdown(null);
+          }, 60000);
+        }}
         // Default hidden in small screens
-        // TODO: Remove && false to re-enable button
         className={
           amount && amount > 0 && isValidEmail(toEmail)
-            ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:flex sm:w-1/2"
+            ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-green-500 bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:flex sm:w-1/2"
             : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex sm:w-1/2"
         }
       >
-        Send via{" "}
-        {fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Mail App"}
+        {countdown
+          ? `Please wait ${countdown} seconds for a response...`
+          : `Send via ${
+              fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Mail App"
+            }`}
       </a>
+
+      {emailSent && (
+        <a
+          href="https://mail.google.com/mail/u/1/#search/to%3Arelayer%40sendeth.org"
+          target="_blank"
+          className="flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:w-1/2"
+        >
+          View Email
+        </a>
+      )}
+
       {amount && amount > 0 && isValidEmail(toEmail) && (
         <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
           <div className="flex">
