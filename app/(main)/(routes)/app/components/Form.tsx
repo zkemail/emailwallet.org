@@ -12,7 +12,8 @@ enum Currency {
 }
 
 const Form = () => {
-  const [email, setEmail] = useState<string>("");
+  const [fromEmail, setFromEmail] = useState<string>("");
+  const [toEmail, setToEmail] = useState<string>("");
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -30,6 +31,34 @@ const Form = () => {
       ? `${baseClasses} bg-slate-100`
       : `${baseClasses} hover:bg-slate-100`;
   }
+
+  function getEmailLink(email: string, subject: string, body: string): string {
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+
+    if (fromEmail.endsWith("@gmail.com")) {
+      return `https://mail.google.com/mail/?view=cm&fs=1&to=${fromEmail}&su=${encodedSubject}&body=${encodedBody}`;
+    } else if (
+      fromEmail.endsWith("@outlook.com") ||
+      fromEmail.endsWith("@hotmail.com")
+    ) {
+      return `https://outlook.live.com/mail/0/compose?to=${fromEmail}&subject=${encodedSubject}&body=${encodedBody}`;
+    } else if (
+      fromEmail.endsWith("@protonmail.com") ||
+      fromEmail.endsWith("@pm.me")
+    ) {
+      return `https://mail.protonmail.com/compose?to=${fromEmail}&subject=${encodedSubject}&body=${encodedBody}`;
+    } else {
+      // Default to mailto: if the domain is not recognized
+      return `https://mail.google.com/mail/?view=cm&fs=1&to=${fromEmail}&su=${encodedSubject}&body=${encodedBody}`;
+    }
+  }
+
+  const emailLink = getEmailLink(
+    fromEmail,
+    `Send ${amount} ${Currency[currency]} to ${toEmail}`,
+    "",
+  );
 
   function handleAmountChange(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
@@ -150,26 +179,56 @@ const Form = () => {
         </div>
       </div>
 
-      <input
-        type="email"
-        className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary sm:w-1/2"
-        placeholder="recipient@email.address"
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-        onBlur={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
+      <div className="flex w-full items-start sm:w-1/2">
+        <label
+          htmlFor="from_email"
+          className="mr-2 flex items-center justify-center py-5 text-sm font-bold text-slate-700"
+        >
+          From:
+        </label>
+        <input
+          id="from_email"
+          type="email"
+          className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
+          placeholder="from@your.email.address"
+          onChange={(e) => {
+            setFromEmail(e.target.value);
+          }}
+          onBlur={(e) => {
+            setFromEmail(e.target.value);
+          }}
+        />
+      </div>
+
+      <div className="flex w-full items-start sm:w-1/2">
+        <label
+          htmlFor="to_email"
+          className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-bold text-slate-700"
+        >
+          To:
+        </label>
+        <input
+          id="to_email"
+          type="email"
+          className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
+          placeholder="to@recipient.email.address"
+          onChange={(e) => {
+            setToEmail(e.target.value);
+          }}
+          onBlur={(e) => {
+            setToEmail(e.target.value);
+          }}
+        />
+      </div>
 
       <a
-        href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+        href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`}
         target="_blank"
         // Hidden hides it on large screens
         // TODO: Remove && false to re-enable button
 
         className={
-          amount && amount > 0 && isValidEmail(email)
+          amount && amount > 0 && isValidEmail(toEmail)
             ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden sm:w-1/2"
             : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden sm:w-1/2"
         }
@@ -177,19 +236,20 @@ const Form = () => {
         Send via Mail App
       </a>
       <a
-        href={`https://mail.google.com/mail/?view=cm&fs=1&to=relayer@sendeth.org&su=Send%20${amount}%20${Currency[currency]}%20to%20${email}`}
+        href={emailLink}
         target="_blank"
         // Default hidden in small screens
         // TODO: Remove && false to re-enable button
         className={
-          amount && amount > 0 && isValidEmail(email)
+          amount && amount > 0 && isValidEmail(toEmail)
             ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:flex sm:w-1/2"
             : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex sm:w-1/2"
         }
       >
-        Send via Gmail
+        Send via{" "}
+        {fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Mail App"}
       </a>
-      {amount && amount > 0 && isValidEmail(email) && (
+      {amount && amount > 0 && isValidEmail(toEmail) && (
         <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
           <div className="flex">
             <span className="text-slate-500">To:</span>
@@ -214,11 +274,11 @@ const Form = () => {
           </div>
           <div className="flex">
             <span className="text-slate-500">Subject:</span>
-            <span className="ml-2 text-left text-slate-700">{`Send ${amount} ${Currency[currency]} to ${email}`}</span>
+            <span className="ml-2 text-left text-slate-700">{`Send ${amount} ${Currency[currency]} to ${toEmail}`}</span>
             <button
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `Send ${amount} ${Currency[currency]} to ${email}`,
+                  `Send ${amount} ${Currency[currency]} to ${toEmail}`,
                 );
                 document
                   .getElementById("copyIcon2")
