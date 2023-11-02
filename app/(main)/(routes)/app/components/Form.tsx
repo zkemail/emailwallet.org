@@ -34,38 +34,63 @@ const Form = () => {
       : `${baseClasses} hover:bg-slate-100`;
   }
 
-  function getEmailLink(email: string, subject: string, body: string): string {
+  function getEmailLink(
+    email: string,
+    subject: string,
+    body: string,
+  ): [string, string] {
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
 
+    if (typeof window !== "undefined" && window.innerWidth <= 768) {
+      return [
+        "Mail App",
+        `mailto:${encodeURIComponent(
+          "relayer@sendeth.org",
+        )}?subject=${encodedSubject}&body=${encodedBody}`,
+      ];
+    }
+
     if (fromEmail.endsWith("@gmail.com")) {
-      return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-        "relayer@sendeth.org",
-      )}&su=${encodedSubject}&body=${encodedBody}`;
+      return [
+        "Gmail",
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+          "relayer@sendeth.org",
+        )}&su=${encodedSubject}&body=${encodedBody}`,
+      ];
     } else if (
       fromEmail.endsWith("@outlook.com") ||
       fromEmail.endsWith("@hotmail.com")
     ) {
-      return `https://outlook.live.com/mail/0/compose?to=${encodeURIComponent(
-        "relayer@sendeth.org",
-      )}&subject=${encodedSubject}&body=${encodedBody}`;
+      return [
+        "Outlook",
+        `https://outlook.live.com/mail/0/compose?to=${encodeURIComponent(
+          "relayer@sendeth.org",
+        )}&subject=${encodedSubject}&body=${encodedBody}`,
+      ];
     } else if (
       fromEmail.endsWith("@protonmail.com") ||
       fromEmail.endsWith("@proton.me") ||
       fromEmail.endsWith("@pm.me")
     ) {
-      return `https://mail.protonmail.com/compose?to=${encodeURIComponent(
-        "relayer@sendeth.org",
-      )}&subject=${encodedSubject}&body=${encodedBody}`;
+      return [
+        "Protonmail (manually copy-paste from below)",
+        `https://mail.protonmail.com/compose?to=${encodeURIComponent(
+          "relayer@sendeth.org",
+        )}&subject=${encodedSubject}&body=${encodedBody}`,
+      ];
     } else {
       // Default to mailto: if the domain is not recognized
-      return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-        "relayer@sendeth.org",
-      )}&su=${encodedSubject}&body=${encodedBody}`;
+      return [
+        "Gmail",
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+          "relayer@sendeth.org",
+        )}&su=${encodedSubject}&body=${encodedBody}`,
+      ];
     }
   }
 
-  const emailLink = getEmailLink(
+  const [emailProviderName, emailLink] = getEmailLink(
     fromEmail,
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
     "",
@@ -232,8 +257,20 @@ const Form = () => {
         />
       </div>
 
+      {countdown ? (
+        <div className="my-4 text-center">
+          <p className="text-lg font-bold">
+            Expect a response in {countdown} seconds...
+          </p>
+        </div>
+      ) : null}
+
       <a
-        href={`mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`}
+        href={
+          countdown
+            ? emailLink
+            : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+        }
         target="_blank"
         onClick={() => {
           setEmailSent(true);
@@ -256,11 +293,15 @@ const Form = () => {
         }
       >
         {countdown
-          ? `Please wait ${countdown} seconds for a response...`
-          : "Send via Mail App"}
+          ? `Couldn't send? Click to re-send via Gmail`
+          : `Send via Mail App`}
       </a>
       <a
-        href={emailLink}
+        href={
+          !countdown
+            ? emailLink
+            : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+        }
         target="_blank"
         onClick={() => {
           setEmailSent(true);
@@ -278,25 +319,27 @@ const Form = () => {
         // Default hidden in small screens
         className={
           amount && amount > 0 && isValidEmail(toEmail)
-            ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-green-500 bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:flex sm:w-1/2"
+            ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white drop-shadow transition ease-in-out hover:scale-105 hover:transition-all sm:flex sm:w-1/2"
             : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex sm:w-1/2"
         }
       >
         {countdown
-          ? `Please wait ${countdown} seconds for a response...`
+          ? `Couldn't send? Click to re-send via default mail app with mailto:`
           : `Send via ${
-              fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Mail App"
+              fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Gmail"
             }`}
       </a>
 
       {emailSent && (
-        <a
-          href="https://mail.google.com/mail/u/1/#search/to%3Arelayer%40sendeth.org"
-          target="_blank"
-          className="flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground sm:w-1/2"
-        >
-          View Email
-        </a>
+        <div className="flex w-full items-start sm:w-1/2">
+          <a
+            href="https://mail.google.com/mail/u/1/#search/to%3Arelayer%40sendeth.org"
+            target="_blank"
+            className="flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
+          >
+            View Sent Email
+          </a>
+        </div>
       )}
 
       {amount && amount > 0 && isValidEmail(toEmail) && (
