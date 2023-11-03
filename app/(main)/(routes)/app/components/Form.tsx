@@ -292,9 +292,7 @@ const Form = () => {
             : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden sm:w-1/2"
         }
       >
-        {countdown
-          ? `Couldn't send? Click to re-send via Gmail`
-          : `Send via Mail App`}
+        {countdown ? `Failed? Re-send via Gmail` : `Send via Mail App`}
       </a>
       <a
         href={
@@ -324,7 +322,7 @@ const Form = () => {
         }
       >
         {countdown
-          ? `Couldn't send? Click to re-send via default mail app with mailto:`
+          ? `Failed? Re-send via default mail app:`
           : `Send via ${
               fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Gmail"
             }`}
@@ -333,7 +331,7 @@ const Form = () => {
       {emailSent && (
         <div className="flex w-full items-start sm:w-1/2">
           <a
-            href="https://mail.google.com/mail/u/1/#search/to%3Arelayer%40sendeth.org"
+            href="https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org"
             target="_blank"
             className="flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
           >
