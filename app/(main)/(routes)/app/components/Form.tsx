@@ -266,11 +266,7 @@ const Form = () => {
       ) : null}
 
       <a
-        href={
-          countdown
-            ? emailLink
-            : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
-        }
+        href={emailLink}
         target="_blank"
         onClick={() => {
           setEmailSent(true);
