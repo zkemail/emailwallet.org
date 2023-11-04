@@ -10,7 +10,7 @@
     "prepare": "husky install"
   },
   "engines": {
-    "node": ">=16.0.0 <21"
+    "node": ">=16.0.0 <=21"
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.3.0",
