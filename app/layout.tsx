@@ -5,6 +5,9 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ParallaxProvider from "@/provider/ParallaxProvider";
+import Head from "next/head";
+import NewBlogPostHeader from "@/components/NewBlogPostHeader";
+import StayUpToDate from "@/components/StayUpToDate";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(inter.className, "overflow-x-clip")}>
+      <body
+        className={cn(inter.className, "overflow-x-clip overflow-y-scroll")}
+      >
         <ParallaxProvider>
           <ThemeProvider
             attribute="class"
@@ -28,8 +33,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <NewBlogPostHeader />
             <Header />
             {children}
+            <StayUpToDate />
           </ThemeProvider>
         </ParallaxProvider>
       </body>

@@ -1,8 +1,8 @@
-import Form from "./components/Form";
+import Form from "./_components/Form";
 
 export default function SendMoneyPage() {
   return (
-    <div>
+    <div className="mb-24 sm:h-full">
       <div className="flex flex-col py-8 text-center sm:py-24">
         <div className="mx-auto max-w-3xl p-4">
           <div className="flex flex-col gap-2 pb-8">

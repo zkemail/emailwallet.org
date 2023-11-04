@@ -10,7 +10,7 @@ tags: ["crypto", "zk"]
 description: "A cool way to do server-free, mostly-trustless email subset verification on chain, and what that unlocks"
 ---
 
-<!-- [TOC] -->
+{/* # <!-- [TOC] --> */}
 
 The lack of trustless integration with web2 is one of the leading reasons that blockchains feel siloed from the rest of the world -- there's currently no way of trustlessly interoperating with the exabytes of existing information online, built up over decades by millions of users, that plug into every system we use every day. The resulting isolation of blockchains leads to fully contained apps and ecosystems: a great fit for DeFi or gaming, but a terrible fit for prosocial applications trying to weave themselves into our daily lives.
 
@@ -127,9 +127,9 @@ If you're using zk-email for semi-anonymity (to prove that you're some member of
 
 Sampriti and I have shipped an MVP, https://zkemail.xyz, that allows any user to run the Twitter username verification circuit. You send a password reset email to yourself, download the headers ("Download original email" in Gmail), then paste the contents of the email into the frontend. You can wait for the token to expire if you're worried about us taking it, or use an old reset email -- the thing we're looking for is just any on-demand email from Twitter with your username, so the particular password reset string doesn't matter. Next, you click generate: this creates a ZK proof that verifies the email signature and ensures that only the Ethereum address you specify can use this proof to verify email ownership.
 
-So what exactly is going on in this ZK circuit? Well, as with every other email, we verify that the RSA signature in the DKIM holds. We verify that the escaped "from:" email is in fact `@twitter.com`. And we check the `\r\n` before `from` in the header to make sure no one's trying to stuff a fake `from` address in another field like the subject line.
+{/* So what exactly is going on in this ZK circuit? Well, as with every other email, we verify that the RSA signature in the DKIM holds. We verify that the escaped "from:" email is in fact `@twitter.com`. And we check the `\r\n` before `from` in the header to make sure no one's trying to stuff a fake `from` address in another field like the subject line. */}
 
-Then, we check the body hash nested inside the hashed header. We save a ton of constraints by only regex-matching the string that precedes a Twitter username -- `email was meant for @` -- and then extracting the last match. (There is no user-generated text of more than 15 characters within this mask, so we know that the last match must be from Twitter itself.) We make just that username public, and verify that the hash holds by calculating the last three cycles of the Merkle-Damgard hash function, from the username match point onwards.
+{/* Then, we check the body hash nested inside the hashed header. We save a ton of constraints by only regex-matching the string that precedes a Twitter username -- `email was meant for @` -- and then extracting the last match. (There is no user-generated text of more than 15 characters within this mask, so we know that the last match must be from Twitter itself.) We make just that username public, and verify that the hash holds by calculating the last three cycles of the Merkle-Damgard hash function, from the username match point onwards. */}
 
 We also need to deal with [malleability](https://zips.z.cash/protocol/protocol.pdf): there are ways for someone else who views your proof to change some parameters and generate another unique proof that verifies. We do this by requiring the user to embed their Ethereum address in the proof, as described in [this post](https://www.geometryresearch.xyz/notebook/groth16-malleability) -- that way, we don't actually have to prevent anyone from generating new proofs, since if they did, they would still just be asserting that _your_ Ethereum address owns your Twitter account.
 
@@ -171,7 +171,7 @@ We have several crazy applications in the works as well -- we'd love to collabor
 
 There are lots of interesting constructions you can experiment with, like putting addresses and hashes inside of emails as verification codes (though don't forget the security pitfalls of unencrypted email). At the same time, there are lots of gotchas -- bcc's aren't signed, so you can't prove that you were the only recipient of an email; the "to" email field isn't signed in Hotmail; and some email providers have quirks that are technically allowed by the DKIM RFC but will break most parsers. If you have an idea for a new construction, we recommend you run it by us so we can help you verify your security assumptions. We intend to audit this codebase during 2023 to enable production use.
 
-<!-- Footnotes themselves at the bottom. -->
+{/* # <!-- Footnotes themselves at the bottom. --> */}
 
 With initial support from 0xPARC and the Ethereum Foundation's Privacy & Scaling Explorations group, [Sora](https://github.com/SoraSuegami/) and I are leading a new research group called Proof of Email in order to further the applications of trustless web2-web3 integrations with initial support from 0xPARC and EF PSE. In addition, [Vivek](https://twitter.com/viv_boop) and I are working on practical applications of this technology with Ivy Research. There are signatures and emails like this hidden all over the internet, and we want to harness their power to bring all of web2 onto web3 without centralized oracles. Reach out if you want to build with us -- we would love to talk with anyone excited about this tech and support them with the resources to build on it in public.
 
