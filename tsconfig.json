@@ -31,7 +31,7 @@
     "**/*.tsx",
     ".contentlayer/generated",
     ".next/types/**/*.ts",
-    "app/blog/_components/Mdx.tsx"
+    "app/(main)/(routes)/blog/_components/Mdx.tsx"
   ],
   "exclude": ["node_modules"]
 }

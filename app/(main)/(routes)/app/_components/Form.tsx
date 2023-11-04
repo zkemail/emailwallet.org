@@ -1,8 +1,6 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 
 enum Currency {
