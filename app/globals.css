@@ -82,6 +82,12 @@ body {
   }
 }
 
+.active-link {
+  text-decoration: underline;
+  font-weight: bold;
+  color: orange;
+}
+
 @layer base {
   * {
     @apply border-border;

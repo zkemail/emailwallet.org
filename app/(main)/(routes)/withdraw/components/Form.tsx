@@ -136,7 +136,7 @@ const Form = () => {
         <div className="h-15 mb-2 flex w-full justify-between rounded-lg bg-secondary p-2.5 px-5 ">
           <input
             type="number"
-            placeholder="Amount to send"
+            placeholder="Amount to withdraw"
             // onChange={(e) => {
             //   setAmount(Math.round(Number(e.target.value)));
             // }}
@@ -227,7 +227,7 @@ const Form = () => {
             id="from_email"
             type="email"
             className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
-            placeholder="Sender email address"
+            placeholder="Your email address"
             onChange={(e) => {
               setFromEmail(e.target.value);
             }}
@@ -242,7 +242,7 @@ const Form = () => {
             id="to_email"
             type="email"
             className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
-            placeholder="Recipient email address"
+            placeholder="Wallet address"
             onChange={(e) => {
               setToEmail(e.target.value);
             }}

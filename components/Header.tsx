@@ -46,17 +46,7 @@ const Header = () => {
             Github
             <ExternalLink size={20} />
           </Link>
-          <Link
-            href={"/app"}
-            className={cn(
-              buttonVariants({
-                className: "hidden px-6 md:flex",
-              }),
-              "bg-tertiary text-primary hover:bg-tertiary/80",
-            )}
-          >
-            Try Demo
-          </Link>
+
           <ModeToggle />
         </nav>
         <div className="flex items-center gap-x-2 md:hidden">
