@@ -8,6 +8,28 @@ import { Button } from "./ui/button";
 const StayUpToDate = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [result, setResult] = useState("none");
+
+  const subscribe = async () => {
+    // TODO: Fix cors hack
+    setResult("pending");
+    const proxy = `https://cors-proxy.fringe.zone/`;
+    const url = `https://script.google.com/macros/s/AKfycbwFEpszXsb5PPsc6mrls71fWI4o6RAbV64okWWZ6yZBcv960oF-3ITi7-hw-5wA6ptV/exec`;
+    const response = await fetch(proxy + url, {
+      method: "POST",
+      body: JSON.stringify({ email: email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    if (data.result === "success") {
+      setResult("success");
+    } else {
+      setResult("none");
+    }
+  };
 
   return (
     <section className="mx-auto flex w-full flex-col items-center justify-center gap-10 overflow-clip border-t bg-primary-foreground px-4 py-20 max-md:gap-10 md:px-32 lg:flex-row">
@@ -42,7 +64,20 @@ const StayUpToDate = () => {
             placeholder="Email Address"
           />
         </div>
-        <Button className="w-full rounded-full">Subscribe</Button>
+        <Button
+          className={`w-full rounded-full ${
+            email && firstName && result == "none"
+              ? ""
+              : "cursor-not-allowed opacity-50"
+          }`}
+          onClick={subscribe}
+        >
+          {result == "success"
+            ? "Subscribed ✔️"
+            : result == "pending"
+            ? "Subscribing..."
+            : "Subscribe"}
+        </Button>
         <span className="text-center text-xs text-muted-foreground">
           We respect your privacy. Unsubscribe at any time.
         </span>
