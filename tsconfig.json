@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -21,8 +25,12 @@
       }
     ],
     "paths": {
-      "contentlayer/generated": ["./.contentlayer/generated"],
-      "@/*": ["./*"]
+      "contentlayer/generated": [
+        "./.contentlayer/generated"
+      ],
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [
@@ -31,7 +39,10 @@
     "**/*.tsx",
     ".contentlayer/generated",
     ".next/types/**/*.ts",
-    "app/(main)/(routes)/blog/_components/Mdx.tsx"
+    "app/(main)/(routes)/blog/_components/Mdx.tsx",
+    "./out/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

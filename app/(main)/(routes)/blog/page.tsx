@@ -18,10 +18,8 @@ const BlogPage = () => {
             href={
               "https://docs.google.com/presentation/d/1nHW57t8SQ-NCqK366_xpkB7WuC3lFX-9/edit#slide=id.p1"
             }
-            title={"Sendeth slides"}
-            description={
-              "Dolore mollit ipsum nulla quis non magna qui voluptate officia cillum sit amet."
-            }
+            title={"Email Wallet Slides"}
+            description={"Technical slides describing the architecture."}
           />
 
           {posts.map((post) => (

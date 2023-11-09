@@ -32,121 +32,11 @@ const AboutPage = () => {
     <section className="mx-auto flex max-w-screen-xl flex-col items-center gap-y-20 py-20">
       <h1 className="text-5xl font-semibold">About Us</h1>
       <p className="w-2/3 text-center text-muted-foreground">
-        Dolore dolore eu enim eiusmod ea laboris aliqua sunt qui. Anim sint
-        dolore reprehenderit magna eiusmod ipsum mollit sint ullamco sint
-        excepteur sunt non veniam. Aliquip eiusmod aliqua enim ipsum excepteur
-        incididunt.
+        Email Wallet is an open source public good that defines a permissionless
+        system by which anyone can onboard onto crypto via emails. Each
+        component including smart contracts and relayers are as decentralized as
+        possible.
       </p>
-      <VerticalTimeline
-        lineColor={resolvedTheme === "dark" ? "white" : "darkgray"}
-      >
-        <VerticalTimelineElement
-          className="vertical-timeline-element--work"
-          date={format(new Date(), "yyyy") + " - present"}
-          iconStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: resolvedTheme === "dark" ? "white" : "gray",
-          }}
-          icon={<FaCoins />}
-          contentStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: "#fff",
-          }}
-          contentArrowStyle={{
-            borderRight: `7px solid ${
-              resolvedTheme === "dark" ? "#0f172a" : "#feead9"
-            }`,
-          }}
-        >
-          <h3 className="text-lg font-semibold text-primary">Art Director</h3>
-          <h4 className="mb-4 text-primary">San Francisco, CA</h4>
-          <span className="text-sm text-muted-foreground">
-            Creative Direction, User Experience, Visual Design, SEO, Online
-            Marketing
-          </span>
-        </VerticalTimelineElement>
-        <VerticalTimelineElement
-          className="vertical-timeline-element--work"
-          date="2021 - 2022"
-          iconStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: resolvedTheme === "dark" ? "white" : "gray",
-          }}
-          icon={<MdWork />}
-          contentStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: "#fff",
-          }}
-          contentArrowStyle={{
-            borderRight: `7px solid ${
-              resolvedTheme === "dark" ? "#0f172a" : "#feead9"
-            }`,
-          }}
-        >
-          <h3 className="text-lg font-semibold text-primary">Art Director</h3>
-          <h4 className="mb-4 text-primary">San Francisco, CA</h4>
-          <span className="text-sm text-muted-foreground">
-            Creative Direction, User Experience, Visual Design, SEO, Online
-            Marketing
-          </span>
-        </VerticalTimelineElement>
-        <VerticalTimelineElement
-          className="vertical-timeline-element--work"
-          date="2018 - 2020"
-          iconStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: resolvedTheme === "dark" ? "white" : "gray",
-          }}
-          icon={<IoMdCodeWorking />}
-          contentStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: "#fff",
-          }}
-          contentArrowStyle={{
-            borderRight: `7px solid ${
-              resolvedTheme === "dark" ? "#0f172a" : "#feead9"
-            }`,
-          }}
-        >
-          <h3 className="text-lg font-semibold text-primary">Art Director</h3>
-          <h4 className="mb-4 text-primary">San Francisco, CA</h4>
-          <span className="text-sm text-muted-foreground">
-            Creative Direction, User Experience, Visual Design, SEO, Online
-            Marketing
-          </span>
-        </VerticalTimelineElement>
-        <VerticalTimelineElement
-          className="vertical-timeline-element--work"
-          date="2015 - 2018"
-          iconStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: resolvedTheme === "dark" ? "white" : "gray",
-          }}
-          icon={<TbDatabaseDollar />}
-          contentStyle={{
-            background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
-            color: "#fff",
-          }}
-          contentArrowStyle={{
-            borderRight: `7px solid ${
-              resolvedTheme === "dark" ? "#0f172a" : "#feead9"
-            }`,
-          }}
-        >
-          <h3 className="text-lg font-semibold text-primary">Art Director</h3>
-          <h4 className="mb-4 text-primary">San Francisco, CA</h4>
-          <span className="text-sm text-muted-foreground">
-            Creative Direction, User Experience, Visual Design, SEO, Online
-            Marketing
-          </span>
-        </VerticalTimelineElement>
-
-        <VerticalTimelineElement
-          iconStyle={{ background: "rgb(16, 204, 82)", color: "#fff" }}
-          icon={<StarIcon />}
-        />
-      </VerticalTimeline>
-
       <div className="mx-auto flex flex-col items-center px-6">
         <h1 className="mb-8 w-[80%] text-center text-3xl font-semibold md:text-5xl md:leading-snug">
           Secured by Advanced Cryptography
@@ -156,6 +46,133 @@ const AboutPage = () => {
         </h3>
         <InfoGraphLg />
         <InfoGraphSm />
+      </div>
+      <div className="mx-auto flex flex-col items-center px-6">
+        <h1 className="mb-8 w-[80%] text-center text-3xl font-semibold md:text-5xl md:leading-snug">
+          Story
+        </h1>
+        <VerticalTimeline
+          lineColor={resolvedTheme === "dark" ? "white" : "darkgray"}
+        >
+          <VerticalTimelineElement
+            className="vertical-timeline-element--work"
+            date={"November 2023 - present"}
+            iconStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: resolvedTheme === "dark" ? "white" : "gray",
+            }}
+            icon={<FaCoins />}
+            contentStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: "#fff",
+            }}
+            contentArrowStyle={{
+              borderRight: `7px solid ${
+                resolvedTheme === "dark" ? "#0f172a" : "#feead9"
+              }`,
+            }}
+          >
+            <h3 className="text-lg font-semibold text-primary">
+              Email Wallet V1
+            </h3>
+            <h4 className="mb-4 text-primary">Istanbul, Turkey</h4>
+            <span className="text-sm text-muted-foreground">
+              Built by Saleel, Rasul, Yush, Sora, and Tyler, a 2-week experiment
+              for the decentralized email wallet V1 contracts is deployed.
+            </span>
+            <br />
+          </VerticalTimelineElement>
+          <VerticalTimelineElement
+            className="vertical-timeline-element--work"
+            date="May 2023"
+            iconStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: resolvedTheme === "dark" ? "white" : "gray",
+            }}
+            dateClassName="sm:mt-5 md:mt-0"
+            icon={<MdWork />}
+            contentStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: "#fff",
+            }}
+            contentArrowStyle={{
+              borderRight: `7px solid ${
+                resolvedTheme === "dark" ? "#0f172a" : "#feead9"
+              }`,
+            }}
+          >
+            <h3 className="text-lg font-semibold text-primary">
+              ZK Email SDKs and Email Wallet MVP Deployed
+            </h3>
+            <h4 className="mb-4 text-primary">Zuzalu/Tokyo/Vietnam</h4>
+            <span className="text-sm text-muted-foreground">
+              Sora and Yush, along with help from PSE and 0xPARC, finish MVPs of
+              the circom + halo2 zk email SDK and the email wallet V0.
+            </span>
+            <br />
+          </VerticalTimelineElement>
+          <VerticalTimelineElement
+            className="vertical-timeline-element--work"
+            date="December 2022"
+            iconStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: resolvedTheme === "dark" ? "white" : "gray",
+            }}
+            icon={<TbDatabaseDollar />}
+            contentStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: "#fff",
+            }}
+            contentArrowStyle={{
+              borderRight: `7px solid ${
+                resolvedTheme === "dark" ? "#0f172a" : "#feead9"
+              }`,
+            }}
+          >
+            <h3 className="text-lg font-semibold text-primary">
+              Email Wallet Invented
+            </h3>
+            <h4 className="mb-4 text-primary">IEEE Dubai</h4>
+            <span className="text-sm text-muted-foreground">
+              Sora Suegami's paper describing a smart contract wallet controlled
+              by emails is accepted to IEEE, and he publishes halo2 RSA
+              circuits.
+            </span>
+            <br />
+          </VerticalTimelineElement>
+          <VerticalTimelineElement
+            className="vertical-timeline-element--work"
+            date="Summer 2022"
+            iconStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: resolvedTheme === "dark" ? "white" : "gray",
+            }}
+            icon={<IoMdCodeWorking />}
+            contentStyle={{
+              background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
+              color: "#fff",
+            }}
+            contentArrowStyle={{
+              borderRight: `7px solid ${
+                resolvedTheme === "dark" ? "#0f172a" : "#feead9"
+              }`,
+            }}
+          >
+            <h3 className="text-lg font-semibold text-primary">
+              ZK Email Invented
+            </h3>
+            <h4 className="mb-4 text-primary">New York, NY</h4>
+            <span className="text-sm text-muted-foreground">
+              Sampriti Panda and Yush G create, compile, and run the first-ever
+              zk-email circuit at the infamous New York 0xPARC residency.
+            </span>
+            <br />
+          </VerticalTimelineElement>
+          <VerticalTimelineElement
+            iconStyle={{ background: "rgb(16, 204, 82)", color: "#fff" }}
+            icon={<StarIcon />}
+          />
+        </VerticalTimeline>
       </div>
     </section>
   );
