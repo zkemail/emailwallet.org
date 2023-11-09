@@ -4,7 +4,7 @@ interface BlogCardProps {
   href: string;
   title: string;
   description: string;
-  imageUrl: string | null;
+  imageUrl?: string;
 }
 
 const BlogCard = ({ href, description, title, imageUrl }: BlogCardProps) => {
