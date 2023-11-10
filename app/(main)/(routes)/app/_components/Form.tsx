@@ -369,12 +369,12 @@ const Form = () => {
                 navigator.clipboard.writeText("relayer@sendeth.org");
                 document
                   .getElementById("copyIcon1")
-                  ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
+                  ?.setAttribute("src", "/checkmark.png");
               }}
             >
               <img
                 id="copyIcon1"
-                src="https://i.imgur.com/yTOO12l.png"
+                src="/copy.png"
                 alt="Copy to clipboard"
                 style={{ height: "1em", marginLeft: "0.5em" }}
               />
@@ -390,12 +390,12 @@ const Form = () => {
                 );
                 document
                   .getElementById("copyIcon2")
-                  ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
+                  ?.setAttribute("src", "/checkmark.png");
               }}
             >
               <img
                 id="copyIcon2"
-                src="https://i.imgur.com/yTOO12l.png"
+                src="/copy.png"
                 alt="Copy to clipboard"
                 style={{ height: "1em", marginLeft: "0.5em" }}
               />

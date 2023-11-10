@@ -40,7 +40,7 @@ const YouOwnMoneySection = () => {
   if (!isMounted) return null;
 
   return (
-    <section className="mx-8 mb-32 mt-32 flex flex-col items-center gap-20 md:mx-10 md:mt-40 md:h-60 md:flex-row md:gap-32">
+    <section className="md:mt-50 mx-8 mb-32 mt-32 flex flex-col items-center gap-20 md:mx-10 md:h-60 md:flex-row md:gap-32">
       <div className="flex flex-col gap-6">
         <motion.h1
           initial="hidden"
