@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 enum Currency {
   USDC,
@@ -372,7 +373,7 @@ const Form = () => {
                   ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
               }}
             >
-              <img
+              <Image
                 id="copyIcon1"
                 src="https://i.imgur.com/yTOO12l.png"
                 alt="Copy to clipboard"
@@ -393,7 +394,7 @@ const Form = () => {
                   ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
               }}
             >
-              <img
+              <Image
                 id="copyIcon2"
                 src="https://i.imgur.com/yTOO12l.png"
                 alt="Copy to clipboard"
