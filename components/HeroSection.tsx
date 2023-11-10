@@ -41,7 +41,7 @@ const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg text-muted-foreground dark:text-slate-200"
           >
-            We use zk proofs to ensure you own your money.
+            We use zk proofs to ensure your email controls your crypto.
           </motion.h3>
           <motion.div
             initial="hidden"

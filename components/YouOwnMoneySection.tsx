@@ -52,7 +52,7 @@ const YouOwnMoneySection = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl font-semibold md:text-4xl"
         >
-          You own your money.
+          Simple microtransactions.
         </motion.h1>
         <motion.p
           initial="hidden"
