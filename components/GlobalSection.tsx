@@ -65,7 +65,7 @@ const GlobalSection = () => {
           className="text-md text-muted-foreground"
         >
           Send between borders via emails, without any KYC. Money lives
-          on-chain.
+          on-chain, not in a bank.
         </motion.p>
       </div>
       {/* <motion.div
