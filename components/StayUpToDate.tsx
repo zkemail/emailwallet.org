@@ -40,7 +40,7 @@ const StayUpToDate = () => {
             <h1 className="text-4xl font-bold text-primary">Stay Tuned</h1>
           </div>
 
-          <p className="w-full text-muted-foreground lg:w-4/5">
+          <p className="w-full text-foreground lg:w-4/5">
             Subscribe and stay up-to-date on the latest developer news
           </p>
         </div>
