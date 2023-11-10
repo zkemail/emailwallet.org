@@ -55,7 +55,7 @@ const HeroSection = () => {
           >
             <a
               href={"/app"}
-              className="flex items-center rounded-lg bg-tertiary px-8 text-primary drop-shadow hover:bg-tertiary-foreground"
+              className="flex items-center rounded-lg bg-tertiary px-8 text-primary drop-shadow hover:bg-tertiary/90"
             >
               Try Demo
             </a>

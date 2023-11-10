@@ -18,7 +18,7 @@ const Form = () => {
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
-  const countdownMax = 60;
+  const countdownMax = 100;
 
   function isValidEmail(email: string): boolean {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
@@ -317,7 +317,7 @@ const Form = () => {
         target="_blank"
         onClick={() => {
           setEmailSent(true);
-          setCountdown(60);
+          setCountdown(countdownMax);
           const intervalId = setInterval(() => {
             setCountdown((prevCountdown) =>
               prevCountdown ? prevCountdown - 1 : null,

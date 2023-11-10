@@ -52,7 +52,7 @@ const YouOwnMoneySection = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl font-semibold md:text-4xl"
         >
-          Simple microtransactions.
+          Simple, secure transactions.
         </motion.h1>
         <motion.p
           initial="hidden"
@@ -62,7 +62,7 @@ const YouOwnMoneySection = () => {
             visible: { opacity: 1, x: 0 },
           }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-sm text-muted-foreground"
+          className="text-md text-muted-foreground"
         >
           We can&apos;t steal your funds, they can only be authorized by your
           email.

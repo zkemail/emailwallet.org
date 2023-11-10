@@ -1,6 +1,6 @@
 const Equations = () => {
   return (
-    <div className="-z-20 font-mono text-xl font-semibold text-slate-300 dark:text-slate-600 md:block">
+    <div className="-z-20 font-mono text-xl font-semibold text-slate-300 opacity-50 dark:text-slate-600 md:block">
       <span className="absolute left-[24%] top-10 hidden rotate-12 md:block">
         ([\w]+@[\w]+.[\w]+)
       </span>
