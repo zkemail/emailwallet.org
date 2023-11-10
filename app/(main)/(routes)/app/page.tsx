@@ -8,11 +8,10 @@ export default function SendMoneyPage() {
           <div className="flex flex-col gap-2 pb-8">
             <h1 className="text-4xl font-medium">Send money</h1>
             <h2 className="text-muted-foreground">
-              This sends money from a new tab (desktop) or your default mail app
-              (mobile) with your currently logged-in email address, by sending
-              an email! Each email address will have a smart contract wallet
-              deployed for them, but your email address will not be revealed
-              on-chain. Everyone starts with 100 TEST tokens.
+              This sends money by sending an email! Each email address will have
+              a smart contract wallet deployed for them, but your email address
+              will not be revealed on-chain. Everyone starts with 100 TEST
+              tokens.
             </h2>
           </div>
           <Form />
