@@ -142,93 +142,10 @@ const Form = () => {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <div className="h-15 flex w-full justify-between rounded-lg bg-secondary p-2.5 px-5 sm:w-1/2">
-        <input
-          type="number"
-          placeholder="Amount to send"
-          // onChange={(e) => {
-          //   setAmount(Math.round(Number(e.target.value)));
-          // }}
-          onChange={handleAmountChange}
-          onBlur={handleAmountChange}
-          className="bg-secondary text-sm text-primary focus:outline-none"
-          value={amount || ""}
-        />
-
-        <div className="relative inline-block text-left" ref={dropdownRef}>
-          <div>
-            <Button
-              type="button"
-              className="gap-x-1 font-semibold shadow-sm"
-              id="menu-button"
-              aria-expanded="true"
-              aria-haspopup="true"
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-            >
-              {Currency[currency]}
-              <svg
-                className="-mr-1 h-5 w-5 text-gray-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </Button>
-          </div>
-          {dropdownOpen && (
-            <div
-              className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="menu-button"
-              tabIndex={-1}
-            >
-              <div className="py-1" role="none">
-                <span
-                  className={getCurrencyOptionClass(currency === Currency.TEST)}
-                  role="menuitem"
-                  onClick={() => {
-                    setCurrency(Currency.TEST);
-                    setDropdownOpen(false);
-                  }}
-                >
-                  TEST
-                </span>
-                <span
-                  className={getCurrencyOptionClass(currency === Currency.USDC)}
-                  role="menuitem"
-                  onClick={() => {
-                    setCurrency(Currency.USDC);
-                    setDropdownOpen(false);
-                  }}
-                >
-                  USDC
-                </span>
-                <span
-                  className={getCurrencyOptionClass(currency === Currency.DAI)}
-                  role="menuitem"
-                  onClick={() => {
-                    setCurrency(Currency.DAI);
-                    setDropdownOpen(false);
-                  }}
-                >
-                  DAI
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
       <div className="flex w-full items-start sm:w-1/2">
         <label
           htmlFor="from_email"
-          className="mr-2 flex items-center justify-center py-5 text-sm font-bold text-slate-700"
+          className="mr-2 flex items-center justify-center py-5 text-sm font-bold text-primary"
         >
           From:
         </label>
@@ -249,7 +166,7 @@ const Form = () => {
       <div className="flex w-full items-start sm:w-1/2">
         <label
           htmlFor="to_email"
-          className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-bold text-slate-700"
+          className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-bold text-primary"
         >
           To:
         </label>
@@ -266,13 +183,109 @@ const Form = () => {
           }}
         />
       </div>
+      <div className="flex w-full items-start sm:w-1/2">
+        {/* <label
+          htmlFor="subject_email"
+          className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-bold text-primary"
+        >
+          Subject:
+        </label> */}
+        <div className="h-15 flex w-1/2 w-full justify-between rounded-lg bg-secondary p-2.5 px-5">
+          <input
+            type="number"
+            placeholder="Amount to send"
+            // onChange={(e) => {
+            //   setAmount(Math.round(Number(e.target.value)));
+            // }}
+            onChange={handleAmountChange}
+            onBlur={handleAmountChange}
+            className="bg-secondary text-sm text-primary focus:outline-none"
+            value={amount || ""}
+          />
+
+          <div className="relative inline-block text-left" ref={dropdownRef}>
+            <div>
+              <Button
+                type="button"
+                className="gap-x-1 font-semibold shadow-sm"
+                id="menu-button"
+                aria-expanded="true"
+                aria-haspopup="true"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                {Currency[currency]}
+                <svg
+                  className="-mr-1 h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Button>
+            </div>
+            {dropdownOpen && (
+              <div
+                className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="menu-button"
+                tabIndex={-1}
+              >
+                <div className="py-1" role="none">
+                  <span
+                    className={getCurrencyOptionClass(
+                      currency === Currency.TEST,
+                    )}
+                    role="menuitem"
+                    onClick={() => {
+                      setCurrency(Currency.TEST);
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    TEST
+                  </span>
+                  <span
+                    className={getCurrencyOptionClass(
+                      currency === Currency.USDC,
+                    )}
+                    role="menuitem"
+                    onClick={() => {
+                      setCurrency(Currency.USDC);
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    USDC
+                  </span>
+                  <span
+                    className={getCurrencyOptionClass(
+                      currency === Currency.DAI,
+                    )}
+                    role="menuitem"
+                    onClick={() => {
+                      setCurrency(Currency.DAI);
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    DAI
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
 
       {
         <>
           <p className="mt-2 text-lg font-bold">Email Template</p>
           <div className="flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
             <div className="flex">
-              <span className="text-slate-500">To:</span>
+              <span className="text-slate-500">Cc:</span>
               <span className="ml-2 text-left text-slate-700">
                 relayer@sendeth.org
               </span>
@@ -388,7 +401,7 @@ const Form = () => {
         className={
           amount && amount > 0 && isValidEmail(toEmail)
             ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden sm:w-1/2"
-            : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden sm:w-1/2"
+            : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-500 sm:hidden sm:w-1/2"
         }
       >
         {emailSent
@@ -420,7 +433,7 @@ const Form = () => {
         className={
           amount && amount > 0 && isValidEmail(toEmail)
             ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white drop-shadow transition ease-in-out hover:scale-105 hover:transition-all sm:flex sm:w-1/2"
-            : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex sm:w-1/2"
+            : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-500 sm:flex sm:w-1/2"
         }
       >
         {!emailSent
