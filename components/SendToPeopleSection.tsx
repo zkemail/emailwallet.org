@@ -17,7 +17,7 @@ const SendToPeopleSection = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl font-semibold md:text-4xl"
         >
-          Send to people outside the system.
+          Receive money without an account.
         </motion.h1>
         <motion.p
           initial="hidden"
@@ -27,10 +27,10 @@ const SendToPeopleSection = () => {
             visible: { opacity: 1, x: 0 },
           }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-sm text-muted-foreground"
+          className="text-md text-muted-foreground"
         >
-          Send to anyone with an email address, whether or not they have an
-          account with us yet.
+          Send to anyone with an email address, whether or not they have signed
+          up yet.
         </motion.p>
       </div>
 

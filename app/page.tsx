@@ -1,6 +1,7 @@
 import HeroSection from "@/components/HeroSection";
 import SendToPeopleSection from "@/components/SendToPeopleSection";
 import YouOwnMoneySection from "@/components/YouOwnMoneySection";
+import GlobalSection from "@/components/GlobalSection";
 
 const HomePage = () => {
   return (
@@ -8,6 +9,7 @@ const HomePage = () => {
       <HeroSection />
       <YouOwnMoneySection />
       <SendToPeopleSection />
+      <GlobalSection />
     </div>
   );
 };

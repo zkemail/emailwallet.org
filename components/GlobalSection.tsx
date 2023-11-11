@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
-const YouOwnMoneySection = () => {
+const GlobalSection = () => {
   const [isMounted, setIsMounted] = useState(false);
   // const { scrollYProgress } = useScroll();
   // const isLargeScreen = useMediaQuery("(min-width: 900px)");
@@ -52,7 +52,7 @@ const YouOwnMoneySection = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl font-semibold md:text-4xl"
         >
-          Simple, secure transactions.
+          Global. Send to anyone, anywhere.
         </motion.h1>
         <motion.p
           initial="hidden"
@@ -64,8 +64,8 @@ const YouOwnMoneySection = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-md text-muted-foreground"
         >
-          We can&apos;t steal your funds, they can only be authorized by your
-          email.
+          Send between borders via emails, without any KYC. Money lives
+          on-chain, not in a bank.
         </motion.p>
       </div>
       {/* <motion.div
@@ -114,4 +114,4 @@ const YouOwnMoneySection = () => {
   );
 };
 
-export default YouOwnMoneySection;
+export default GlobalSection;

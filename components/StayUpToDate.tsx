@@ -32,7 +32,7 @@ const StayUpToDate = () => {
   };
 
   return (
-    <section className="mx-auto flex w-full flex-col items-center justify-center gap-10 overflow-clip border-t bg-primary-foreground px-4 py-20 max-md:gap-10 md:px-32 lg:flex-row">
+    <section className="mx-auto flex w-full flex-col items-center justify-center gap-10 overflow-clip border-t bg-tertiary px-4 py-20 max-md:gap-10 md:px-32 lg:flex-row">
       <div className="flex flex-1 flex-col gap-8">
         <div className="flex flex-col items-center gap-y-10 max-lg:text-center lg:items-start">
           <div className="flex flex-col items-center gap-y-3 md:gap-x-2 lg:flex-row">
@@ -40,7 +40,7 @@ const StayUpToDate = () => {
             <h1 className="text-4xl font-bold text-primary">Stay Tuned</h1>
           </div>
 
-          <p className="w-full text-muted-foreground lg:w-4/5">
+          <p className="w-full text-foreground lg:w-4/5">
             Subscribe and stay up-to-date on the latest developer news
           </p>
         </div>

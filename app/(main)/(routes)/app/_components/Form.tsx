@@ -19,7 +19,7 @@ const Form = () => {
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
-  const countdownMax = 60;
+  const countdownMax = 120;
 
   function isValidEmail(email: string): boolean {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
@@ -55,7 +55,7 @@ const Form = () => {
     if (fromEmail.endsWith("@gmail.com")) {
       return [
         "Gmail",
-        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+        `https://mail.google.com/mail/?view=cm&fs=1&cc=${encodeURIComponent(
           "relayer@sendeth.org",
         )}&su=${encodedSubject}&body=${encodedBody}`,
         `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,
@@ -74,7 +74,7 @@ const Form = () => {
     } else if (fromEmail.endsWith("@yahoo.com")) {
       return [
         "Yahoo Mail",
-        `https://mail.yahoo.com/d/compose-message?to=${encodeURIComponent(
+        `https://mail.yahoo.com/d/compose-message?cc=${encodeURIComponent(
           "relayer@sendeth.org",
         )}&subject=${encodedSubject}&body=${encodedBody}`,
         `https://mail.yahoo.com/d/search/keyword=relayer@sendeth.org`,
@@ -93,7 +93,7 @@ const Form = () => {
       // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
       return [
         "Gmail",
-        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+        `https://mail.google.com/mail/?view=cm&fs=1&cc=${encodeURIComponent(
           "relayer@sendeth.org",
         )}&su=${encodedSubject}&body=${encodedBody}`,
         `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,
@@ -268,15 +268,104 @@ const Form = () => {
         />
       </div>
 
-      {countdown ? (
-        <div className="my-4 text-center">
-          <p className="text-lg font-bold">
-            Expect a response in {countdown} seconds...
-          </p>
-        </div>
-      ) : null}
+      {
+        <>
+          <p className="mt-2 text-lg font-bold">Email Template</p>
+          <div className="flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
+            <div className="flex">
+              <span className="text-slate-500">To:</span>
+              <span className="ml-2 text-left text-slate-700">
+                relayer@sendeth.org
+              </span>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText("relayer@sendeth.org");
+                  document
+                    .getElementById("copyIcon1")
+                    ?.setAttribute("src", "/checkmark.png");
+                }}
+              >
+                <Image
+                  id="copyIcon1"
+                  src="/copy.png"
+                  alt="Copy to clipboard"
+                  style={{ height: "1em", marginLeft: "0.5em" }}
+                />
+              </button>
+            </div>
+            <div className="flex">
+              <span className="text-slate-500">Subject:</span>
+              <span className="ml-2 text-left text-slate-700">
+                {amount && amount > 0 && isValidEmail(toEmail)
+                  ? `Send ${amount} ${Currency[currency]} to ${toEmail}`
+                  : `...`}
+              </span>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `Send ${amount} ${Currency[currency]} to ${toEmail}`,
+                  );
+                  document
+                    .getElementById("copyIcon2")
+                    ?.setAttribute("src", "/checkmark.png");
+                }}
+              >
+                <Image
+                  id="copyIcon2"
+                  src="/copy.png"
+                  alt="Copy to clipboard"
+                  style={{ height: "1em", marginLeft: "0.5em" }}
+                />
+              </button>
+            </div>
+          </div>
+        </>
+      }
 
-      {/* // Small screen div; default to mailto regardless. Default hidden on large screens */}
+      {emailSent ? (
+        <>
+          <div className="my-4 text-center">
+            <p className="text-lg font-bold">
+              {countdown
+                ? `Expect a response in ${countdown} seconds...`
+                : "Done processing!"}
+            </p>
+          </div>
+          <p className="text-md mt-2">or...</p>
+        </>
+      ) : (
+        <p className="text-md mt-2">or...</p>
+      )}
+
+      {
+        <>
+          <p className="text-lg font-bold">Auto-Format Email</p>
+          <p className="text-md w-2/3">
+            This will format the email for you to send money from a new tab
+            (desktop) or your default mail app (mobile)!
+          </p>
+        </>
+      }
+
+      {emailSent && (
+        <div className="flex w-full items-start sm:w-1/2">
+          <a
+            href={emailSearchLink}
+            target="_blank"
+            className={
+              emailSearchLink
+                ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
+                : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50"
+            }
+          >
+            {emailSearchLink
+              ? `View Sent Email in ${emailProviderName} ➜`
+              : `View your sent email for updates!`}
+          </a>
+        </div>
+      )}
+
+      {/* Default hidden on large screens. Small screen div; default to mailto regardless. */}
       <a
         href={
           countdown == 0 || countdown == null || countdownMax - countdown < 2
@@ -303,7 +392,7 @@ const Form = () => {
             : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:hidden sm:w-1/2"
         }
       >
-        {countdown
+        {emailSent
           ? `Failed? Re-send via ${emailProviderName}`
           : `Send via default mail app`}
       </a>
@@ -318,7 +407,7 @@ const Form = () => {
         target="_blank"
         onClick={() => {
           setEmailSent(true);
-          setCountdown(60);
+          setCountdown(countdownMax);
           const intervalId = setInterval(() => {
             setCountdown((prevCountdown) =>
               prevCountdown ? prevCountdown - 1 : null,
@@ -335,75 +424,10 @@ const Form = () => {
             : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50 sm:flex sm:w-1/2"
         }
       >
-        {countdown == 0 || countdown == null || countdownMax - countdown < 2
+        {!emailSent
           ? `Send via ${emailProviderName}`
           : `Failed? Re-send via default mail app`}
       </a>
-
-      {emailSent && (
-        <div className="flex w-full items-start sm:w-1/2">
-          <a
-            href={emailSearchLink}
-            target="_blank"
-            className={
-              emailSearchLink
-                ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
-                : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50"
-            }
-          >
-            {emailSearchLink
-              ? `View Sent Email in ${emailProviderName} ➜`
-              : `View your sent email for updates!`}
-          </a>
-        </div>
-      )}
-
-      {amount && amount > 0 && isValidEmail(toEmail) && (
-        <div className="mt-4 flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
-          <div className="flex">
-            <span className="text-slate-500">To:</span>
-            <span className="ml-2 text-left text-slate-700">
-              relayer@sendeth.org
-            </span>
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText("relayer@sendeth.org");
-                document
-                  .getElementById("copyIcon1")
-                  ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
-              }}
-            >
-              <Image
-                id="copyIcon1"
-                src="https://i.imgur.com/yTOO12l.png"
-                alt="Copy to clipboard"
-                style={{ height: "1em", marginLeft: "0.5em" }}
-              />
-            </button>
-          </div>
-          <div className="flex">
-            <span className="text-slate-500">Subject:</span>
-            <span className="ml-2 text-left text-slate-700">{`Send ${amount} ${Currency[currency]} to ${toEmail}`}</span>
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(
-                  `Send ${amount} ${Currency[currency]} to ${toEmail}`,
-                );
-                document
-                  .getElementById("copyIcon2")
-                  ?.setAttribute("src", "https://i.imgur.com/17wupld.png");
-              }}
-            >
-              <Image
-                id="copyIcon2"
-                src="https://i.imgur.com/yTOO12l.png"
-                alt="Copy to clipboard"
-                style={{ height: "1em", marginLeft: "0.5em" }}
-              />
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

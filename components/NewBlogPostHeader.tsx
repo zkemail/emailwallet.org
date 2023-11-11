@@ -15,10 +15,7 @@ const NewBlogPostHeader = () => {
       <p className="text-secondary-foreground">
         We&apos;ve dropped a new blog post.
       </p>
-      <a
-        href={`/blog/${posts[0].slug}`}
-        className="flex items-center font-bold text-slate-800"
-      >
+      <a href={`/blog`} className="flex items-center font-bold text-slate-800">
         Read now <ArrowRight size={15} />
       </a>
     </div>
