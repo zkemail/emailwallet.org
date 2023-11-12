@@ -6,6 +6,7 @@ import { buttonVariants } from "./ui/button";
 import { ExternalLink } from "lucide-react";
 
 const routes = [
+  { name: "create", pathname: "/create", isExternal: false },
   { name: "send", pathname: "/app", isExternal: false },
   { name: "withdraw", pathname: "/withdraw" },
   { name: "deposit", pathname: "/deposit" },

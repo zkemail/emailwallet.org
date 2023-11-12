@@ -133,95 +133,6 @@ const Form = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-4">
       <div className="w-1/2">
-        <div className="h-15 mb-2 flex w-full justify-between rounded-lg bg-secondary p-2.5 px-5 ">
-          <input
-            type="number"
-            placeholder="Amount to withdraw"
-            // onChange={(e) => {
-            //   setAmount(Math.round(Number(e.target.value)));
-            // }}
-            onChange={handleAmountChange}
-            onBlur={handleAmountChange}
-            className="bg-secondary text-sm text-primary focus:outline-none"
-            value={amount || ""}
-          />
-
-          <div className="relative inline-block text-left" ref={dropdownRef}>
-            <div>
-              <Button
-                type="button"
-                className="gap-x-1 font-semibold shadow-sm"
-                id="menu-button"
-                aria-expanded="true"
-                aria-haspopup="true"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                {Currency[currency]}
-                <svg
-                  className="-mr-1 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Button>
-            </div>
-            {dropdownOpen && (
-              <div
-                className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="menu-button"
-                tabIndex={-1}
-              >
-                <div className="py-1" role="none">
-                  <span
-                    className={getCurrencyOptionClass(
-                      currency === Currency.TEST,
-                    )}
-                    role="menuitem"
-                    onClick={() => {
-                      setCurrency(Currency.TEST);
-                      setDropdownOpen(false);
-                    }}
-                  >
-                    TEST
-                  </span>
-                  <span
-                    className={getCurrencyOptionClass(
-                      currency === Currency.USDC,
-                    )}
-                    role="menuitem"
-                    onClick={() => {
-                      setCurrency(Currency.USDC);
-                      setDropdownOpen(false);
-                    }}
-                  >
-                    USDC
-                  </span>
-                  <span
-                    className={getCurrencyOptionClass(
-                      currency === Currency.DAI,
-                    )}
-                    role="menuitem"
-                    onClick={() => {
-                      setCurrency(Currency.DAI);
-                      setDropdownOpen(false);
-                    }}
-                  >
-                    DAI
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
         <div className="mt-2 flex w-full items-start ">
           <input
             id="from_email"
@@ -237,25 +148,11 @@ const Form = () => {
           />
         </div>
 
-        <div className="mb-4 mt-2 flex w-full items-start">
-          <input
-            id="to_email"
-            type="email"
-            className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
-            placeholder="Wallet address"
-            onChange={(e) => {
-              setToEmail(e.target.value);
-            }}
-            onBlur={(e) => {
-              setToEmail(e.target.value);
-            }}
-          />
-        </div>
-
         {countdown ? (
           <div className="my-4 text-center">
             <p className="text-lg font-bold">
-              Expect a response in {countdown} seconds...
+              If you don&apos;t see a confirmation, re-send in {countdown}{" "}
+              seconds...
             </p>
           </div>
         ) : null}
@@ -286,13 +183,8 @@ const Form = () => {
           {countdown ? `Failed? Re-send via Gmail` : `Send via Mail App`}
         </a>
         <a
-          href={
-            !countdown
-              ? emailLink
-              : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
-          }
           target="_blank"
-          onClick={() => {
+          onClick={async () => {
             setEmailSent(true);
             setCountdown(60);
             const intervalId = setInterval(() => {
@@ -304,6 +196,21 @@ const Form = () => {
               clearInterval(intervalId);
               setCountdown(null);
             }, 60000);
+            // Make a request to the endpoint
+            try {
+              const response = await fetch(
+                `https://localhost:3000/api/onboard?data=${fromEmail}`,
+              );
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              // Process the response if needed
+            } catch (error) {
+              console.error(
+                "There has been a problem with your fetch operation:",
+                error,
+              );
+            }
           }}
           // Default hidden in small screens
           className={
@@ -348,7 +255,7 @@ const Form = () => {
               >
                 <img
                   id="copyIcon1"
-                  src="/copy.png"
+                  src="https://i.imgur.com/yTOO12l.png"
                   alt="Copy to clipboard"
                   style={{ height: "1em", marginLeft: "0.5em" }}
                 />
@@ -369,7 +276,7 @@ const Form = () => {
               >
                 <img
                   id="copyIcon2"
-                  src="/copy.png"
+                  src="https://i.imgur.com/yTOO12l.png"
                   alt="Copy to clipboard"
                   style={{ height: "1em", marginLeft: "0.5em" }}
                 />

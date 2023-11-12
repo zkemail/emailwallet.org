@@ -1,5 +1,5 @@
 import Form from "./components/Form";
-import Nav from "./components/NavBar";
+import Nav from "../app/components/NavBar";
 
 export default function Deposit() {
   return (

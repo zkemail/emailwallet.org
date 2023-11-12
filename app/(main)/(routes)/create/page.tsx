@@ -10,11 +10,9 @@ export default function Withdraw() {
             <Nav />
           </div>
           <div className="flex flex-col gap-2 pb-8">
-            <h1 className="text-4xl font-medium">Withdraw money</h1>
+            <h1 className="text-4xl font-medium">Create Account</h1>
             <h2 className="text-muted-foreground">
-              This withdraws money from your currently logged-in email address,
-              by emailing the relayer with the amount and recipient in your
-              subject!
+              Simply email a relayer to create your account.
             </h2>
           </div>
           <Form />
