@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 
 interface BlogCardProps {
   href: string;
@@ -13,7 +12,7 @@ const BlogCard = ({ href, description, title, imageUrl }: BlogCardProps) => {
     <a href={href} className="flex flex-col space-y-2 max-md:items-center">
       {imageUrl && (
         <div className="relative h-[230px] w-[300px] border bg-white">
-          <Image
+          <img
             src={imageUrl}
             className="h-full w-full object-cover"
             alt={title}
