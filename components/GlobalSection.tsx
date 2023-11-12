@@ -2,9 +2,8 @@
 
 import ExportedImage from "next-image-export-optimizer";
 import { useTheme } from "next-themes";
-import { cubicBezier, motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import useMediaQuery from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
 
 const GlobalSection = () => {
@@ -92,23 +91,18 @@ const GlobalSection = () => {
           visible: {
             opacity: 1,
             x: 0,
-            rotateX: 180,
+            rotateX: 0,
             rotate: 30,
           },
         }}
         viewport={{ amount: 0.8 }}
         transition={{ duration: 1 }}
-        className={cn("relative h-40 w-40 md:self-end")}
+        className={cn(
+          "relative h-40 w-40 rounded-full border-stone-800 dark:border-4 dark:bg-stone-300 md:self-end",
+        )}
       >
-        <ExportedImage
-          src={
-            resolvedTheme === "dark"
-              ? "/emailDarkMode.svg"
-              : "/emailLightMode.svg"
-          }
-          alt={"email"}
-          fill
-        />
+        <ExportedImage src={"outlineGlobe.gif"} alt={"globe"} fill />
+        {/* <Globe size={180} className="animate-spin" /> */}
       </motion.div>
     </section>
   );
