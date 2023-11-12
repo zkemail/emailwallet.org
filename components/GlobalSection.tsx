@@ -87,7 +87,7 @@ const GlobalSection = () => {
         initial="hidden"
         whileInView="visible"
         variants={{
-          hidden: { opacity: 0.5, x: 100 },
+          hidden: { opacity: 0.5, x: 40 },
           visible: {
             opacity: 1,
             x: 0,
