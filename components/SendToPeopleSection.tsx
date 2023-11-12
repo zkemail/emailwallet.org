@@ -5,7 +5,7 @@ import { PiLaptopThin } from "react-icons/pi";
 
 const SendToPeopleSection = () => {
   return (
-    <section className="relative mx-8 mb-28 flex flex-col items-center gap-10 overflow-x-clip max-md:text-end md:mx-10 md:mb-40 md:flex-row-reverse md:gap-48">
+    <section className=" mx-8 mb-28 flex flex-col items-center gap-10 overflow-x-clip max-md:text-end md:mx-10 md:mb-40 md:flex-row-reverse md:gap-48">
       <div className="flex flex-col gap-6 md:basis-[50%]">
         <motion.h1
           initial="hidden"
@@ -54,7 +54,7 @@ const SendToPeopleSection = () => {
       <motion.div
         transition={{ repeat: Infinity, duration: 4 }}
         animate={{ x: [0, 30, 0] }}
-        className="absolute -bottom-[80%] left-2/4 -z-50 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/30 transition-all md:-bottom-[190%]"
+        className="absolute -bottom-[260%] -z-50 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/30 transition-all md:-bottom-[120%]"
       />
     </section>
   );
