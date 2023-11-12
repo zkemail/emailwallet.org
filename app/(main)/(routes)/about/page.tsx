@@ -134,9 +134,9 @@ const AboutPage = () => {
             </h3>
             <h4 className="mb-4 text-primary">IEEE Dubai</h4>
             <span className="text-sm text-muted-foreground">
-              Sora Suegami&apos;s paper describing a smart contract wallet
-              controlled by emails is accepted to IEEE, and he publishes halo2
-              RSA circuits.
+              Sora Suegami's paper describing a smart contract wallet controlled
+              by emails is accepted to IEEE, and he publishes halo2 RSA
+              circuits.
             </span>
             <br />
           </VerticalTimelineElement>
