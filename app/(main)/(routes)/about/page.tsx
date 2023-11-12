@@ -78,7 +78,8 @@ const AboutPage = () => {
             <h4 className="mb-4 text-primary">Istanbul, Turkey</h4>
             <span className="text-sm text-muted-foreground">
               Built by Saleel, Rasul, Yush, Sora, and Tyler, a 2-week experiment
-              for the decentralized email wallet V1 contracts is deployed.
+              for the decentralized email wallet V1 contracts is audited and
+              deployed.
             </span>
             <br />
           </VerticalTimelineElement>
