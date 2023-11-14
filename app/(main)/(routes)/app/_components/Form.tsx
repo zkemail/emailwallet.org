@@ -363,7 +363,7 @@ const Send: React.FC = () => {
         </div>
         <div className="start-0 flex w-full">
           <textarea
-            className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+            className="flex h-20 w-full rounded-lg bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
             defaultValue={
               "Thanks for helping teach math"
             } /*TODO: fill this in */
