@@ -165,7 +165,7 @@ const Send: React.FC = () => {
             type="email"
             size={46}
             className="block rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
-            placeholder="Email Address OR Wallet Address OR ENS Name"
+            placeholder="Email Address OR Wallet Address"
             onChange={(e) => {
               setToEmail(e.target.value);
             }}
@@ -197,14 +197,14 @@ const Send: React.FC = () => {
         </div>
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
           <label
-            htmlFor="cc_emai"
-            className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-medium text-[#515364]"
+            htmlFor="cc_email"
+            className="mr-2 flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
           >
             cc:
           </label>
           <p
             className="
-            block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+            mb-3 mt-1 block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
           >
             relayer@sendeth.org
           </p>
@@ -233,11 +233,11 @@ const Send: React.FC = () => {
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
           <label
             htmlFor="subject_email"
-            className="flex items-center justify-center px-2 py-5 text-sm font-medium text-[#515364]"
+            className="flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
           >
             Subject:
           </label>
-          <p className="flex w-full items-center gap-1 rounded-lg bg-black py-2 text-sm text-white placeholder:text-[#515364]">
+          <p className="flex w-full items-center gap-1 rounded-lg bg-black pb-3 pt-1  text-sm text-white placeholder:text-[#515364]">
             Send{" "}
             <input
               value={amount}
@@ -245,7 +245,7 @@ const Send: React.FC = () => {
               type="email"
               size={5}
               className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
-              placeholder="Email Address OR Wallet Address OR ENS Name"
+              placeholder="Email Address OR Wallet Address"
               defaultValue={10}
               onChange={(e) => {
                 handleAmountChange(e);
@@ -333,9 +333,7 @@ const Send: React.FC = () => {
                 toEmail.length > 0 ? "" : "text-[#515364]"
               } inline pl-1`}
             >
-              {toEmail.length > 0
-                ? toEmail
-                : "Email Address OR Wallet Address OR ENS Name"}
+              {toEmail.length > 0 ? toEmail : "Email Address OR Wallet Address"}
             </p>
           </p>
           <button
@@ -367,9 +365,7 @@ const Send: React.FC = () => {
         <div className="start-0 flex w-full">
           <textarea
             className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
-            defaultValue={
-              "Thanks for helping teach math"
-            } /*TODO: fill this in */
+            defaultValue={"Thanks for teaching math!"} /*TODO: fill this in */
           ></textarea>
         </div>
 
@@ -379,7 +375,7 @@ const Send: React.FC = () => {
               <p className="text-lg font-medium">
                 {countdown
                   ? `Expect a response in ${countdown} seconds...`
-                  : "Done processing! You should have received a reply."}
+                  : "Done processing! You should receive a reply shortly."}
               </p>
             </div>
           </>

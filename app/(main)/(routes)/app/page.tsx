@@ -7,7 +7,7 @@ export default function SendMoneyPage() {
         <h1 className="text-4xl font-medium">Send Money via Email</h1>
         <h2 className="w-1/2 text-center text-muted-foreground">
           Just send emails from your currently logged-in email address! Everyone
-          starts with 100 TEST tokens (and 5 USDC during Devconnect!).
+          starts with 100 TEST tokens (and 5 USDC during ProgCrypto!).
           <br />
           <br />
           This 2-week demo experiment on Optimism mainnet will shut down on
