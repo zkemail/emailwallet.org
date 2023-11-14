@@ -338,9 +338,12 @@ const Send: React.FC = () => {
             </p>
           </p>
           <button
-            // make this clickable to copy the input to clipboard
             onClick={() => {
-              navigator.clipboard.writeText("relayer@sendeth.org");
+              navigator.clipboard.writeText(
+                `Send ${amount?.toFixed(0)} of ${
+                  Currency[currency]
+                } to ${toEmail}`,
+              );
             }}
             className="px-2"
           >
