@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { getEmailLink, isValidEmail } from "@/lib/send";
+import { getEmailLink, isValidEmail, getCreateEmailLink } from "@/lib/send";
 
 enum Currency {
   USDC,
@@ -577,14 +577,9 @@ const Deposit: React.FC = () => {
 
 const CreateAccount: React.FC = () => {
   const [email, setEmail] = useState("");
-  const emailLink = useMemo(() => {
-    const [, link] = getEmailLink(
-      email,
-      "" /*TODO: fill in subject for account creation email*/,
-      "",
-    );
-    return link;
-  }, [email]);
+  const [emailLink, setEmailLink] = useState("");
+  const [sent, setSent] = useState(false);
+
   return (
     <div
       className={
@@ -606,10 +601,14 @@ const CreateAccount: React.FC = () => {
           type="email"
         />
         <BlueButton
-          onClick={() => {
+          onClick={async () => {
             console.log(email);
-            console.log(emailLink);
-            window.location.href = emailLink;
+            const [name, sendLink, viewLink] = await getCreateEmailLink(email);
+            setEmailLink(sendLink);
+            if (sendLink) {
+              window.open(sendLink, "_blank");
+            }
+            setSent(true);
           }}
         >
           Create Account
