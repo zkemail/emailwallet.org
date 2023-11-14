@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { getEmailLink, isValidEmail, getCreateEmailLink } from "@/lib/send";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 enum Currency {
   USDC,
@@ -151,9 +152,11 @@ const Send: React.FC = () => {
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
     "",
   );
+  const isLargeScreen = useMediaQuery("(min-width: 740px)");
+
   return (
     <>
-      <div className="flex w-[850px] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4">
+      <div className="flex w-[95%] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4 lg:w-[850px]">
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 py-4">
           <label
             htmlFor="to_email"
@@ -164,8 +167,8 @@ const Send: React.FC = () => {
           <input
             id="to_email"
             type="email"
-            size={46}
-            className="block rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+            size={isLargeScreen ? 46 : 30}
+            className="block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]"
             placeholder="Email Address OR Wallet Address"
             onChange={(e) => {
               setToEmail(e.target.value);
@@ -231,109 +234,109 @@ const Send: React.FC = () => {
             </svg>
           </button>
         </div>
-        <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
+        <div className="flex w-full items-start border-b-[1px] border-[#515364]/30 md:items-center">
           <label
             htmlFor="subject_email"
             className="flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
           >
             Subject:
           </label>
-          <p className="flex w-full items-center gap-1 rounded-lg bg-black pb-3 pt-1  text-sm text-white placeholder:text-[#515364]">
-            Send{" "}
-            <input
-              value={amount}
-              id="to_email"
-              type="email"
-              size={5}
-              className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
-              placeholder="Email Address OR Wallet Address"
-              defaultValue={5}
-              onChange={(e) => {
-                handleAmountChange(e);
-              }}
-              onBlur={(e) => {
-                handleAmountChange(e);
-              }}
-            />
-            <div className="relative" ref={dropdownRef}>
-              <button
-                type="button"
-                className="mr-2 inline-flex h-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] p-2 text-white"
-                id="menu-button"
-                aria-expanded="true"
-                aria-haspopup="true"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                {Currency[currency]}
-                <svg
-                  className="-mr-1 h-5 w-5 text-gray-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+          <p className="flex w-full flex-col items-start gap-y-3 rounded-lg bg-black pb-3 pt-1 text-sm text-white  placeholder:text-[#515364] md:flex-row md:items-center">
+            <div className="flex items-center">
+              <span className="mr-1">Send</span>
+              <input
+                value={amount}
+                id="to_email"
+                type="email"
+                size={5}
+                className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+                placeholder="Email Address OR Wallet Address"
+                defaultValue={5}
+                onChange={(e) => {
+                  handleAmountChange(e);
+                }}
+                onBlur={(e) => {
+                  handleAmountChange(e);
+                }}
+              />
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  type="button"
+                  className="mr-2 inline-flex h-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] p-2 text-white"
+                  id="menu-button"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-              {dropdownOpen && (
-                <div
-                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-black shadow-lg ring-1
+                  {Currency[currency]}
+                  <svg
+                    className="-mr-1 h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                {dropdownOpen && (
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-black shadow-lg ring-1
                ring-black ring-opacity-5 focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="menu-button"
-                  tabIndex={-1}
-                >
-                  <div className="py-1" role="none">
-                    <span
-                      className={getCurrencyOptionClass(
-                        currency === Currency.TEST,
-                      )}
-                      role="menuitem"
-                      onClick={() => {
-                        setCurrency(Currency.TEST);
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      TEST
-                    </span>
-                    <span
-                      className={getCurrencyOptionClass(
-                        currency === Currency.USDC,
-                      )}
-                      role="menuitem"
-                      onClick={() => {
-                        setCurrency(Currency.USDC);
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      USDC
-                    </span>
-                    <span
-                      className={getCurrencyOptionClass(
-                        currency === Currency.DAI,
-                      )}
-                      role="menuitem"
-                      onClick={() => {
-                        setCurrency(Currency.DAI);
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      DAI
-                    </span>
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabIndex={-1}
+                  >
+                    <div className="py-1" role="none">
+                      <span
+                        className={getCurrencyOptionClass(
+                          currency === Currency.TEST,
+                        )}
+                        role="menuitem"
+                        onClick={() => {
+                          setCurrency(Currency.TEST);
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        TEST
+                      </span>
+                      <span
+                        className={getCurrencyOptionClass(
+                          currency === Currency.USDC,
+                        )}
+                        role="menuitem"
+                        onClick={() => {
+                          setCurrency(Currency.USDC);
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        USDC
+                      </span>
+                      <span
+                        className={getCurrencyOptionClass(
+                          currency === Currency.DAI,
+                        )}
+                        role="menuitem"
+                        onClick={() => {
+                          setCurrency(Currency.DAI);
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        DAI
+                      </span>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-            {" to "}
             <p
-              className={`${
-                toEmail.length > 0 ? "" : "text-[#515364]"
-              } inline pl-1`}
+              className={`${toEmail.length > 0 ? "" : "text-[#515364]"} inline`}
             >
+              <span className="mr-2 text-white">To</span>
               {toEmail.length > 0 ? toEmail : "Email Address OR Wallet Address"}
             </p>
           </p>
@@ -353,7 +356,7 @@ const Send: React.FC = () => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="h-6 w-6 text-[#515364]"
+              className="h-6 w-6 text-[#515364] max-md:mt-3"
             >
               <path
                 strokeLinecap="round"
@@ -365,8 +368,9 @@ const Send: React.FC = () => {
         </div>
         <div className="start-0 flex w-full">
           <textarea
-            className="flex h-40 w-full rounded-lg bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
-            defaultValue={"Thanks for teaching math!"} /*TODO: fill this in */
+            className="mt-3 flex w-full rounded-lg border bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+            defaultValue={"Thanks for teaching math!"}
+            rows={isLargeScreen ? 8 : 4} /*TODO: fill this in */
           ></textarea>
         </div>
 
@@ -402,7 +406,7 @@ const Send: React.FC = () => {
 
         <div className="flex w-full items-center justify-end gap-3 text-white">
           <button
-            className={""}
+            // variant={"ghost"}
             onClick={() => {
               document.querySelectorAll(".pulsetarget").forEach((node) => {
                 node.classList.add("pulse");
@@ -587,7 +591,7 @@ const CreateAccount: React.FC<{
   return (
     <div
       className={
-        "flex flex-col items-center gap-[1.25rem]  rounded-[2rem] bg-black p-[2rem]"
+        "flex flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem]"
       }
     >
       <h3 className={`text-[1.625rem] font-bold text-white`}>Create Account</h3>

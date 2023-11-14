@@ -28,7 +28,7 @@ const Header = () => {
   if (!isMounted) return null;
 
   return (
-    <header className="sticky mt-7 bg-transparent">
+    <header className="sticky mt-14 bg-transparent sm:mt-7">
       <div className="flex w-full items-center justify-between px-4 py-1">
         <Logo />
         <nav className="hidden gap-4 md:flex">
