@@ -629,8 +629,8 @@ const CreateAccount: React.FC<{
             }
           >
             {sent
-              ? "Sent? Go to Send tab ➜"
-              : "Already created? Go to send tab ➜"}
+              ? "Sent? Go to 'Send Money' tab ➜"
+              : "Already created? Go to 'Send Money' tab ➜"}
           </a>
         </div>
       </div>

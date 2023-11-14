@@ -30,7 +30,7 @@ export async function getCreateEmailLink(
     account_key: `${code}`,
   };
   // Sync call this fn in the background to onboard
-  fetch("http://relayer.sendeth.org/api/onboard", {
+  fetch("https://relayer.sendeth.org/api/onboard", {
     // replace with actual server URL
     method: "POST",
     headers: {
