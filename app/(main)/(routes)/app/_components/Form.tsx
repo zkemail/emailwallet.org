@@ -172,11 +172,10 @@ const Send: React.FC = () => {
             }}
           />
           <button
-            // make this clickable to copy the input to clipboard
             onClick={() => {
               navigator.clipboard.writeText(toEmail);
             }}
-            className="px-2"
+            className="pulsetarget px-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -208,11 +207,10 @@ const Send: React.FC = () => {
             relayer@sendeth.org
           </p>
           <button
-            // make this clickable to copy the input to clipboard
             onClick={() => {
               navigator.clipboard.writeText("relayer@sendeth.org");
             }}
-            className="px-2"
+            className="pulsetarget px-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -345,7 +343,7 @@ const Send: React.FC = () => {
                 } to ${toEmail}`,
               );
             }}
-            className="px-2"
+            className="pulsetarget px-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -406,9 +404,12 @@ const Send: React.FC = () => {
           <button
             className={""}
             onClick={() => {
-              {
-                /*TODO: fill in logic for copy details function*/
-              }
+              document.querySelectorAll(".pulsetarget").forEach((node) => {
+                node.classList.add("pulse");
+                setTimeout(() => {
+                  node.classList.remove("pulse");
+                }, 3000);
+              });
             }}
           >
             Copy Details

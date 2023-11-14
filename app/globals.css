@@ -90,3 +90,18 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+.pulse {
+  animation: pulse-animation 2s infinite;
+  border-radius: 100%;
+}
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px rgba(114, 114, 114, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+  }
+}
