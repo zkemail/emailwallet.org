@@ -30,23 +30,23 @@ export async function getCreateEmailLink(
     account_key: `${code}`,
   };
   // Sync call this fn in the background to onboard
-  fetch("https://relayer.sendeth.org/api/onboard", {
-    // replace with actual server URL
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(accountRegistrationRequest),
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      console.log(data);
-      // return data.account_key;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      // "0" trick ensures is exactly 64 chars long
-    });
+  // fetch("https://relayer.sendeth.org/api/onboard", {
+  //   // replace with actual server URL
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(accountRegistrationRequest),
+  // })
+  //   .then((response) => response.text())
+  //   .then((data) => {
+  //     console.log(data);
+  //     // return data.account_key;
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error:", error);
+  //     // "0" trick ensures is exactly 64 chars long
+  //   });
 
   let subject = "Create my email wallet! CODE:" + code;
   return getEmailLink(
