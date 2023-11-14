@@ -406,7 +406,6 @@ const Send: React.FC = () => {
 
         <div className="flex w-full items-center justify-end gap-3 text-white">
           <button
-            // variant={"ghost"}
             onClick={() => {
               document.querySelectorAll(".pulsetarget").forEach((node) => {
                 node.classList.add("pulse");

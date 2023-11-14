@@ -13,6 +13,21 @@ export default function SendMoneyPage() {
           This 2-week demo experiment on Optimism mainnet will shut down on
           November 28, 2023. Make sure to withdraw your money by then!
         </h2>
+        <div className="text-sm text-muted-foreground">
+          By using this service, you agree to our{" "}
+          <a
+            href="/terms-of-service.html"
+            target="_blank"
+            className="underline"
+          >
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a href="/privacy-policy.html" target="_blank" className="underline">
+            Privacy Policy
+          </a>
+          .
+        </div>
         <Form />
       </div>
     </div>
