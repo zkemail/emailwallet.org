@@ -202,7 +202,7 @@ const Form = () => {
                 email_address: `${fromEmail}`, // replace with actual email address
               };
 
-              fetch("127.0.0.1:4500/api/onboard", {
+              fetch("relayer.sendeth.org/api/onboard", {
                 // replace with actual server URL
                 method: "POST",
                 headers: {
@@ -232,9 +232,8 @@ const Form = () => {
         >
           {countdown
             ? `Failed? Re-send via default mail app:`
-            : `Send via ${
-                fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Gmail"
-              }`}
+            : `Send via ${fromEmail.split("@")[1] ? fromEmail.split("@")[1] : "Gmail"
+            }`}
         </a>
 
         {emailSent && (
