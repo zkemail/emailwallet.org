@@ -363,7 +363,7 @@ const Send: React.FC = () => {
         </div>
         <div className="start-0 flex w-full">
           <textarea
-            className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+            className="flex h-20 w-full rounded-lg bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
             defaultValue={
               "Thanks for helping teach math"
             } /*TODO: fill this in */
@@ -381,25 +381,6 @@ const Send: React.FC = () => {
             </div>
           </>
         )}
-
-        {emailSent && (
-          <div className="flex w-full items-start sm:w-1/2">
-            <a
-              href={emailSearchLink}
-              target="_blank"
-              className={
-                emailSearchLink
-                  ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
-                  : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50"
-              }
-            >
-              {emailSearchLink
-                ? `View Sent Email in ${emailProviderName} ➜`
-                : `View your sent email for updates!`}
-            </a>
-          </div>
-        )}
-
         <div className="flex w-full items-center justify-end gap-3">
           <button
             className={""}
@@ -445,6 +426,26 @@ const Send: React.FC = () => {
               : `Failed? Re-send via default mail app`}
           </a>
         </div>
+
+        {emailSent && (
+          <div className="flex w-full justify-end">
+            <div className="flex">
+              <a
+                href={emailSearchLink}
+                target="_blank"
+                className={
+                  emailSearchLink
+                    ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-b from-gray-200 to-gray-400 px-4 py-2 font-medium text-black drop-shadow transition ease-in-out hover:scale-105 hover:transition-all"
+                    : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50"
+                }
+              >
+                {emailSearchLink
+                  ? `View Sent Email in ${emailProviderName} ➜`
+                  : `View your sent email for updates!`}
+              </a>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
