@@ -339,7 +339,7 @@ const Send: React.FC = () => {
           <button
             onClick={() => {
               navigator.clipboard.writeText(
-                `Send ${amount?.toFixed(0)} of ${
+                `Send ${amount?.toFixed(0)} ${
                   Currency[currency]
                 } to ${toEmail}`,
               );
