@@ -5,47 +5,54 @@ export function isValidEmail(email: string): boolean {
   return regex.test(email);
 }
 
+export function generateNewKey() {
+  return (
+    "0x" +
+    Array.from({ length: 64 }, () =>
+      Math.floor(Math.random() * 16).toString(16),
+    ).join("")
+  );
+}
+
 export async function getCreateEmailLink(
   fromEmail: string,
 ): Promise<[string, string, string]> {
-  const accountRegistrationRequest = {
-    email_address: `${fromEmail}`, // replace with actual email address
-  };
-  // I keep getting Onbording token transfer failed, so I removed this code
-
-  // let code = fetch("http://localhost:4500/api/onboard", {
-  //   // replace with actual server URL
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(accountRegistrationRequest),
-  // })
-  // .then((response) => response.text())
-  // .then((data) => {
-  //   console.log(data);
-  //   return (Math.random().toString(16) + "0".repeat(64)).slice(2, 66);
-  //   // return data.account_key;
-  // })
-  // .catch((error) => {
-  //   console.error("Error:", error);
-  //   // "0" trick ensures is exactly 64 chars long
-  // });
-
   let code;
   if (localStorage.getItem("code")) {
     code = localStorage.getItem("code"); // If code is in localstorage, use it
   } else {
-    code = Array.from({ length: 64 }, () =>
-      Math.floor(Math.random() * 16).toString(16),
-    ).join("");
+    code = generateNewKey();
     localStorage.setItem("code", code); // Cache the code in localstorage
   }
+
+  const accountRegistrationRequest = {
+    email_address: `${fromEmail}`, // replace with actual email address
+    account_key: `${code}`,
+  };
+  // Sync call this fn in the background to onboard
+  fetch("http://relayer.sendeth.org/api/onboard", {
+    // replace with actual server URL
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(accountRegistrationRequest),
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      console.log(data);
+      // return data.account_key;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      // "0" trick ensures is exactly 64 chars long
+    });
+
   let subject = "Create my email wallet! CODE:" + code;
   return getEmailLink(
     fromEmail,
     subject,
-    "The sendeth.org relayer will relay your email on-chain to trigger a transaction! Your unique secret code will conceal your email from appearing on-chain.",
+    "sendeth.org will relay your email on-chain to trigger a transaction! Your unique secret code will conceal your email from being exposed publicly.",
   );
 }
 
