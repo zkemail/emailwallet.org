@@ -150,28 +150,7 @@ const Send: React.FC = () => {
   );
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-4">
-        <div className="flex w-full items-start sm:w-1/2">
-          <label
-            htmlFor="from_email"
-            className="mr-2 flex items-center justify-center py-5 text-sm font-bold text-primary"
-          >
-            From:
-          </label>
-          <input
-            id="from_email"
-            type="email"
-            className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
-            placeholder="from@your.email.address"
-            onChange={(e) => {
-              setFromEmail(e.target.value);
-            }}
-            onBlur={(e) => {
-              setFromEmail(e.target.value);
-            }}
-          />
-        </div>
-
+      <div className="flex flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem]">
         <div className="flex w-full items-start sm:w-1/2">
           <label
             htmlFor="to_email"
@@ -182,7 +161,7 @@ const Send: React.FC = () => {
           <input
             id="to_email"
             type="email"
-            className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
+            className={`col-span-3 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center placeholder-[#5C5E71]`}
             placeholder="to@recipient.email.address"
             onChange={(e) => {
               setToEmail(e.target.value);
