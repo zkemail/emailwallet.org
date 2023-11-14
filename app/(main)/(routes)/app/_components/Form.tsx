@@ -151,27 +151,6 @@ const Send: React.FC = () => {
   return (
     <>
       <div className="flex w-[850px] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4">
-        {/* <div className="flex w-full items-start sm:w-1/2">
-          <label
-            htmlFor="from_email"
-            className="mr-2 flex items-center justify-center py-5 text-sm font-bold text-primary"
-          >
-            From:
-          </label>
-          <input
-            id="from_email"
-            type="email"
-            className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
-            placeholder="from@your.email.address"
-            onChange={(e) => {
-              setFromEmail(e.target.value);
-            }}
-            onBlur={(e) => {
-              setFromEmail(e.target.value);
-            }}
-          />
-        </div> */}
-
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 py-4">
           <label
             htmlFor="to_email"
@@ -182,8 +161,9 @@ const Send: React.FC = () => {
           <input
             id="to_email"
             type="email"
-            className="block w-full rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
-            placeholder="to@recipient.email.address"
+            size={46}
+            className="block rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+            placeholder="Email Address OR Wallet Address OR ENS Name"
             onChange={(e) => {
               setToEmail(e.target.value);
             }}
@@ -223,7 +203,7 @@ const Send: React.FC = () => {
           </label>
           <p
             className="
-            block w-full rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+            block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
           >
             relayer@sendeth.org
           </p>
@@ -253,17 +233,109 @@ const Send: React.FC = () => {
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
           <label
             htmlFor="subject_email"
-            className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-medium text-[#515364]"
+            className="flex items-center justify-center px-2 py-5 text-sm font-medium text-[#515364]"
           >
             Subject:
           </label>
-          <p
-            placeholder=""
-            className="block w-full rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
-          >
-            {amount && amount > 0 && isValidEmail(toEmail)
-              ? `Send ${amount} ${Currency[currency]} to ${toEmail}`
-              : `...`}
+          <p className="block flex w-full items-center gap-1 rounded-lg bg-black py-2 text-sm placeholder:text-[#515364]">
+            Send{" "}
+            <input
+              value={amount}
+              id="to_email"
+              type="email"
+              size={5}
+              className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+              placeholder="Email Address OR Wallet Address OR ENS Name"
+              defaultValue={10}
+              onChange={(e) => {
+                handleAmountChange(e);
+              }}
+              onBlur={(e) => {
+                handleAmountChange(e);
+              }}
+            />
+            <div className="relative" ref={dropdownRef}>
+              <button
+                type="button"
+                className="inline-flex h-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] p-2"
+                id="menu-button"
+                aria-expanded="true"
+                aria-haspopup="true"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                {Currency[currency]}
+                <svg
+                  className="-mr-1 h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              {dropdownOpen && (
+                <div
+                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-black shadow-lg ring-1
+               ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="menu-button"
+                  tabIndex={-1}
+                >
+                  <div className="py-1" role="none">
+                    <span
+                      className={getCurrencyOptionClass(
+                        currency === Currency.TEST,
+                      )}
+                      role="menuitem"
+                      onClick={() => {
+                        setCurrency(Currency.TEST);
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      TEST
+                    </span>
+                    <span
+                      className={getCurrencyOptionClass(
+                        currency === Currency.USDC,
+                      )}
+                      role="menuitem"
+                      onClick={() => {
+                        setCurrency(Currency.USDC);
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      USDC
+                    </span>
+                    <span
+                      className={getCurrencyOptionClass(
+                        currency === Currency.DAI,
+                      )}
+                      role="menuitem"
+                      onClick={() => {
+                        setCurrency(Currency.DAI);
+                        setDropdownOpen(false);
+                      }}
+                    >
+                      DAI
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+            <p
+              className={`${
+                toEmail.length > 0 ? "" : "text-[#515364]"
+              } inline pl-1`}
+            >
+              {toEmail.length > 0
+                ? toEmail
+                : "Email Address OR Wallet Address OR ENS Name"}
+            </p>
           </p>
           <button
             // make this clickable to copy the input to clipboard
@@ -291,23 +363,10 @@ const Send: React.FC = () => {
         <div className="start-0 flex w-full">
           <textarea
             className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
-            placeholder="Joe"
+            defaultValue={
+              "Thanks for helping teach math"
+            } /*TODO: fill this in */
           ></textarea>
-        </div>
-        <div className="flex w-full items-start sm:w-1/2">
-          <div className="h-15 flex w-full justify-between rounded-lg bg-secondary p-2.5 px-5">
-            <input
-              type="number"
-              placeholder="Amount to send"
-              // onChange={(e) => {
-              //   setAmount(Math.round(Number(e.target.value)));
-              // }}
-              onChange={handleAmountChange}
-              onBlur={handleAmountChange}
-              className="bg-secondary text-sm text-primary focus:outline-none"
-              value={amount || ""}
-            />
-          </div>
         </div>
 
         {/* <>
@@ -406,7 +465,6 @@ const Send: React.FC = () => {
         )}
 
         {/* Default hidden on large screens. Small screen div; default to mailto regardless. */}
-
         <a
           href={
             countdown == 0 || countdown == null || countdownMax - countdown < 2
@@ -482,6 +540,7 @@ const Deposit: React.FC = () => {
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
+
   function getCurrencyOptionClass(selected: boolean): string {
     const baseClasses =
       "text-gray-50 block px-4 py-2 text-sm m-2 rounded-md cursor-pointer hover:transition-all";
