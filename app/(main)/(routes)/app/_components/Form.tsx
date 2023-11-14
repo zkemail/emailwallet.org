@@ -67,7 +67,9 @@ const Tabs: React.FC<{
           Deposit
         </TabButton>
       </div>
-      {selectedTab === "create" && <CreateAccount />}
+      {selectedTab === "create" && (
+        <CreateAccount setSelectedTab={setSelectedTab} />
+      )}
       {selectedTab === "send" && <Send />}
       {selectedTab === "deposit" && <Deposit />}
     </div>
@@ -325,6 +327,7 @@ const Send: React.FC = () => {
                 </div>
               )}
             </div>
+            {" to "}
             <p
               className={`${
                 toEmail.length > 0 ? "" : "text-[#515364]"
@@ -376,7 +379,7 @@ const Send: React.FC = () => {
               <p className="text-lg font-medium">
                 {countdown
                   ? `Expect a response in ${countdown} seconds...`
-                  : "Done processing!"}
+                  : "Done processing! You should have received a reply."}
               </p>
             </div>
           </>
@@ -575,9 +578,13 @@ const Deposit: React.FC = () => {
   );
 };
 
-const CreateAccount: React.FC = () => {
+const CreateAccount: React.FC<{
+  setSelectedTab: (tab: "create" | "send" | "deposit") => void;
+}> = ({ setSelectedTab }) => {
   const [email, setEmail] = useState("");
   const [emailLink, setEmailLink] = useState("");
+  const [emailProviderName, setEmailProviderName] = useState("");
+  const [emailSearchLink, setEmailSearchLink] = useState("");
   const [sent, setSent] = useState(false);
 
   return (
@@ -590,29 +597,46 @@ const CreateAccount: React.FC = () => {
       <div className={"leading-5 text-[#878AA1]"}>
         Simply email a relayer to create your account.
       </div>
-      <div className={"flex gap-2.5"}>
-        <input
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center placeholder-[#5C5E71]`}
-          placeholder={"Your Email Address"}
-          type="email"
-        />
-        <BlueButton
-          onClick={async () => {
-            console.log(email);
-            const [name, sendLink, viewLink] = await getCreateEmailLink(email);
-            setEmailLink(sendLink);
-            if (sendLink) {
-              window.open(sendLink, "_blank");
-            }
-            setSent(true);
-          }}
-        >
-          Create Account
-        </BlueButton>
+      <div className={"flex flex-col gap-2.5"}>
+        <div className={"flex gap-2.5"}>
+          <input
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center placeholder-[#5C5E71]`}
+            placeholder={"Your Email Address"}
+            type="email"
+          />
+          <BlueButton
+            onClick={async () => {
+              console.log(email);
+              const [name, sendLink, viewLink] =
+                await getCreateEmailLink(email);
+              setEmailProviderName(name);
+              setEmailSearchLink(viewLink);
+              setEmailLink(sendLink);
+              if (sendLink) {
+                window.open(sendLink, "_blank");
+              }
+              setSent(true);
+            }}
+          >
+            Create Account
+          </BlueButton>
+        </div>
+        {sent && (
+          <div className="flex w-full items-start">
+            <a
+              onClick={() => setSelectedTab("send")}
+              className={
+                "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
+              }
+            >
+              Sent? Go to Send tab
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

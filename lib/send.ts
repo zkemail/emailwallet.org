@@ -53,6 +53,7 @@ export function getEmailLink(
   fromEmail: string,
   subject: string,
   body: string,
+  force_mailto = false,
 ): [string, string, string] {
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
