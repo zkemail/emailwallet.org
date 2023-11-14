@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { getEmailLink, isValidEmail, getCreateEmailLink } from "@/lib/send";
 import useMediaQuery from "@/hooks/useMediaQuery";
