@@ -22,7 +22,7 @@ const TabButton: React.FC<{
           ? `linear-gradient(179deg, rgba(255, 255, 255, 0.20) 0.8%, rgba(255, 255, 255, 0.00) 144.46%)`
           : "",
       }}
-      className={`cursor-pointer rounded-md px-[1rem] py-[0.625rem]`}
+      className={`cursor-pointer rounded-md px-[1rem] py-[0.625rem] text-white`}
       onClick={props.onClick}
     >
       {props.children}
@@ -38,7 +38,7 @@ const Tabs: React.FC<{
     <div className={"flex flex-col items-center gap-[1.5rem]"}>
       <div
         className={
-          "font- flex items-center gap-5 p-[0.625rem] text-[1rem] font-medium"
+          "flex items-center gap-5 p-[0.625rem] text-[1rem] font-medium text-primary"
         }
         style={{ borderRadius: "0.5625rem", background: "#000" }}
       >
@@ -84,7 +84,7 @@ const BlueButton: React.FC<{
       style={{
         background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
       }}
-      className={`rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium ${props.className}`}
+      className={`rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium text-white ${props.className}`}
       onClick={props.onClick}
     >
       {props.children}
@@ -162,7 +162,7 @@ const Send: React.FC = () => {
             id="to_email"
             type="email"
             size={46}
-            className="block rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+            className="block rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
             placeholder="Email Address OR Wallet Address OR ENS Name"
             onChange={(e) => {
               setToEmail(e.target.value);
@@ -202,7 +202,7 @@ const Send: React.FC = () => {
           </label>
           <p
             className="
-            block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+            block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
           >
             relayer@sendeth.org
           </p>
@@ -235,14 +235,14 @@ const Send: React.FC = () => {
           >
             Subject:
           </label>
-          <p className="flex w-full items-center gap-1 rounded-lg bg-black py-2 text-sm placeholder:text-[#515364]">
+          <p className="flex w-full items-center gap-1 rounded-lg bg-black py-2 text-sm text-white placeholder:text-[#515364]">
             Send{" "}
             <input
               value={amount}
               id="to_email"
               type="email"
               size={5}
-              className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+              className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
               placeholder="Email Address OR Wallet Address OR ENS Name"
               defaultValue={10}
               onChange={(e) => {
@@ -255,7 +255,7 @@ const Send: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
-                className="inline-flex h-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] p-2"
+                className="inline-flex h-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] p-2 text-white"
                 id="menu-button"
                 aria-expanded="true"
                 aria-haspopup="true"
@@ -363,7 +363,7 @@ const Send: React.FC = () => {
         </div>
         <div className="start-0 flex w-full">
           <textarea
-            className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+            className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
             defaultValue={
               "Thanks for helping teach math"
             } /*TODO: fill this in */
@@ -400,7 +400,7 @@ const Send: React.FC = () => {
           </div>
         )}
 
-        <div className="flex w-full items-center justify-end gap-3">
+        <div className="flex w-full items-center justify-end gap-3 text-white">
           <button
             className={""}
             onClick={() => {
@@ -438,7 +438,7 @@ const Send: React.FC = () => {
             style={{
               background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
             }}
-            className={`rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium`}
+            className={`rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium text-white`}
           >
             {!emailSent
               ? `Auto-Format Email`
@@ -486,17 +486,19 @@ const Deposit: React.FC = () => {
         "flex w-[27rem] flex-col items-stretch gap-[1.25rem] rounded-[2rem] bg-black p-[2rem]"
       }
     >
-      <h3 className={`text-center text-[1.625rem] font-bold`}>Deposit Money</h3>
+      <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
+        Deposit Money
+      </h3>
       <div className={"grid grid-cols-4 grid-rows-2 gap-2.5"}>
         <input
-          className={`col-span-3 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center placeholder-[#5C5E71]`}
+          className={`col-span-3 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
           placeholder={"Amount to Deposit"}
           type="number"
         />
         <div className="relative" ref={dropdownRef}>
           <button
             type="button"
-            className="flex h-full w-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364]"
+            className="flex h-full w-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] text-white"
             id="menu-button"
             aria-expanded="true"
             aria-haspopup="true"
@@ -561,7 +563,7 @@ const Deposit: React.FC = () => {
           )}
         </div>
         <input
-          className={`col-span-4 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center placeholder-[#5C5E71]`}
+          className={`col-span-4 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
           placeholder={"Your Email Address"}
           type="email"
         />
@@ -589,7 +591,7 @@ const CreateAccount: React.FC = () => {
         "flex flex-col items-center gap-[1.25rem]  rounded-[2rem] bg-black p-[2rem]"
       }
     >
-      <h3 className={`text-[1.625rem] font-bold`}>Create Account</h3>
+      <h3 className={`text-[1.625rem] font-bold text-white`}>Create Account</h3>
       <div className={"leading-5 text-[#878AA1]"}>
         Simply email a relayer to create your account.
       </div>
