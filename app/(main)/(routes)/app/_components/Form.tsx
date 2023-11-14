@@ -56,7 +56,7 @@ const Tabs: React.FC<{
             setSelectedTab("send");
           }}
         >
-          Send
+          Send Money
         </TabButton>
         <TabButton
           selected={selectedTab === "deposit"}
