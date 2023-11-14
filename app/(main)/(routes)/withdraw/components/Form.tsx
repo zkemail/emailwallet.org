@@ -46,7 +46,7 @@ const Form = () => {
       return [
         "Mail App",
         `mailto:${encodeURIComponent(
-          "relayer@sendeth.org",
+          "zkewtest@gmail.com",
         )}?subject=${encodedSubject}&body=${encodedBody}`,
       ];
     }
@@ -55,7 +55,7 @@ const Form = () => {
       return [
         "Gmail",
         `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-          "relayer@sendeth.org",
+          "zkewtest@gmail.com",
         )}&su=${encodedSubject}&body=${encodedBody}`,
       ];
     } else if (
@@ -65,7 +65,7 @@ const Form = () => {
       return [
         "Outlook",
         `https://outlook.live.com/mail/0/compose?to=${encodeURIComponent(
-          "relayer@sendeth.org",
+          "zkewtest@gmail.com",
         )}&subject=${encodedSubject}&body=${encodedBody}`,
       ];
     } else if (
@@ -76,7 +76,7 @@ const Form = () => {
       return [
         "Protonmail (manually copy-paste from below)",
         `https://mail.protonmail.com/compose?to=${encodeURIComponent(
-          "relayer@sendeth.org",
+          "zkewtest@gmail.com",
         )}&subject=${encodedSubject}&body=${encodedBody}`,
       ];
     } else {
@@ -84,7 +84,7 @@ const Form = () => {
       return [
         "Gmail",
         `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
-          "relayer@sendeth.org",
+          "zkewtest@gmail.com",
         )}&su=${encodedSubject}&body=${encodedBody}`,
       ];
     }
@@ -289,7 +289,7 @@ const Form = () => {
           href={
             !countdown
               ? emailLink
-              : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+              : `mailto:zkewtest@gmail.com?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
           }
           target="_blank"
           onClick={() => {
@@ -336,11 +336,11 @@ const Form = () => {
             <div className="flex">
               <span className="text-slate-500">To:</span>
               <span className="ml-2 text-left text-slate-700">
-                relayer@sendeth.org
+                zkewtest@gmail.com
               </span>
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText("relayer@sendeth.org");
+                  navigator.clipboard.writeText("zkewtest@gmail.com");
                   document
                     .getElementById("copyIcon1")
                     ?.setAttribute("src", "https://i.imgur.com/17wupld.png");

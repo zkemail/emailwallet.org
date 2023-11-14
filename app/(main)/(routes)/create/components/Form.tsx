@@ -198,12 +198,23 @@ const Form = () => {
             }, 60000);
             // Make a request to the endpoint
             try {
-              const response = await fetch(
-                `https://localhost:3000/api/onboard?data=${fromEmail}`,
-              );
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
+              const accountRegistrationRequest = {
+                email_address: `${fromEmail}`, // replace with actual email address
+              };
+
+              fetch("127.0.0.1:4500/api/onboard", {
+                // replace with actual server URL
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(accountRegistrationRequest),
+              })
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .catch((error) => {
+                  console.error("Error:", error);
+                });
               // Process the response if needed
             } catch (error) {
               console.error(
