@@ -7,8 +7,8 @@ export function isValidEmail(email: string): boolean {
 
 export function generateNewKey() {
   return (
-    "0x" +
-    Array.from({ length: 64 }, () =>
+    "0x000" +
+    Array.from({ length: 61 }, () =>
       Math.floor(Math.random() * 16).toString(16),
     ).join("")
   );
@@ -52,7 +52,7 @@ export async function getCreateEmailLink(
   return getEmailLink(
     fromEmail,
     subject,
-    "sendeth.org will relay your email on-chain to trigger a transaction! Your unique secret code will conceal your email from being exposed publicly.",
+    "sendeth.org (cc'd) will relay your email on-chain to initialize your account! Your unique secret code will conceal your email from being exposed publicly. Don't edit the cc or subject fields, or else your transfer will fail!",
   );
 }
 

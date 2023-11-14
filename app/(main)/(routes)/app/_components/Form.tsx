@@ -568,7 +568,7 @@ const Deposit: React.FC = () => {
         />
       </div>
       <BlueButton className={`w-full`} onClick={() => {}}>
-        Create Account
+        Open Wallet to Deposit Money
       </BlueButton>
     </div>
   );
