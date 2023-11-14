@@ -150,18 +150,39 @@ const Send: React.FC = () => {
   );
   return (
     <>
-      <div className="flex flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem]">
-        <div className="flex w-full items-start sm:w-1/2">
+      <div className="flex w-[850px] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4">
+        {/* <div className="flex w-full items-start sm:w-1/2">
+          <label
+            htmlFor="from_email"
+            className="mr-2 flex items-center justify-center py-5 text-sm font-bold text-primary"
+          >
+            From:
+          </label>
+          <input
+            id="from_email"
+            type="email"
+            className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
+            placeholder="from@your.email.address"
+            onChange={(e) => {
+              setFromEmail(e.target.value);
+            }}
+            onBlur={(e) => {
+              setFromEmail(e.target.value);
+            }}
+          />
+        </div> */}
+
+        <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 py-4">
           <label
             htmlFor="to_email"
-            className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-bold text-primary"
+            className="mr-2 flex items-center justify-center px-2 py-2 text-sm font-medium text-[#515364]"
           >
             To:
           </label>
           <input
             id="to_email"
             type="email"
-            className={`col-span-3 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center placeholder-[#5C5E71]`}
+            className="block w-full rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
             placeholder="to@recipient.email.address"
             onChange={(e) => {
               setToEmail(e.target.value);
@@ -170,15 +191,111 @@ const Send: React.FC = () => {
               setToEmail(e.target.value);
             }}
           />
+          <button
+            // make this clickable to copy the input to clipboard
+            onClick={() => {
+              navigator.clipboard.writeText(toEmail);
+            }}
+            className="px-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="h-6 w-6 text-[#515364]"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
+          <label
+            htmlFor="cc_emai"
+            className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-medium text-[#515364]"
+          >
+            cc:
+          </label>
+          <p
+            className="
+            block w-full rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+          >
+            relayer@sendeth.org
+          </p>
+          <button
+            // make this clickable to copy the input to clipboard
+            onClick={() => {
+              navigator.clipboard.writeText("relayer@sendeth.org");
+            }}
+            className="px-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="h-6 w-6 text-[#515364]"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
+          <label
+            htmlFor="subject_email"
+            className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-medium text-[#515364]"
+          >
+            Subject:
+          </label>
+          <p
+            placeholder=""
+            className="block w-full rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+          >
+            {amount && amount > 0 && isValidEmail(toEmail)
+              ? `Send ${amount} ${Currency[currency]} to ${toEmail}`
+              : `...`}
+          </p>
+          <button
+            // make this clickable to copy the input to clipboard
+            onClick={() => {
+              navigator.clipboard.writeText("relayer@sendeth.org");
+            }}
+            className="px-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="h-6 w-6 text-[#515364]"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="start-0 flex w-full">
+          <textarea
+            className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm placeholder:text-[#515364]"
+            placeholder="Joe"
+          ></textarea>
         </div>
         <div className="flex w-full items-start sm:w-1/2">
-          {/* <label
-          htmlFor="subject_email"
-          className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-bold text-primary"
-        >
-          Subject:
-        </label> */}
-          <div className="h-15 flex w-1/2 w-full justify-between rounded-lg bg-secondary p-2.5 px-5">
+          <div className="h-15 flex w-full justify-between rounded-lg bg-secondary p-2.5 px-5">
             <input
               type="number"
               placeholder="Amount to send"
@@ -193,7 +310,7 @@ const Send: React.FC = () => {
           </div>
         </div>
 
-        <>
+        {/* <>
           <p className="mt-2 text-lg font-bold">Email Template</p>
           <div className="flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
             <div className="flex">
@@ -243,9 +360,9 @@ const Send: React.FC = () => {
               </button>
             </div>
           </div>
-        </>
+        </> */}
 
-        {emailSent ? (
+        {/* {emailSent ? (
           <>
             <div className="my-4 text-center">
               <p className="text-lg font-bold">
@@ -258,9 +375,9 @@ const Send: React.FC = () => {
           </>
         ) : (
           <p className="text-md mt-2">or...</p>
-        )}
+        )} */}
 
-        {
+        {/* {
           <>
             <p className="text-lg font-bold">Auto-Format Email</p>
             <p className="text-md w-2/3">
@@ -268,7 +385,7 @@ const Send: React.FC = () => {
               (desktop) or your default mail app (mobile)!
             </p>
           </>
-        }
+        } */}
 
         {emailSent && (
           <div className="flex w-full items-start sm:w-1/2">
@@ -289,6 +406,7 @@ const Send: React.FC = () => {
         )}
 
         {/* Default hidden on large screens. Small screen div; default to mailto regardless. */}
+
         <a
           href={
             countdown == 0 || countdown == null || countdownMax - countdown < 2
@@ -321,36 +439,40 @@ const Send: React.FC = () => {
         </a>
 
         {/* // Default hidden in small screens */}
-        <a
-          href={
-            countdown == 0 || countdown == null || countdownMax - countdown < 2
-              ? emailLink
-              : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
-          }
-          target="_blank"
-          onClick={() => {
-            setEmailSent(true);
-            setCountdown(countdownMax);
-            const intervalId = setInterval(() => {
-              setCountdown((prevCountdown) =>
-                prevCountdown ? prevCountdown - 1 : null,
-              );
-            }, 1000);
-            setTimeout(() => {
-              clearInterval(intervalId);
-              setCountdown(null);
-            }, 60000);
-          }}
-          className={
-            amount && amount > 0 && isValidEmail(toEmail)
-              ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white drop-shadow transition ease-in-out hover:scale-105 hover:transition-all sm:flex sm:w-1/2"
-              : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-500 sm:flex sm:w-1/2"
-          }
-        >
-          {!emailSent
-            ? `Send via ${emailProviderName}`
-            : `Failed? Re-send via default mail app`}
-        </a>
+        <div className="flex w-full justify-end">
+          <a
+            href={
+              countdown == 0 ||
+              countdown == null ||
+              countdownMax - countdown < 2
+                ? emailLink
+                : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+            }
+            target="_blank"
+            onClick={() => {
+              setEmailSent(true);
+              setCountdown(countdownMax);
+              const intervalId = setInterval(() => {
+                setCountdown((prevCountdown) =>
+                  prevCountdown ? prevCountdown - 1 : null,
+                );
+              }, 1000);
+              setTimeout(() => {
+                clearInterval(intervalId);
+                setCountdown(null);
+              }, 60000);
+            }}
+            className={
+              amount && amount > 0 && isValidEmail(toEmail)
+                ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white drop-shadow transition ease-in-out hover:scale-105 hover:transition-all sm:flex sm:w-1/2"
+                : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-500 sm:flex sm:w-1/2"
+            }
+          >
+            {!emailSent
+              ? `Send via ${emailProviderName}`
+              : `Failed? Re-send via default mail app`}
+          </a>
+        </div>
       </div>
     </>
   );
