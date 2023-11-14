@@ -52,10 +52,7 @@ export async function getCreateEmailLink(
   return getEmailLink(
     fromEmail,
     subject,
-    "❗ Don't edit the cc or subject fields, or else your transfer will fail!\n\
-    📤 sendeth.org (cc'd) will relay your email on-chain to initialize your account!\n\
-    🤫 Your unique secret code will conceal your email from being exposed publicly.\n\
-    📖 Read more on our docs at https://docs.emailwallet.org!",
+    "❗ Don't edit the cc or subject fields, or else your transfer will fail!\n📤 sendeth.org (cc'd) will relay your email on-chain to initialize your account!\n🤫 Your unique secret code will conceal your email from being exposed publicly.\n📖 Read more on our docs at https://docs.emailwallet.org!",
   );
 }
 
