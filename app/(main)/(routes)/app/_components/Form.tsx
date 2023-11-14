@@ -237,7 +237,7 @@ const Send: React.FC = () => {
           >
             Subject:
           </label>
-          <p className="block flex w-full items-center gap-1 rounded-lg bg-black py-2 text-sm placeholder:text-[#515364]">
+          <p className="flex w-full items-center gap-1 rounded-lg bg-black py-2 text-sm placeholder:text-[#515364]">
             Send{" "}
             <input
               value={amount}
@@ -372,82 +372,17 @@ const Send: React.FC = () => {
           ></textarea>
         </div>
 
-        {/* <>
-          <p className="mt-2 text-lg font-bold">Email Template</p>
-          <div className="flex flex-col items-start gap-2 rounded-md bg-slate-100 p-4">
-            <div className="flex">
-              <span className="text-slate-500">Cc:</span>
-              <span className="ml-2 text-left text-slate-700">
-                relayer@sendeth.org
-              </span>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText("relayer@sendeth.org");
-                  document
-                    .getElementById("copyIcon1")
-                    ?.setAttribute("src", "/checkmark.png");
-                }}
-              >
-                <img
-                  id="copyIcon1"
-                  src="/copy.png"
-                  alt="Copy to clipboard"
-                  style={{ height: "1em", marginLeft: "0.5em" }}
-                />
-              </button>
-            </div>
-            <div className="flex">
-              <span className="text-slate-500">Subject:</span>
-              <span className="ml-2 text-left text-slate-700">
-                {amount && amount > 0 && isValidEmail(toEmail)
-                  ? `Send ${amount} ${Currency[currency]} to ${toEmail}`
-                  : `...`}
-              </span>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    `Send ${amount} ${Currency[currency]} to ${toEmail}`,
-                  );
-                  document
-                    .getElementById("copyIcon2")
-                    ?.setAttribute("src", "/checkmark.png");
-                }}
-              >
-                <img
-                  id="copyIcon2"
-                  src="/copy.png"
-                  alt="Copy to clipboard"
-                  style={{ height: "1em", marginLeft: "0.5em" }}
-                />
-              </button>
-            </div>
-          </div>
-        </> */}
-
-        {/* {emailSent ? (
+        {emailSent && (
           <>
             <div className="my-4 text-center">
-              <p className="text-lg font-bold">
+              <p className="text-lg font-medium">
                 {countdown
                   ? `Expect a response in ${countdown} seconds...`
                   : "Done processing!"}
               </p>
             </div>
-            <p className="text-md mt-2">or...</p>
           </>
-        ) : (
-          <p className="text-md mt-2">or...</p>
-        )} */}
-
-        {/* {
-          <>
-            <p className="text-lg font-bold">Auto-Format Email</p>
-            <p className="text-md w-2/3">
-              This will format the email for you to send money from a new tab
-              (desktop) or your default mail app (mobile)!
-            </p>
-          </>
-        } */}
+        )}
 
         {emailSent && (
           <div className="flex w-full items-start sm:w-1/2">
@@ -467,47 +402,23 @@ const Send: React.FC = () => {
           </div>
         )}
 
-        {/* Default hidden on large screens. Small screen div; default to mailto regardless. */}
-        <a
-          href={
-            countdown == 0 || countdown == null || countdownMax - countdown < 2
-              ? `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
-              : emailLink
-          }
-          target="_blank"
-          onClick={() => {
-            setEmailSent(true);
-            setCountdown(countdownMax);
-            const intervalId = setInterval(() => {
-              setCountdown((prevCountdown) =>
-                prevCountdown ? prevCountdown - 1 : null,
-              );
-            }, 1000);
-            setTimeout(() => {
-              clearInterval(intervalId);
-              setCountdown(null);
-            }, 60000);
-          }}
-          className={
-            amount && amount > 0 && isValidEmail(toEmail)
-              ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden sm:w-1/2"
-              : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-500 sm:hidden sm:w-1/2"
-          }
-        >
-          {emailSent
-            ? `Failed? Re-send via ${emailProviderName}`
-            : `Send via default mail app`}
-        </a>
-
-        {/* // Default hidden in small screens */}
-        <div className="flex w-full justify-end">
+        <div className="flex w-full items-center justify-end gap-3">
+          <button
+            className={""}
+            onClick={() => {
+              {
+                /*TODO: fill in logic for copy details function*/
+              }
+            }}
+          >
+            Copy Details
+          </button>
+          <p>OR</p>
           <a
             href={
-              countdown == 0 ||
-              countdown == null ||
-              countdownMax - countdown < 2
-                ? emailLink
-                : `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+              emailSent
+                ? `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                : emailLink
             }
             target="_blank"
             onClick={() => {
@@ -523,14 +434,13 @@ const Send: React.FC = () => {
                 setCountdown(null);
               }, 60000);
             }}
-            className={
-              amount && amount > 0 && isValidEmail(toEmail)
-                ? "hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white drop-shadow transition ease-in-out hover:scale-105 hover:transition-all sm:flex sm:w-1/2"
-                : "pointer-events-none hidden h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-500 sm:flex sm:w-1/2"
-            }
+            style={{
+              background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
+            }}
+            className={`rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium`}
           >
             {!emailSent
-              ? `Send via ${emailProviderName}`
+              ? `Auto-Format Email`
               : `Failed? Re-send via default mail app`}
           </a>
         </div>
