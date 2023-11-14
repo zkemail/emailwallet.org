@@ -72,7 +72,7 @@ export function getEmailLink(
     return [
       "Mail App",
       `mailto:${encodeURIComponent(
-        "optimism@sendeth.org",
+        "arbitrum@sendeth.org",
       )}?subject=${encodedSubject}&body=${encodedBody}`,
       ``,
     ];
@@ -82,7 +82,7 @@ export function getEmailLink(
     return [
       "Gmail",
       `https://mail.google.com/mail/?view=cm&fs=1&cc=${encodeURIComponent(
-        "optimism@sendeth.org",
+        "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
       `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,
     ];
@@ -93,7 +93,7 @@ export function getEmailLink(
     return [
       "Mail App",
       `mailto:${encodeURIComponent(
-        "optimism@sendeth.org",
+        "arbitrum@sendeth.org",
       )}?subject=${encodedSubject}&body=${encodedBody}`,
       `https://outlook.live.com/mail/0/sentitems`,
     ];
@@ -101,9 +101,9 @@ export function getEmailLink(
     return [
       "Yahoo Mail",
       `https://mail.yahoo.com/d/compose-message?cc=${encodeURIComponent(
-        "optimism@sendeth.org",
+        "arbitrum@sendeth.org",
       )}&subject=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.yahoo.com/d/search/keyword=optimism@sendeth.org`,
+      `https://mail.yahoo.com/d/search/keyword=arbitrum@sendeth.org`,
     ];
   } else if (
     fromEmail.endsWith("@protonmail.com") ||
@@ -113,14 +113,14 @@ export function getEmailLink(
     return [
       "Protonmail [copy over details below!]",
       `https://mail.proton.me/u/0/`,
-      `https://mail.proton.me/u/0/almost-all-mail#keyword=optimism@sendeth.org`,
+      `https://mail.proton.me/u/0/almost-all-mail#keyword=arbitrum@sendeth.org`,
     ];
   } else {
     // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
     return [
       "Gmail",
       `https://mail.google.com/mail/?view=cm&fs=1&cc=${encodeURIComponent(
-        "optimism@sendeth.org",
+        "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
       `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,
     ];

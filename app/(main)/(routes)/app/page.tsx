@@ -10,7 +10,7 @@ export default function SendMoneyPage() {
           starts with 100 TEST tokens (and 5 USDC during ProgCrypto!).
           <br />
           <br />
-          This 2-week demo experiment on Optimism mainnet will shut down on
+          This 2-week demo experiment on Arbitrum mainnet will shut down on
           November 28, 2023. Make sure to withdraw your money by then!
         </h2>
         <div className="text-sm text-muted-foreground">

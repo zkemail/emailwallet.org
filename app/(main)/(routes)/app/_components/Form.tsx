@@ -209,11 +209,11 @@ const Send: React.FC = () => {
             className="
             mb-3 mt-1 block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-2.5 py-2 text-sm text-white placeholder:text-[#515364]"
           >
-            optimism@sendeth.org
+            arbitrum@sendeth.org
           </p>
           <button
             onClick={() => {
-              navigator.clipboard.writeText("optimism@sendeth.org");
+              navigator.clipboard.writeText("arbitrum@sendeth.org");
             }}
             className="pulsetarget px-2"
           >
@@ -405,6 +405,7 @@ const Send: React.FC = () => {
 
         <div className="flex w-full items-center justify-end gap-3 text-white">
           <button
+            className={""}
             onClick={() => {
               document.querySelectorAll(".pulsetarget").forEach((node) => {
                 node.classList.add("pulse");
