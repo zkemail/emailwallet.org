@@ -3,7 +3,7 @@ import Form from "./_components/Form";
 export default function SendMoneyPage() {
   return (
     <div className="mb-10">
-      <div className="flex flex-col items-center gap-[5rem] py-[5rem] sm:py-24">
+      <div className="flex flex-col items-center gap-[2rem] py-[5rem] sm:py-24">
         <h1 className="text-4xl font-medium">Send Money via Email</h1>
         <h2 className="w-1/2 text-center text-muted-foreground">
           Just send emails from your currently logged-in email address! Everyone
