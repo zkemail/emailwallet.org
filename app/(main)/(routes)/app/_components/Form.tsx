@@ -401,49 +401,51 @@ const Send: React.FC = () => {
         )}
 
         <div className="flex w-full items-center justify-end gap-3 text-white">
-          <button
-            className={""}
-            onClick={() => {
-              document.querySelectorAll(".pulsetarget").forEach((node) => {
-                node.classList.add("pulse");
+          <>
+            <button
+              className={""}
+              onClick={() => {
+                document.querySelectorAll(".pulsetarget").forEach((node) => {
+                  node.classList.add("pulse");
+                  setTimeout(() => {
+                    node.classList.remove("pulse");
+                  }, 3000);
+                });
+              }}
+            >
+              Copy Details
+            </button>
+            <p>OR</p>
+            <a
+              href={
+                emailSent && (!countdown || countdown < countdownMax - 2)
+                  ? `mailto:optimism@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                  : emailLink
+              }
+              target="_blank"
+              onClick={() => {
+                setEmailSent(true);
+                setCountdown(countdownMax);
+                const intervalId = setInterval(() => {
+                  setCountdown((prevCountdown) =>
+                    prevCountdown ? prevCountdown - 1 : null,
+                  );
+                }, 1000);
                 setTimeout(() => {
-                  node.classList.remove("pulse");
-                }, 3000);
-              });
-            }}
-          >
-            Copy Details
-          </button>
-          <p>OR</p>
-          <a
-            href={
-              emailSent && (!countdown || countdown < countdownMax - 2)
-                ? `mailto:optimism@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
-                : emailLink
-            }
-            target="_blank"
-            onClick={() => {
-              setEmailSent(true);
-              setCountdown(countdownMax);
-              const intervalId = setInterval(() => {
-                setCountdown((prevCountdown) =>
-                  prevCountdown ? prevCountdown - 1 : null,
-                );
-              }, 1000);
-              setTimeout(() => {
-                clearInterval(intervalId);
-                setCountdown(null);
-              }, 60000);
-            }}
-            style={{
-              background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
-            }}
-            className={`rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium text-white`}
-          >
-            {!emailSent
-              ? `Auto-Format Email`
-              : `Failed? Re-send via default mail app`}
-          </a>
+                  clearInterval(intervalId);
+                  setCountdown(null);
+                }, 60000);
+              }}
+              style={{
+                background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
+              }}
+              className={`rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium text-white`}
+            >
+              {!emailSent
+                ? `Auto-Format Email`
+                : `Failed? Re-send via default mail app`}
+            </a>
+          </>
         </div>
       </div>
     </>
