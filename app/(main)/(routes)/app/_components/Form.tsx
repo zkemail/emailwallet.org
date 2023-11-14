@@ -204,13 +204,13 @@ const Send: React.FC = () => {
           </label>
           <p
             className="
-            mb-3 mt-1 block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+            mb-3 mt-1 block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-2.5 py-2 text-sm text-white placeholder:text-[#515364]"
           >
-            relayer@sendeth.org
+            optimism@sendeth.org
           </p>
           <button
             onClick={() => {
-              navigator.clipboard.writeText("relayer@sendeth.org");
+              navigator.clipboard.writeText("optimism@sendeth.org");
             }}
             className="pulsetarget px-2"
           >
@@ -257,7 +257,7 @@ const Send: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 type="button"
-                className="inline-flex h-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] p-2 text-white"
+                className="mr-2 inline-flex h-full items-center justify-center rounded-md border-[1px] border-solid border-[#515364] p-2 text-white"
                 id="menu-button"
                 aria-expanded="true"
                 aria-haspopup="true"
@@ -364,7 +364,7 @@ const Send: React.FC = () => {
         </div>
         <div className="start-0 flex w-full">
           <textarea
-            className="flex h-80 w-full rounded-lg bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+            className="h-50 flex w-full rounded-lg bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
             defaultValue={"Thanks for teaching math!"} /*TODO: fill this in */
           ></textarea>
         </div>
@@ -417,7 +417,7 @@ const Send: React.FC = () => {
           <a
             href={
               emailSent
-                ? `mailto:relayer@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                ? `mailto:optimism@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
                 : emailLink
             }
             target="_blank"
@@ -621,18 +621,18 @@ const CreateAccount: React.FC<{
             Create Account
           </BlueButton>
         </div>
-        {sent && (
-          <div className="flex w-full items-start">
-            <a
-              onClick={() => setSelectedTab("send")}
-              className={
-                "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
-              }
-            >
-              Sent? Go to Send tab
-            </a>
-          </div>
-        )}
+        <div className="flex w-full items-start">
+          <a
+            onClick={() => setSelectedTab("send")}
+            className={
+              "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
+            }
+          >
+            {sent
+              ? "Sent? Go to Send tab ➜"
+              : "Already created? Go to send tab ➜"}
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -642,6 +642,12 @@ const Form = () => {
   const [selectedTab, setSelectedTab] = useState<"create" | "send" | "deposit">(
     "create",
   );
+
+  useEffect(() => {
+    if (localStorage.getItem("code")) {
+      setSelectedTab("send");
+    }
+  }, []);
 
   return (
     <>
