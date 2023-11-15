@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { getEmailLink, getCreateEmailLink } from "@/lib/send";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import Tabs from "./Tabs";
 
 export enum Currency {
