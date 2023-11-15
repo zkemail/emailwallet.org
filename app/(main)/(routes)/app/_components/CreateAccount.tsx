@@ -58,7 +58,7 @@ const CreateAccount: React.FC<{
             className="w-full bg-tertiary text-primary hover:bg-tertiary/80"
           >
             {sent
-              ? "Sent? Go to 'Send Money' tab ➜"
+              ? "Sent email? Go to 'Send Money' tab ➜"
               : "Already created? Go to 'Send Money' tab ➜"}
           </Button>
         </div>

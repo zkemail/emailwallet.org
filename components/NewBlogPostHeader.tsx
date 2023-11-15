@@ -15,7 +15,11 @@ const NewBlogPostHeader = () => {
       <p className="text-secondary-foreground">
         Live on Arbitrum Mainnet, for 2 weeks only in Istanbul.
       </p>
-      <a href={`/blog`} className="flex items-center font-bold text-slate-800">
+      <a
+        href={`https://docs.emailwallet.org/`}
+        target="_blank"
+        className="flex items-center font-bold text-slate-800"
+      >
         Read now <ArrowRight size={15} />
       </a>
     </div>
