@@ -68,13 +68,21 @@ const Send: React.FC = () => {
   return (
     <>
       <div className="flex w-[95%] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4 sm:w-[600px] md:w-[700px] lg:w-[850px]">
+        <h3 className={`text-[1.625rem] font-bold text-white`}>Send Money</h3>
+        <div className={"leading-5 text-[#878AA1]"}>
+          Send money via sending an email and cc&apos;ing a relayer with
+          transaction instructions in the subject.
+          {/* w-1/2 `Create Account` pops out your default email client with your private code in the subject. */}
+        </div>
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 py-4">
-          <label
-            htmlFor="to_email"
-            className="mr-2 flex items-center justify-center px-2 py-2 text-sm font-medium text-[#515364]"
-          >
-            To:
-          </label>
+          <ToolTip text="This recipient's identity will be concealed on-chain.">
+            <label
+              htmlFor="to_email"
+              className="mr-2 flex items-center justify-center px-2 py-2 text-sm font-medium text-[#515364]"
+            >
+              To:
+            </label>
+          </ToolTip>
           <input
             id="to_email"
             type="email"
@@ -112,50 +120,56 @@ const Send: React.FC = () => {
             </button>
           )}
         </div>
-        <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
-          <label
-            htmlFor="cc_email"
-            className="mr-2 flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
-          >
-            Cc:
-          </label>
-          <p
-            className="
-              mb-3 mt-1 block w-[11rem] rounded-lg bg-black px-2.5 py-2 text-sm text-white placeholder:text-[#515364]"
-          >
-            arbitrum@sendeth.org
-          </p>
-          <ToolTip text="Copy to clipboard">
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText("arbitrum@sendeth.org");
-              }}
-              className="pulsetarget px-2"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="h-6 w-6 text-[#515364]"
+        <div className="flex w-full">
+          <ToolTip text="This the email for the relayer, which will prove your email on-chain.">
+            <div className="flex w-full items-center border-b-[1px] border-[#515364]/30">
+              <label
+                htmlFor="cc_email"
+                className="mr-2 flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
-                />
-              </svg>
-            </button>
+                Cc:
+              </label>
+              <p
+                className="
+                    mb-3 mt-1 block w-[11rem] rounded-lg bg-black px-2.5 py-2 text-sm text-white placeholder:text-[#515364]"
+              >
+                arbitrum@sendeth.org
+              </p>
+              <ToolTip text="Copy to clipboard">
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText("arbitrum@sendeth.org");
+                  }}
+                  className="pulsetarget px-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="h-6 w-6 text-[#515364]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
+                    />
+                  </svg>
+                </button>
+              </ToolTip>
+            </div>
           </ToolTip>
         </div>
         <div className="flex w-full items-start border-b-[1px] border-[#515364]/30 md:items-center">
-          <label
-            htmlFor="subject_email"
-            className="flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
-          >
-            Subject:
-          </label>
+          <ToolTip text="You trigger Email Wallet transactions via plain text commands in the subject.">
+            <label
+              htmlFor="subject_email"
+              className="flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
+            >
+              Subject:
+            </label>
+          </ToolTip>
           <p className="flex w-full flex-col items-start gap-y-3 rounded-lg bg-black pb-3 pt-1 text-sm text-white  placeholder:text-[#515364] md:flex-row md:items-center">
             <div className="flex items-center">
               <span className="mr-1">Send</span>
@@ -250,16 +264,18 @@ const Send: React.FC = () => {
             </div>
 
             <div className="flex items-center">
-              <p
-                className={`${
-                  toEmail.length > 0 ? "" : "text-[#515364]"
-                } inline w-[210px] overflow-x-scroll sm:w-[280px] lg:max-w-full`}
-              >
-                <span className="mr-2 text-white">to</span>
-                {toEmail.length > 0
-                  ? toEmail
-                  : "Email Address OR Wallet Address"}
-              </p>
+              <ToolTip text="You can edit this recipient by editing the `To:` field above.">
+                <p
+                  className={`${
+                    toEmail.length > 0 ? "" : "text-[#515364]"
+                  } inline w-[210px] overflow-x-scroll sm:w-[280px] lg:max-w-full`}
+                >
+                  <span className="mr-2 text-white">to</span>
+                  {toEmail.length > 0
+                    ? toEmail
+                    : "Email Address OR Wallet Address"}
+                </p>
+              </ToolTip>
               <ToolTip text="Copy to clipboard">
                 <button
                   onClick={() => {
@@ -329,49 +345,53 @@ const Send: React.FC = () => {
         )}
 
         <div className="flex w-full items-center justify-end gap-3 text-white">
-          <Button
-            variant={"secondary"}
-            onClick={() => {
-              document.querySelectorAll(".pulsetarget").forEach((node) => {
-                node.classList.add("pulse");
-                setTimeout(() => {
-                  node.classList.remove("pulse");
-                }, 3000);
-              });
-            }}
-          >
-            Copy Details
-          </Button>
+          <ToolTip text="Manually copy the cc: and subject: fields into your inbox.">
+            <Button
+              variant={"secondary"}
+              onClick={() => {
+                document.querySelectorAll(".pulsetarget").forEach((node) => {
+                  node.classList.add("pulse");
+                  setTimeout(() => {
+                    node.classList.remove("pulse");
+                  }, 3000);
+                });
+              }}
+            >
+              Copy Details
+            </Button>
+          </ToolTip>
           <p className="text-sm">OR</p>
-          <a
-            href={
-              emailSent && (!countdown || countdown < countdownMax - 2)
-                ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
-                : emailLink
-            }
-            target="_blank"
-            onClick={() => {
-              setEmailSent(true);
-              setCountdown(countdownMax);
-              const intervalId = setInterval(() => {
-                setCountdown((prevCountdown) =>
-                  prevCountdown ? prevCountdown - 1 : null,
-                );
-              }, 1000);
-              setTimeout(() => {
-                clearInterval(intervalId);
-                setCountdown(null);
-              }, 60000);
-            }}
-            style={{
-              background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
-            }}
-            className={cn(buttonVariants({ className: "text-white" }))}
-          >
-            {!emailSent
-              ? `Send via Default Email App`
-              : `Failed? Re-send via default mail app`}
-          </a>
+          <ToolTip text="This will auto-format the fields above into your default mail app.">
+            <a
+              href={
+                emailSent && (!countdown || countdown < countdownMax - 2)
+                  ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                  : emailLink
+              }
+              target="_blank"
+              onClick={() => {
+                setEmailSent(true);
+                setCountdown(countdownMax);
+                const intervalId = setInterval(() => {
+                  setCountdown((prevCountdown) =>
+                    prevCountdown ? prevCountdown - 1 : null,
+                  );
+                }, 1000);
+                setTimeout(() => {
+                  clearInterval(intervalId);
+                  setCountdown(null);
+                }, 60000);
+              }}
+              style={{
+                background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
+              }}
+              className={cn(buttonVariants({ className: "text-white" }))}
+            >
+              {!emailSent
+                ? `Send via Default Email App`
+                : `Failed? Re-send via default mail app`}
+            </a>
+          </ToolTip>
         </div>
       </div>
     </>

@@ -22,7 +22,8 @@ const CreateAccount: React.FC<{
     >
       <h3 className={`text-[1.625rem] font-bold text-white`}>Create Account</h3>
       <div className={"leading-5 text-[#878AA1]"}>
-        Simply email a relayer to create your account.
+        Email a relayer to create an account.
+        {/* w-1/2 `Create Account` pops out your default email client with your private code in the subject. */}
       </div>
       <div className={"flex flex-col gap-2.5"}>
         <div className={"flex items-center gap-2.5"}>
@@ -35,7 +36,7 @@ const CreateAccount: React.FC<{
             placeholder={"Your Email Address"}
             type="email"
           />
-          <ToolTip text="This will open your default email client with your private code.">
+          <ToolTip text="This will open your default email client, with your private code in the subject.">
             <BlueButton
               className="py-6"
               onClick={async () => {
@@ -62,7 +63,7 @@ const CreateAccount: React.FC<{
           >
             {sent
               ? "Sent email? Go to 'Send Money' tab ➜"
-              : "Already created? Go to 'Send Money' tab ➜"}
+              : "Created? Go to 'Send Money' tab ➜"}
           </Button>
         </div>
       </div>
