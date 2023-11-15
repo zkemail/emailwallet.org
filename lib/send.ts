@@ -34,15 +34,15 @@ export function getCreateEmailLink(
   };
 
   let subject = "Create my email wallet! CODE:" + code;
-  let test_message = "🧪 Each new account starts with 100 TEST tokens.\n";
+  // let test_message = "🧪 Each new account starts with 100 TEST tokens.";
   return getEmailLink(
     fromEmail,
     subject,
-    `You are sending with Email Wallet.\n
-\n❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n
-\n${test_message}📤 sendeth.org will relay your email on Arbitrum (without publicly revealing it) to initialize your account. Expect a confirmation email when finished.\n
-\n🤫 Your unique secret code will conceal your email and email address from being exposed publicly.\n
-\n📖 Read more on our docs at http://docs.emailwallet.org`,
+    `You are creating your Email Wallet.\n
+❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n
+📤 sendeth.org privately relays your email on Arbitrum to create your account. Expect a confirmation email in a minute.\n
+🤫 Your unique secret code hides your email on-chain.\n
+📖 Read more on our docs at http://docs.emailwallet.org`,
     true,
   );
 }
@@ -78,7 +78,7 @@ export function getEmailLink(
       }=${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.google.com/mail?authuser=${fromEmail}#search/to%3Arelayer%40sendeth.org`,
+      `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
     ];
   } else if (
     fromEmail.endsWith("@outlook.com") ||
@@ -118,7 +118,7 @@ export function getEmailLink(
       }=${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.google.com/mail?authuser=${fromEmail}#search/to%3Arelayer%40sendeth.org`,
+      `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
     ];
   }
 }
