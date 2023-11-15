@@ -317,36 +317,6 @@ const Send: React.FC = () => {
           ></textarea>
         </div>
 
-        {emailSent && (
-          <>
-            <div className="my-4 text-center">
-              <p className="text-lg font-medium">
-                {countdown
-                  ? `Expect a response in ${countdown} seconds...`
-                  : "Done processing! You should receive a reply shortly."}
-              </p>
-            </div>
-          </>
-        )}
-
-        {emailSent && (
-          <div className="flex w-full items-start sm:w-1/2">
-            <a
-              href={emailSearchLink}
-              target="_blank"
-              className={
-                emailSearchLink
-                  ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
-                  : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50"
-              }
-            >
-              {emailSearchLink
-                ? `View Sent Email in ${emailProviderName} ➜`
-                : `View your sent email for updates!`}
-            </a>
-          </div>
-        )}
-
         <div className="flex w-full items-center justify-end gap-3 text-white">
           <ToolTip text="Manually copy the cc: and subject: fields into your inbox.">
             <Button
@@ -396,6 +366,38 @@ const Send: React.FC = () => {
             </a>
           </ToolTip>
         </div>
+
+        {emailSent && (
+          <>
+            <div className="my-4 text-center">
+              <p className="text-lg font-medium">
+                {countdown
+                  ? `Expect a response in ${countdown} seconds...`
+                  : "Done processing! You should receive a reply shortly."}
+              </p>
+            </div>
+          </>
+        )}
+
+        {/* If the email search link doesn't exist, we found 
+        people still try to click the grayed out button. */}
+        {emailSent && emailSearchLink && (
+          <div className="flex w-full items-start sm:w-1/2">
+            <a
+              href={emailSearchLink}
+              target="_blank"
+              className={
+                emailSearchLink
+                  ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-tertiary px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
+                  : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50"
+              }
+            >
+              {emailSearchLink
+                ? `View Sent Email in ${emailProviderName} ➜`
+                : `View your sent email for updates!`}
+            </a>
+          </div>
+        )}
       </div>
     </>
   );
