@@ -18,11 +18,13 @@ export async function getCreateEmailLink(
   fromEmail: string,
 ): Promise<[string, string, string]> {
   let code;
-  if (localStorage.getItem("code")) {
-    code = localStorage.getItem("code"); // If code is in localstorage, use it
+  let storedData = JSON.parse(localStorage.getItem(fromEmail) || "{}");
+  if (storedData && storedData.code) {
+    code = storedData.code; // If code is in localstorage for this email, use it
   } else {
     code = generateNewKey();
-    localStorage.setItem("code", code); // Cache the code in localstorage
+    storedData = { ...storedData, code: code }; // Add the code to the stored data for this email
+    localStorage.setItem(fromEmail, JSON.stringify(storedData)); // Cache the data in localstorage for this email
   }
 
   const accountRegistrationRequest = {
