@@ -30,7 +30,7 @@ const CreateAccount: React.FC<{
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center placeholder-[#5C5E71]`}
+            className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
             placeholder={"Your Email Address"}
             type="email"
           />
@@ -55,7 +55,7 @@ const CreateAccount: React.FC<{
         <div className="flex w-full items-start">
           <Button
             onClick={() => setSelectedTab("send")}
-            className="w-full bg-tertiary text-white hover:bg-tertiary/80"
+            className="w-full bg-tertiary text-primary hover:bg-tertiary/80"
           >
             {sent
               ? "Sent? Go to 'Send Money' tab ➜"
