@@ -11,9 +11,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const routes = [
-  { name: "docs", pathname: "https://docs.sendeth.org", isExternal: true },
+  { name: "docs", pathname: "https://docs.emailwallet.org", isExternal: true },
   { name: "about", pathname: "/about" },
-  { name: "blog", pathname: "/blog" },
+  { name: "blog", pathname: "https://prove.email/blog", isExternal: true },
 ];
 
 const Header = () => {
