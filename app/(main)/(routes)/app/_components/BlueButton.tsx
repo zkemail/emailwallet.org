@@ -8,14 +8,12 @@ const BlueButton: React.FC<{
 }> = ({ children, onClick, className }) => {
   return (
     <Button
-      style={{
-        background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
-      }}
       className={cn(
-        "rounded-[0.5625rem] px-[1.1875rem] py-2.5 font-medium text-white",
+        "w-auto rounded-[0.5625rem] bg-tertiary px-[1rem] py-2.5 font-medium text-white hover:bg-tertiary/80",
         className,
       )}
       onClick={onClick}
+      style={{ minWidth: "16ch" }}
     >
       {children}
     </Button>

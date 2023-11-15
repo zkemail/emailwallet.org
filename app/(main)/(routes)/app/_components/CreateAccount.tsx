@@ -3,6 +3,7 @@ import { useState } from "react";
 import BlueButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ToolTip from "@/components/ToolTip";
 
 const CreateAccount: React.FC<{
   setSelectedTab: (tab: "create" | "send" | "deposit") => void;
@@ -34,28 +35,30 @@ const CreateAccount: React.FC<{
             placeholder={"Your Email Address"}
             type="email"
           />
-          <BlueButton
-            className="py-6"
-            onClick={async () => {
-              console.log(email);
-              const [name, sendLink, viewLink] =
-                await getCreateEmailLink(email);
-              setEmailProviderName(name);
-              setEmailSearchLink(viewLink);
-              setEmailLink(sendLink);
-              if (sendLink) {
-                window.open(sendLink, "_blank");
-              }
-              setSent(true);
-            }}
-          >
-            Create Account
-          </BlueButton>
+          <ToolTip text="This will open your default email client with your private code.">
+            <BlueButton
+              className="py-6"
+              onClick={async () => {
+                console.log(email);
+                const [name, sendLink, viewLink] =
+                  await getCreateEmailLink(email);
+                setEmailProviderName(name);
+                setEmailSearchLink(viewLink);
+                setEmailLink(sendLink);
+                if (sendLink) {
+                  window.open(sendLink, "_blank");
+                }
+                setSent(true);
+              }}
+            >
+              {sent ? "Created ✔" : "Create Account"}
+            </BlueButton>
+          </ToolTip>
         </div>
         <div className="flex w-full items-start">
           <Button
             onClick={() => setSelectedTab("send")}
-            className="w-full bg-tertiary text-primary hover:bg-tertiary/80"
+            className="hover:bg-neutral/80 w-full border border-solid border-primary bg-secondary text-primary"
           >
             {sent
               ? "Sent email? Go to 'Send Money' tab ➜"

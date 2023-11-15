@@ -369,7 +369,7 @@ const Send: React.FC = () => {
             className={cn(buttonVariants({ className: "text-white" }))}
           >
             {!emailSent
-              ? `Auto-Format Email`
+              ? `Send via Default Email App`
               : `Failed? Re-send via default mail app`}
           </a>
         </div>
