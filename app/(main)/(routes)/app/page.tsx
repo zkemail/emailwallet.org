@@ -2,19 +2,34 @@ import Form from "./_components/Form";
 
 export default function SendMoneyPage() {
   return (
-    <div className="mb-24 sm:h-full">
-      <div className="flex flex-col py-8 text-center sm:py-24">
-        <div className="mx-auto max-w-3xl p-4">
-          <div className="flex flex-col gap-2 pb-8">
-            <h1 className="text-4xl font-medium">Send Money via Emails</h1>
-            <h2 className="text-muted-foreground">
-              Each email address will have a smart contract wallet deployed for
-              them, but your email address will not be revealed on-chain.
-              Everyone starts with 100 TEST tokens.
-            </h2>
-          </div>
-          <Form />
+    <div className="mb-10 px-2.5">
+      <div className="flex flex-col items-center gap-[2rem] py-[5rem] sm:py-24">
+        <h1 className="text-4xl font-medium">Send Money via Email</h1>
+        <h2 className="w-11/12 text-center text-muted-foreground sm:w-1/2">
+          Create an account and send money, by sending emails from your
+          currently logged-in email address. Everyone starts with 100 TEST
+          tokens (and 5 USDC during ProgCrypto).
+          <br />
+          <br />
+          This 2-week demo experiment on Arbitrum mainnet will shut down on
+          November 28, 2023. Make sure to withdraw your money by then!
+        </h2>
+        <div className="text-sm text-muted-foreground">
+          By using this service, you agree to our{" "}
+          <a
+            href="/terms-of-service.html"
+            target="_blank"
+            className="underline"
+          >
+            Terms of Service
+          </a>{" "}
+          and{" "}
+          <a href="/privacy-policy.html" target="_blank" className="underline">
+            Privacy Policy
+          </a>
+          .
         </div>
+        <Form />
       </div>
     </div>
   );
