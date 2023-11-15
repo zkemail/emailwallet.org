@@ -54,6 +54,7 @@ const SendToPeopleSection = () => {
       {/* <motion.div
         transition={{ repeat: Infinity, duration: 4 }}
         animate={{ x: [0, 30, 0] }}
+        className="absolute -bottom-[260%] -z-50 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/30 transition-all md:-bottom-[120%]"
         className="absolute -z-50 h-[400px] w-[400px] rounded-full border border-primary bg-tertiary/30 transition-all max-md:hidden md:-bottom-[120%]"
       /> */}
     </section>
