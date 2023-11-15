@@ -61,7 +61,7 @@ const Send: React.FC = () => {
   const [emailProviderName, emailLink, emailSearchLink] = getEmailLink(
     fromEmail,
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
-    "You are sending with Email Wallet.\n\n❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n\n📤 sendeth.org (cc'd) will relay your email on Arbitrum to transfer the funds. Expect a confirmation email when finished.\n\n🤫 Funds can be returned after 30 days if the recipient does not claim them.\n\n🤏 This Arbitrum mainnet experiment will only run for 2 weeks, so ensure to withdraw any real funds by November 28, 2023.\n\n📖 Read more on our site, docs, or code at https://emailwallet.org",
+    "You are sending with Email Wallet.\n\n❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n\n📤 sendeth.org (cc'd) relays your email on Arbitrum to transfer the funds. Expect a confirmation email when finished.\n\n🤏 This Arbitrum mainnet experiment will only run for 2 weeks, so withdraw any real funds by November 28, 2023.\n\n📖 Read more on our site, docs, or code at https://emailwallet.org",
   );
   const isLargeScreen = useMediaQuery("(min-width: 740px)");
 
@@ -77,26 +77,28 @@ const Send: React.FC = () => {
         </div>
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 py-4">
           <ToolTip text="This recipient's identity will be concealed on-chain.">
-            <label
-              htmlFor="to_email"
-              className="mr-2 flex items-center justify-center px-2 py-2 text-sm font-medium text-[#515364]"
-            >
-              To:
-            </label>
+            <div className="flex w-full">
+              <label
+                htmlFor="to_email"
+                className="mr-2 flex items-center justify-center px-2 py-2 text-sm font-medium text-[#515364]"
+              >
+                To:
+              </label>
+              <input
+                id="to_email"
+                type="email"
+                size={isLargeScreen ? 55 : 31}
+                className="block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]"
+                placeholder="Email Address OR Wallet Address"
+                onChange={(e) => {
+                  setToEmail(e.target.value);
+                }}
+                onBlur={(e) => {
+                  setToEmail(e.target.value);
+                }}
+              />
+            </div>
           </ToolTip>
-          <input
-            id="to_email"
-            type="email"
-            size={isLargeScreen ? 55 : 31}
-            className="block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]"
-            placeholder="Email Address OR Wallet Address"
-            onChange={(e) => {
-              setToEmail(e.target.value);
-            }}
-            onBlur={(e) => {
-              setToEmail(e.target.value);
-            }}
-          />
           {toEmail.startsWith("0x") && (
             <button
               onClick={() => {
@@ -163,7 +165,7 @@ const Send: React.FC = () => {
           </ToolTip>
         </div>
         <div className="flex w-full items-start border-b-[1px] border-[#515364]/30 md:items-center">
-          <ToolTip text="You trigger Email Wallet transactions via plain text commands in the subject.">
+          <ToolTip text="You trigger Email Wallet transactions via commands in the subject.">
             <label
               htmlFor="subject_email"
               className="flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
