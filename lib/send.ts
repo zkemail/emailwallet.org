@@ -36,7 +36,7 @@ export async function getCreateEmailLink(
   return getEmailLink(
     fromEmail,
     subject,
-    "❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n📤 sendeth.org will relay your email on-chain to initialize your account! Expect a confirmation email when finished.\n🤫 Your unique secret code will conceal your email from being exposed publicly.\n📖 Read more on our docs at https://docs.emailwallet.org!",
+    "❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n📤 sendeth.org will relay your email on Arbitrum (without publicly revealing it) to initialize your account. Expect a confirmation email when finished.\n🤫 Your unique secret code will conceal your email and email address from being exposed publicly.\n📖 Read more on our docs at https://docs.emailwallet.org",
     true,
   );
 }
