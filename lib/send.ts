@@ -69,12 +69,12 @@ export function getEmailLink(
   if (fromEmail.endsWith("@gmail.com")) {
     return [
       "Gmail",
-      `https://mail.google.com/mail/?view=cm&fs=1&${
+      `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
         send_to_instead_of_cc ? "to" : "cc"
       }=${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,
+      `https://mail.google.com/mail?authuser=${fromEmail}#search/to%3Arelayer%40sendeth.org`,
     ];
   } else if (
     fromEmail.endsWith("@outlook.com") ||
@@ -85,7 +85,7 @@ export function getEmailLink(
       `mailto:${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}?subject=${encodedSubject}&body=${encodedBody}`,
-      `https://outlook.live.com/mail/0/sentitems`,
+      `https://outlook.live.com/mail/${fromEmail}/sentitems`,
     ];
   } else if (fromEmail.endsWith("@yahoo.com")) {
     return [
@@ -93,7 +93,7 @@ export function getEmailLink(
       `https://mail.yahoo.com/d/compose-message?cc=${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}&subject=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.yahoo.com/d/search/keyword=arbitrum@sendeth.org`,
+      `https://mail.yahoo.com/d/search/keyword=sendeth.org`,
     ];
   } else if (
     fromEmail.endsWith("@protonmail.com") ||
@@ -101,20 +101,20 @@ export function getEmailLink(
     fromEmail.endsWith("@pm.me")
   ) {
     return [
-      "Protonmail [copy over details below!]",
+      "Protonmail [manually copy details!]",
       `https://mail.proton.me/u/0/`,
-      `https://mail.proton.me/u/0/almost-all-mail#keyword=arbitrum@sendeth.org`,
+      `https://mail.proton.me/u/0/almost-all-mail#keyword=sendeth.org`,
     ];
   } else {
     // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
     return [
       "Gmail",
-      `https://mail.google.com/mail/?view=cm&fs=1&${
+      `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
         send_to_instead_of_cc ? "to" : "cc"
       }=${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,
+      `https://mail.google.com/mail?authuser=${fromEmail}#search/to%3Arelayer%40sendeth.org`,
     ];
   }
 }

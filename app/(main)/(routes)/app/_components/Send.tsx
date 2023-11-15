@@ -69,10 +69,10 @@ const Send: React.FC = () => {
     <>
       <div className="flex w-[95%] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4 sm:w-[600px] md:w-[700px] lg:w-[850px]">
         <h3 className={`text-[1.625rem] font-bold text-white`}>Send Money</h3>
-        <div className={"leading-5 text-[#878AA1]"}>
-          Send money via sending an email and cc&apos;ing a relayer with
-          transaction instructions in the subject. Everyone starts with 100 TEST
-          tokens (and 5 USDC during ProgCrypto).
+        <div className={"text-center leading-5 text-[#878AA1]"}>
+          Send money via sending an email through a relayer, with transaction
+          instructions in the subject. Everyone starts with 100 TEST tokens (and
+          5 USDC during ProgCrypto).
           {/* w-1/2 `Create Account` pops out your default email client with your private code in the subject. */}
         </div>
         <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 py-4">
