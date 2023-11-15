@@ -1,5 +1,5 @@
 import { getCreateEmailLink } from "@/lib/send";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlueButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,13 @@ const CreateAccount: React.FC<{
   const [emailProviderName, setEmailProviderName] = useState("");
   const [emailSearchLink, setEmailSearchLink] = useState("");
   const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const [name, sendLink, viewLink] = getCreateEmailLink(email);
+    setEmailProviderName(name);
+    setEmailSearchLink(viewLink);
+    setEmailLink(sendLink);
+  }, [email]);
 
   return (
     <div
@@ -37,23 +44,17 @@ const CreateAccount: React.FC<{
             type="email"
           />
           <ToolTip text="This will open your default email client, with your private code in the subject.">
-            <BlueButton
-              className="py-6"
-              onClick={async () => {
-                console.log(email);
-                const [name, sendLink, viewLink] =
-                  await getCreateEmailLink(email);
-                setEmailProviderName(name);
-                setEmailSearchLink(viewLink);
-                setEmailLink(sendLink);
-                if (sendLink) {
-                  window.open(sendLink, "_blank");
-                }
-                setSent(true);
-              }}
-            >
-              {sent ? "Created ✔" : "Create Account"}
-            </BlueButton>
+            <a href={emailLink} target="_blank" rel="noopener noreferrer">
+              <BlueButton
+                className="py-6"
+                onClick={async () => {
+                  console.log(email);
+                  setSent(true);
+                }}
+              >
+                {sent ? "Created ✔" : "Create Account"}
+              </BlueButton>
+            </a>
           </ToolTip>
         </div>
         <div className="flex w-full items-start">
