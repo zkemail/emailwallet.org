@@ -61,7 +61,7 @@ const Send: React.FC = () => {
   const [emailProviderName, emailLink, emailSearchLink] = getEmailLink(
     fromEmail,
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
-    "",
+    "❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n📤 sendeth.org (cc'd) will relay your email on-chain to transfer the funds. Expect a confirmation email when finished.\n🤫 Funds can be returned after 30 days if the recipient does not claim them.\n🤏 This mainnet experiment will only run for 2 weeks, so ensure to withdraw any real funds by November 28, 2023.\n📖 Read more on our site, docs, or code at https://emailwallet.org !",
   );
   const isLargeScreen = useMediaQuery("(min-width: 740px)");
 
@@ -117,7 +117,7 @@ const Send: React.FC = () => {
             htmlFor="cc_email"
             className="mr-2 flex items-center justify-center px-2 pb-5 pt-3 text-sm font-medium text-[#515364]"
           >
-            cc:
+            Cc:
           </label>
           <p
             className="
@@ -255,7 +255,7 @@ const Send: React.FC = () => {
                   toEmail.length > 0 ? "" : "text-[#515364]"
                 } inline w-[210px] overflow-x-scroll sm:w-[280px] lg:max-w-full`}
               >
-                <span className="mr-2 text-white">To</span>
+                <span className="mr-2 text-white">to</span>
                 {toEmail.length > 0
                   ? toEmail
                   : "Email Address OR Wallet Address"}

@@ -6,8 +6,9 @@ export default function SendMoneyPage() {
       <div className="flex flex-col items-center gap-[2rem] py-[5rem] sm:py-24">
         <h1 className="text-4xl font-medium">Send Money via Email</h1>
         <h2 className="w-11/12 text-center text-muted-foreground sm:w-1/2">
-          Just send emails from your currently logged-in email address! Everyone
-          starts with 100 TEST tokens (and 5 USDC during ProgCrypto!).
+          Create an account and send money, by sending emails from your
+          currently logged-in email address. Everyone starts with 100 TEST
+          tokens (and 5 USDC during ProgCrypto).
           <br />
           <br />
           This 2-week demo experiment on Arbitrum mainnet will shut down on

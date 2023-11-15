@@ -31,30 +31,13 @@ export async function getCreateEmailLink(
     email_address: `${fromEmail}`, // replace with actual email address
     account_key: `${code}`,
   };
-  // Sync call this fn in the background to onboard
-  // fetch("https://relayer.sendeth.org/api/onboard", {
-  //   // replace with actual server URL
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(accountRegistrationRequest),
-  // })
-  //   .then((response) => response.text())
-  //   .then((data) => {
-  //     console.log(data);
-  //     // return data.account_key;
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error:", error);
-  //     // "0" trick ensures is exactly 64 chars long
-  //   });
 
   let subject = "Create my email wallet! CODE:" + code;
   return getEmailLink(
     fromEmail,
     subject,
-    "❗ Don't edit the cc or subject fields, or else your transfer will fail!\n📤 sendeth.org (cc'd) will relay your email on-chain to initialize your account!\n🤫 Your unique secret code will conceal your email from being exposed publicly.\n📖 Read more on our docs at https://docs.emailwallet.org!",
+    "❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n📤 sendeth.org will relay your email on-chain to initialize your account! Expect a confirmation email when finished.\n🤫 Your unique secret code will conceal your email from being exposed publicly.\n📖 Read more on our docs at https://docs.emailwallet.org!",
+    true,
   );
 }
 
@@ -62,6 +45,7 @@ export function getEmailLink(
   fromEmail: string,
   subject: string,
   body: string,
+  send_to_instead_of_cc = false,
   force_mailto = false,
 ): [string, string, string] {
   const encodedSubject = encodeURIComponent(subject);
@@ -80,7 +64,9 @@ export function getEmailLink(
   if (fromEmail.endsWith("@gmail.com")) {
     return [
       "Gmail",
-      `https://mail.google.com/mail/?view=cm&fs=1&cc=${encodeURIComponent(
+      `https://mail.google.com/mail/?view=cm&fs=1&${
+        send_to_instead_of_cc ? "to" : "cc"
+      }=${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
       `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,
@@ -118,7 +104,9 @@ export function getEmailLink(
     // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
     return [
       "Gmail",
-      `https://mail.google.com/mail/?view=cm&fs=1&cc=${encodeURIComponent(
+      `https://mail.google.com/mail/?view=cm&fs=1&${
+        send_to_instead_of_cc ? "to" : "cc"
+      }=${encodeURIComponent(
         "arbitrum@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
       `https://mail.google.com/mail/u/0/#search/to%3Arelayer%40sendeth.org`,

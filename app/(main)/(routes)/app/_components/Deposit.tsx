@@ -41,8 +41,12 @@ const Deposit: React.FC = () => {
       <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
         Deposit Money
       </h3>
+      <div className="mx-auto w-1/2 self-center text-center text-white">
+        To optionally top-up your wallet address, send additional funds directly
+        to your address mentioned in your confirmation emails.
+      </div>
       <div className={"grid grid-cols-4 grid-rows-2 gap-2.5"}>
-        <input
+        {/* <input
           className={`col-span-3 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
           placeholder={"Amount to Deposit"}
           type="number"
@@ -122,7 +126,8 @@ const Deposit: React.FC = () => {
       </div>
       <BlueButton className={`w-full`} onClick={() => {}}>
         Open Wallet to Deposit Money
-      </BlueButton>
+      </BlueButton> */}
+      </div>
     </div>
   );
 };
