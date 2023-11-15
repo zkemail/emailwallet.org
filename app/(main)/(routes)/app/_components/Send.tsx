@@ -78,7 +78,7 @@ const Send: React.FC = () => {
           <input
             id="to_email"
             type="email"
-            size={isLargeScreen ? 55 : 33}
+            size={isLargeScreen ? 55 : 31}
             className="block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]"
             placeholder="Email Address OR Wallet Address"
             onChange={(e) => {
@@ -330,7 +330,6 @@ const Send: React.FC = () => {
 
         <div className="flex w-full items-center justify-end gap-3 text-white">
           <Button
-            // className="px-1.5"
             variant={"secondary"}
             onClick={() => {
               document.querySelectorAll(".pulsetarget").forEach((node) => {
