@@ -37,7 +37,11 @@ export async function getCreateEmailLink(
   return getEmailLink(
     fromEmail,
     subject,
-    `You are sending with Email Wallet.\n❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n${test_message}📤 sendeth.org will relay your email on Arbitrum (without publicly revealing it) to initialize your account. Expect a confirmation email when finished.\n🤫 Your unique secret code will conceal your email and email address from being exposed publicly.\n📖 Read more on our docs at http://docs.emailwallet.org`,
+    `You are sending with Email Wallet.\n
+    \n❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n
+    \n${test_message}📤 sendeth.org will relay your email on Arbitrum (without publicly revealing it) to initialize your account. Expect a confirmation email when finished.\n
+    \n🤫 Your unique secret code will conceal your email and email address from being exposed publicly.\n
+    \n📖 Read more on our docs at http://docs.emailwallet.org`,
     true,
   );
 }
