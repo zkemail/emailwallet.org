@@ -63,7 +63,7 @@ const HeroSection = () => {
               className="rounded-lg border px-8 drop-shadow"
               variant={"outline"}
             >
-              <Link href="https://docs.emailwallet.org" target="_blank">
+              <Link href="http://docs.emailwallet.org" target="_blank">
                 Read Docs
               </Link>
             </Button>

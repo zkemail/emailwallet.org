@@ -16,7 +16,7 @@ const NewBlogPostHeader = () => {
         Live on Arbitrum Mainnet, for 2 weeks only in Istanbul.
       </p>
       <a
-        href={`https://docs.emailwallet.org/`}
+        href={`http://docs.emailwallet.org/`}
         target="_blank"
         className="flex items-center font-bold text-slate-800"
       >
