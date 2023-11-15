@@ -61,7 +61,7 @@ const Send: React.FC = () => {
   const [emailProviderName, emailLink, emailSearchLink] = getEmailLink(
     fromEmail,
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
-    "❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n📤 sendeth.org (cc'd) will relay your email on Arbitrum to transfer the funds. Expect a confirmation email when finished.\n🤫 Funds can be returned after 30 days if the recipient does not claim them.\n🤏 This Arbitrum mainnet experiment will only run for 2 weeks, so ensure to withdraw any real funds by November 28, 2023.\n📖 Read more on our site, docs, or code at https://emailwallet.org",
+    "You are sending with Email Wallet.\n❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n📤 sendeth.org (cc'd) will relay your email on Arbitrum to transfer the funds. Expect a confirmation email when finished.\n🤫 Funds can be returned after 30 days if the recipient does not claim them.\n🤏 This Arbitrum mainnet experiment will only run for 2 weeks, so ensure to withdraw any real funds by November 28, 2023.\n📖 Read more on our site, docs, or code at https://emailwallet.org",
   );
   const isLargeScreen = useMediaQuery("(min-width: 740px)");
 
@@ -121,14 +121,14 @@ const Send: React.FC = () => {
           </label>
           <p
             className="
-              mb-3 mt-1 block w-[11rem] rounded-lg border-2 border-[#515364] bg-black px-2.5 py-2 text-sm text-white placeholder:text-[#515364]"
+              mb-3 mt-1 block w-[11rem] rounded-lg bg-black px-2.5 py-2 text-sm text-white placeholder:text-[#515364]"
           >
-            optimism@sendeth.org
+            arbitrum@sendeth.org
           </p>
           <ToolTip text="Copy to clipboard">
             <button
               onClick={() => {
-                navigator.clipboard.writeText("optimism@sendeth.org");
+                navigator.clipboard.writeText("arbitrum@sendeth.org");
               }}
               className="pulsetarget px-2"
             >
@@ -346,7 +346,7 @@ const Send: React.FC = () => {
           <a
             href={
               emailSent && (!countdown || countdown < countdownMax - 2)
-                ? `mailto:optimism@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
                 : emailLink
             }
             target="_blank"
