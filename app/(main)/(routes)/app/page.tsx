@@ -2,10 +2,10 @@ import Form from "./_components/Form";
 
 export default function SendMoneyPage() {
   return (
-    <div className="mb-10">
+    <div className="mb-10 px-2.5">
       <div className="flex flex-col items-center gap-[2rem] py-[5rem] sm:py-24">
         <h1 className="text-4xl font-medium">Send Money via Email</h1>
-        <h2 className="w-1/2 text-center text-muted-foreground">
+        <h2 className="w-11/12 text-center text-muted-foreground sm:w-1/2">
           Just send emails from your currently logged-in email address! Everyone
           starts with 100 TEST tokens (and 5 USDC during ProgCrypto!).
           <br />
