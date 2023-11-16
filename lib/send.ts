@@ -16,7 +16,7 @@ export function generateNewKey() {
 
 export function getCreateEmailLink(
   fromEmail: string,
-): [string, string, string] {
+): [string, string, string, string] {
   let code;
   localStorage.setItem("recentEmail", fromEmail);
   let storedData = JSON.parse(localStorage.getItem(fromEmail) || "{}");
@@ -35,16 +35,19 @@ export function getCreateEmailLink(
 
   let subject = "Create my email wallet! CODE:" + code;
   // let test_message = "🧪 Each new account starts with 100 TEST tokens.";
-  return getEmailLink(
-    fromEmail,
-    subject,
-    `You are creating your Email Wallet.\n
+  return [
+    ...getEmailLink(
+      fromEmail,
+      subject,
+      `You are creating your Email Wallet.\n
 ❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n
 📤 sendeth.org privately relays your email on Arbitrum to create your account. Expect a confirmation email in a minute.\n
 🤫 Your unique secret code hides your email on-chain.\n
 📖 Read more on our docs at http://docs.emailwallet.org`,
-    true,
-  );
+      true,
+    ),
+    subject,
+  ];
 }
 
 // TODO: Dynamically look up the DKIM and depending on what's enabled,

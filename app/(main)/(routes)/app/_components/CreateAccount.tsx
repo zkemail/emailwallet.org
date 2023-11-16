@@ -11,15 +11,43 @@ const CreateAccount: React.FC<{
   const [email, setEmail] = useState("");
   const [emailLink, setEmailLink] = useState("");
   const [emailProviderName, setEmailProviderName] = useState("");
+  const [subject, setSubject] = useState("");
   const [emailSearchLink, setEmailSearchLink] = useState("");
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const [name, sendLink, viewLink] = getCreateEmailLink(email);
+    const [name, sendLink, viewLink, subject] = getCreateEmailLink(email);
     setEmailProviderName(name);
     setEmailSearchLink(viewLink);
     setEmailLink(sendLink);
+    setSubject(subject);
+
+    if (sendLink?.startsWith("mailto:")) {
+      const emailLink = document.getElementById("emailLink");
+      if (!emailLink) return;
+
+      emailLink.addEventListener("click", function (event: any) {
+        var timeout: NodeJS.Timeout;
+
+        window.addEventListener("blur", function () {
+          clearTimeout(timeout);
+        });
+
+        timeout = setTimeout(function () {
+          const inst = document.getElementById("manualInstructions");
+          if (!inst) return;
+          inst.style.display = "block";
+        }, 500);
+      });
+    }
   }, [email]);
+
+  function copyText(e: any) {
+    const target = e.target;
+    if (!target) return;
+
+    navigator.clipboard.writeText(target.innerText);
+  }
 
   return (
     <div
@@ -44,7 +72,12 @@ const CreateAccount: React.FC<{
             type="email"
           />
           <ToolTip text="This will open your default email client, with your private code in the subject.">
-            <a href={emailLink} target="_blank" rel="noopener noreferrer">
+            <a
+              id="emailLink"
+              href={emailLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <BlueButton
                 className="py-6 text-primary"
                 onClick={async () => {
@@ -56,6 +89,24 @@ const CreateAccount: React.FC<{
               </BlueButton>
             </a>
           </ToolTip>
+        </div>
+
+        <div
+          id="manualInstructions"
+          className="manual-instructions"
+          style={{ display: "none" }}
+        >
+          <p>We were not able to able to open your email client.</p>
+          <p>
+            You can create an account by sending an email to
+            <div>
+              <code onClick={copyText}>arbitrum@sendeth.org</code>
+            </div>
+            <p> with subject</p>
+            <div>
+              <code onClick={copyText}>{subject}</code>
+            </div>
+          </p>
         </div>
         <div className="flex w-full items-start">
           <Button
