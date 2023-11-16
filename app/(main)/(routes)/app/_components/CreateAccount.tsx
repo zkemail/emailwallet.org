@@ -46,7 +46,7 @@ const CreateAccount: React.FC<{
           <ToolTip text="This will open your default email client, with your private code in the subject.">
             <a href={emailLink} target="_blank" rel="noopener noreferrer">
               <BlueButton
-                className="py-6"
+                className="py-6 text-primary"
                 onClick={async () => {
                   console.log(email);
                   setSent(true);

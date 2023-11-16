@@ -2,6 +2,8 @@
 
 The ZK-Email Wallet is a unique type of non-custodial cryptocurrency wallet that is managed via email. This document provides an overview of its features and future development plans. You can try our demo at https://emailwallet.org.
 
+For the source code of the contracts, relayers, and other infrastructure, see the main repo here: [github.com/zkemail/email-wallet](https://github.com/zkemail/email-wallet).
+
 ## Features
 
 The ZK-Email Wallet currently supports the following functions:
@@ -9,13 +11,15 @@ The ZK-Email Wallet currently supports the following functions:
 - **ETH Transfers**: Users can transfer ETH from standard ETH addresses to email wallets, from email wallets to standard ETH addresses, and between email wallets.
 - **ERC20 Transfers**
 - **Native swaps on Uniswap**
+- **Changing your DKIM Registry**
+- **Transporting to another relayer**
 
 Currently, the wallet uniquely provides the following features:
 - **Send money to people without accounts**: Because transfers are authorized by an email address, you can mass send money or assets to people who have never used email wallet before but do have an email address. If the email address does not claim the money in 1 year (or another preset time), it can be returned to the sender. This avoids problems with dead email addresses or transactions the recipient does not want to recieve.
 - **No user interaction with Ethereum**: By delegating control of their account to an account abstraction wallet under their email provider (which they already trust with their bank account recovery and social media password reset control), users can avoid ever having to think about private keys or the complexity of the crypto ecosystem.
 
 ## How It Works (User Perspective)
-For each transaction, you send an email. This email can be formatted for you on https://sendeth.org, or you can simply email "relayer@sendeth.org" with a subject like "Send 2 DAI to friend@gmail.com". The relayer will automatically deploy a new wallet for you (if you don't have one) that can only be authorized via emails from you. If you want to test without any Goerli assets, you can start trying to send TEST token like "Send 2 TEST to friend@gmail.com", which will automatically spend from a free 10 token starting balance.
+For each transaction, you send an email. This email can be formatted for you on https://emailwallet.org, or you can simply email "relayer@sendeth.org" with a subject like "Send 2 DAI to friend@gmail.com". The relayer will automatically deploy a new wallet for you (if you don't have one) that can only be authorized via emails from you. If you want to test without any Goerli assets, you can start trying to send TEST token like "Send 2 TEST to friend@gmail.com", which will automatically spend from a free 10 token starting balance.
 
 This money is sent to a smart contract wallet authorized to your friend's email address (in this case, friend@gmail.com), meaning only emails from them can spend the money. This transaction occurs in wallets on-chain, and neither the relayer nor us can steal your funds (since we can't generate a fake email from you with the correct cryptographic signatures, only your email provider can). Currently, transfers happen on Goerli -- dm us if you need free Goerli ETH/DAI/USDC to test it out!
 

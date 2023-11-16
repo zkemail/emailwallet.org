@@ -50,7 +50,7 @@ const Header = () => {
             </div>
           ))}
           <Link
-            href={"https://github.com/zkemail/sendeth"}
+            href={"https://github.com/zkemail/email-wallet"}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "flex items-center gap-1",
