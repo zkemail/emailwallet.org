@@ -47,6 +47,8 @@ export function getCreateEmailLink(
   );
 }
 
+// TODO: Dynamically look up the DKIM and depending on what's enabled,
+// change the default client
 export function getEmailLink(
   fromEmail: string,
   subject: string,
@@ -119,8 +121,7 @@ export function getEmailLink(
       `https://mail.proton.me/u/0/`,
       `https://mail.proton.me/u/0/almost-all-mail#keyword=sendeth.org`,
     ];
-  } else {
-    // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
+  } else if (googleDomainList.includes(fromEmail.split("@").pop() || "")) {
     return [
       "Gmail",
       `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
@@ -130,5 +131,109 @@ export function getEmailLink(
       )}&su=${encodedSubject}&body=${encodedBody}`,
       `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
     ];
+  } else {
+    // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
+    return [
+      "Mail App",
+      `mailto:${encodeURIComponent(
+        "arbitrum@sendeth.org",
+      )}?subject=${encodedSubject}&body=${encodedBody}`,
+      ``,
+    ];
   }
 }
+
+// List of domains at ProgCrypto with a 'google' selector
+let googleDomainList = [
+  "0xparc.org",
+  "1kx.capital",
+  "a16z.com",
+  "albiona.dev",
+  "alchemy.com",
+  "ethereum.foundation",
+  "altresear.ch",
+  "antalpha.com",
+  "ante.xyz",
+  "arpachain.io",
+  "arx.org",
+  "atomlabs.one",
+  "aztecprotocol.com",
+  "berkeley.edu",
+  "blockchain.capital",
+  "blockchaincapital.com",
+  "chainsafe.io",
+  "cherry.vc",
+  "clave.team",
+  "coinbase.com",
+  "cyber.fund",
+  "dalstonlabs.com",
+  "dcpos.ch",
+  "defi.sucks",
+  "dexlabs.xyz",
+  "dfinity.org",
+  "dodoex.io",
+  "essec.edu",
+  "ethereal.xyz",
+  "ethereum.org",
+  "figmentcapital.io",
+  "framework.ventures",
+  "garillot.net",
+  "gizatech.xyz",
+  "gnosis.io",
+  "hypersphere.ventures",
+  "i-globalsociety.com",
+  "immutable.com",
+  "ingonyama.com",
+  "intrinsictech.xyz",
+  "iosg.vc",
+  "ironfish.network",
+  "jonashals.me",
+  "kaleido.io",
+  "kevincharm.com",
+  "kirastudio.xyz",
+  "ku.edu.tr",
+  "litprotocol.com",
+  "maddevs.io",
+  "mainstream.so",
+  "matterlabs.dev",
+  "maya-zk.com",
+  "mixbytes.io",
+  "monad.xyz",
+  "nethermind.io",
+  "nil.foundation",
+  "nocturnelabs.xyz",
+  "nodeguardians.io",
+  "nucypher.com",
+  "o1labs.org",
+  "obol.tech",
+  "openblocklabs.com",
+  "openzeppelin.com",
+  "panteracapital.com",
+  "paribu.com",
+  "pauldowman.com",
+  "polygon.technology",
+  "primev.xyz",
+  "puffer.fi",
+  "puzzle.online",
+  "quantstamp.com",
+  "risczero.com",
+  "scroll.io",
+  "semiotic.ai",
+  "shamirlabs.org",
+  "sigmaprime.io",
+  "sinaxyz.io",
+  "snu.ac.kr",
+  "spacemesh.io",
+  "starkware.co",
+  "status.im",
+  "talentprotocol.com",
+  "token.im",
+  "tuneinsight.com",
+  "ucm.es",
+  "ucsb.edu",
+  "yacademy.dev",
+  "yale.edu",
+  "zkonduit.com",
+  "fireblocks.com",
+  "wharton.upenn.edu",
+];
