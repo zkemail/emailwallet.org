@@ -70,6 +70,16 @@ export function getEmailLink(
     ];
   }
 
+  if (fromEmail.endsWith("@me.com") || fromEmail.endsWith("@icloud.com")) {
+    return [
+      "Mail App",
+      `mailto:${encodeURIComponent(
+        "arbitrum@sendeth.org",
+      )}?subject=${encodedSubject}&body=${encodedBody}`,
+      ``,
+    ];
+  }
+
   if (fromEmail.endsWith("@gmail.com")) {
     return [
       "Gmail",
