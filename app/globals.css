@@ -109,13 +109,13 @@ body {
 .manual-instructions {
   max-width: 500px;
   margin: 10px auto;
-  background: white;
+  background: #f9eee5;
   padding: 1rem;
   border-radius: 5px;
 }
 
 .manual-instructions code {
-  background: #ddd;
+  background: #F3CBA8;
   padding: 5px;
   display: block;
   border-radius: 5px;
@@ -123,6 +123,11 @@ body {
   margin: 5px 0;
   cursor: pointer;
 }
+
+/* .manual-instructions code::after {
+  content: "\2398";
+  font-size: 1.25rem;
+} */
 
 .manual-instructions code:focus, .manual-instructions code:active {
   background-color: rgb(178, 195, 162);
