@@ -31,6 +31,7 @@ const CreateAccount: React.FC<{
 
         window.addEventListener("blur", function () {
           clearTimeout(timeout);
+          setSent(true);
         });
 
         timeout = setTimeout(function () {
@@ -39,6 +40,8 @@ const CreateAccount: React.FC<{
           inst.style.display = "block";
         }, 500);
       });
+    } else {
+      setSent(true);
     }
   }, [email]);
 
@@ -54,9 +57,12 @@ const CreateAccount: React.FC<{
       className={
         "flex w-[375px] flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem] sm:w-full"
       }
+      style={{ display: "block" }}
     >
-      <h3 className={`text-[1.625rem] font-bold text-white`}>Create Account</h3>
-      <div className={"leading-5 text-[#878AA1]"}>
+      <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
+        Create Account
+      </h3>
+      <div className={"mb-3 text-center leading-5 text-[#878AA1]"}>
         Email a relayer to create an account.
         {/* w-1/2 `Create Account` pops out your default email client with your private code in the subject. */}
       </div>
@@ -82,7 +88,7 @@ const CreateAccount: React.FC<{
                 className="py-6 text-primary"
                 onClick={async () => {
                   console.log(email);
-                  setSent(true);
+                  // setSent(true);
                 }}
               >
                 {sent ? "Created ✔" : "Create Account"}
