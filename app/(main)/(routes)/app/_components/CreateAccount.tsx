@@ -91,7 +91,7 @@ const CreateAccount: React.FC<{
                   // setSent(true);
                 }}
               >
-                {sent ? "Created ✔" : "Create Account"}
+                {sent ? "Created ✔" : "Create"}
               </BlueButton>
             </a>
           </ToolTip>

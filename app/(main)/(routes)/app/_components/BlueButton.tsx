@@ -13,7 +13,7 @@ const BlueButton: React.FC<{
         className,
       )}
       onClick={onClick}
-      style={{ minWidth: "16ch" }}
+      style={{ minWidth: "12ch" }}
     >
       {children}
     </Button>
