@@ -99,18 +99,22 @@ const CreateAccount: React.FC<{
 
         <div
           id="manualInstructions"
-          className="manual-instructions"
+          className="manual-instructions bg-secondary"
           style={{ display: "none" }}
         >
           <p>We were not able to able to open your email client.</p>
           <p>
             You can create an account by sending an email to
             <div>
-              <code onClick={copyText}>arbitrum@sendeth.org</code>
+              <code className="bg-tertiary" onClick={copyText}>
+                arbitrum@sendeth.org
+              </code>
             </div>
             <p> with subject</p>
             <div>
-              <code onClick={copyText}>{subject}</code>
+              <code className="bg-tertiary" onClick={copyText}>
+                {subject}
+              </code>
             </div>
           </p>
         </div>

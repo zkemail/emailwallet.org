@@ -110,13 +110,11 @@ body {
   width: 100%;
   max-width: 500px;
   margin: 10px auto;
-  background: #f9eee5;
   padding: 1rem;
   border-radius: 5px;
 }
 
 .manual-instructions code {
-  background: #F3CBA8;
   padding: 5px;
   display: block;
   border-radius: 5px;
