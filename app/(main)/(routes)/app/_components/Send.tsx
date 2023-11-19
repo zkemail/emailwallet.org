@@ -5,6 +5,7 @@ import { Currency } from "./Form";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ToolTip from "@/components/ToolTip";
+import { EmailDropdown } from "./email-dropdown";
 
 const Send: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
@@ -327,6 +328,11 @@ const Send: React.FC = () => {
         </div>
 
         <div className="flex w-full items-center justify-end gap-3 text-white">
+          {/* Dropdown menu for email providers */}
+          <EmailDropdown side="top" buttonClassName="max-sm:hidden">
+            Select Mail Provider
+          </EmailDropdown>
+
           <ToolTip text="Manually copy the cc: and subject: fields into your inbox.">
             <Button
               variant={"secondary"}
