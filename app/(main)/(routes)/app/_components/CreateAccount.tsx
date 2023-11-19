@@ -4,6 +4,7 @@ import BlueButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
+import qs from "query-string";
 
 const CreateAccount: React.FC<{
   setSelectedTab: (tab: "create" | "send" | "deposit") => void;
@@ -89,6 +90,16 @@ const CreateAccount: React.FC<{
                 onClick={async () => {
                   console.log(email);
                   // setSent(true);
+                  const url = qs.stringifyUrl(
+                    {
+                      url: window.location.href,
+                      query: {
+                        email: email,
+                      },
+                    },
+                    { skipEmptyString: true, skipNull: true },
+                  );
+                  location.replace(url);
                 }}
               >
                 {sent ? "Created ✔" : "Create"}

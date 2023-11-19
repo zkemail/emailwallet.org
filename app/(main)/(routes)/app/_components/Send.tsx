@@ -7,7 +7,10 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import ToolTip from "@/components/ToolTip";
 
 const Send: React.FC = () => {
-  const [fromEmail, setFromEmail] = useState<string>("");
+  const searchParams = new URLSearchParams(window.location.search);
+  const [fromEmail, setFromEmail] = useState<string>(
+    (searchParams.get("email") as string) || "",
+  );
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -89,6 +92,7 @@ const Send: React.FC = () => {
                 id="to_email"
                 type="email"
                 size={isLargeScreen ? 55 : 31}
+                value={toEmail}
                 className={cn(
                   "block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]",
                   isErrors && "border-red-500",
