@@ -13,6 +13,7 @@ const Send: React.FC = () => {
   const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | undefined>(5);
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
+  const [isErrors, setIsErrors] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
   const countdownMax = 120;
@@ -88,7 +89,10 @@ const Send: React.FC = () => {
                 id="to_email"
                 type="email"
                 size={isLargeScreen ? 55 : 31}
-                className="block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]"
+                className={cn(
+                  "block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]",
+                  isErrors && "border-red-500",
+                )}
                 placeholder="Email Address OR Wallet Address"
                 onChange={(e) => {
                   setToEmail(e.target.value);
@@ -138,7 +142,7 @@ const Send: React.FC = () => {
               >
                 arbitrum@sendeth.org
               </p>
-              <ToolTip text="Copy to clipboard">
+              <ToolTip text="Copy to clipboard" side="bottom">
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText("arbitrum@sendeth.org");
@@ -335,14 +339,16 @@ const Send: React.FC = () => {
           </ToolTip>
           <p className="text-sm">OR</p>
           <ToolTip text="This will auto-format the fields above into your default mail app.">
-            <a
-              href={
-                emailSent && (!countdown || countdown < countdownMax - 2)
-                  ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
-                  : emailLink
-              }
-              target="_blank"
+            {/* changed to button so mailTo won't work if To field is empty */}
+            <button
+              // href={
+              //   emailSent && (!countdown || countdown < countdownMax - 2)
+              //     ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+              //     : emailLink
+              // }
               onClick={() => {
+                if (toEmail.length === 0) return setIsErrors(true);
+
                 setEmailSent(true);
                 setCountdown(countdownMax);
                 const intervalId = setInterval(() => {
@@ -354,16 +360,21 @@ const Send: React.FC = () => {
                   clearInterval(intervalId);
                   setCountdown(null);
                 }, 60000);
+                window.open(
+                  emailSent && (!countdown || countdown < countdownMax - 2)
+                    ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                    : emailLink,
+                );
               }}
               style={{
                 background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
               }}
-              className={cn(buttonVariants({ className: "text-white" }))}
+              className={buttonVariants({ className: "text-white" })}
             >
               {!emailSent
                 ? `Send via Default Email App`
                 : `Failed? Re-send via default mail app`}
-            </a>
+            </button>
           </ToolTip>
         </div>
 

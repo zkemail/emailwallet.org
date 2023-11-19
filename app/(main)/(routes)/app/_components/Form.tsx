@@ -10,6 +10,7 @@ export enum Currency {
 }
 
 const Form = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const [selectedTab, setSelectedTab] = useState<"create" | "send" | "deposit">(
     "create",
   );
@@ -18,7 +19,12 @@ const Form = () => {
     if (localStorage.getItem("code")) {
       setSelectedTab("send");
     }
+
+    setIsMounted(true);
   }, []);
+
+  // prevent hydration errors
+  if (!isMounted) return null;
 
   return (
     <>
