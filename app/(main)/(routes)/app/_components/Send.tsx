@@ -62,6 +62,7 @@ const Send: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
   const [emailProviderName, emailLink, emailSearchLink] = getEmailLink(
     fromEmail,
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
@@ -71,7 +72,7 @@ const Send: React.FC = () => {
 
   return (
     <>
-      <div className="flex w-[95%] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4 sm:w-[600px] md:w-[700px] lg:w-[850px]">
+      <div className="flex w-[380px] flex-col items-center justify-center gap-2 overflow-x-scroll rounded-[32px] bg-black px-6 py-4 sm:w-[600px] md:w-[700px] lg:w-[850px]">
         <h3 className={`text-[1.625rem] font-bold text-white`}>Send Money</h3>
         <div className={"text-center leading-5 text-[#878AA1]"}>
           Send money via sending an email through a relayer, with transaction
@@ -279,7 +280,7 @@ const Send: React.FC = () => {
                 <p
                   className={`${
                     toEmail.length > 0 ? "" : "text-[#515364]"
-                  } inline w-[210px] overflow-x-scroll sm:w-[280px] lg:max-w-full`}
+                  } inline lg:max-w-full`}
                 >
                   <span className="mr-2 text-white">to</span>
                   {toEmail.length > 0
