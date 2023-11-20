@@ -35,7 +35,7 @@ export const FromEmailInput = ({
         });
 
   return (
-    <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 py-4">
+    <div className="flex w-full items-center border-b-[1px] border-[#515364]/30 p-2">
       <Combobox value={selectedEmail} onChange={setSelectedEmail}>
         <div className="relative mt-1">
           <div className="flex items-center gap-x-2 sm:text-sm">
