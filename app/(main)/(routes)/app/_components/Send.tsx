@@ -6,15 +6,13 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ToolTip from "@/components/ToolTip";
 import { EmailDropdown } from "./email-dropdown";
-import { useReadLocalStorage } from "usehooks-ts";
 import { FromEmailInput } from "./from-email-input";
 
 const Send: React.FC = () => {
-  const storedFromEmail = useReadLocalStorage("fromEmail");
-  /* The above code is using a custom hook called `useReadLocalStorage` to read the value stored in the
-  "fromEmail" key of the local storage. The value is then stored in the `storedFromEmail` variable. */
-
-  const [fromEmail, setFromEmail] = useState<string>(storedFromEmail as string);
+  const storedEmails = Object.keys(localStorage).filter((key) =>
+    key.includes("@"),
+  );
+  const [fromEmail, setFromEmail] = useState<string>(storedEmails[0] || "");
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -327,6 +325,7 @@ const Send: React.FC = () => {
         </div>
 
         <FromEmailInput
+          storedEmails={storedEmails}
           fromEmail={fromEmail}
           isErrors={isErrors}
           setFromEmail={setFromEmail}
@@ -372,7 +371,7 @@ const Send: React.FC = () => {
               // }
               onClick={() => {
                 // Prevent opening an email app if no email provided in the field
-                if (toEmail.length === 0 && fromEmail.length > 0) {
+                if (toEmail?.length === 0 && fromEmail?.length > 0) {
                   return setIsErrors({ toEmail: true, fromEmail: false });
                 } else if (toEmail.length > 0 && fromEmail.length === 0) {
                   return setIsErrors({ toEmail: false, fromEmail: true });

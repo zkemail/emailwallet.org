@@ -15,7 +15,6 @@ const CreateAccount: React.FC<{
   const [subject, setSubject] = useState("");
   const [emailSearchLink, setEmailSearchLink] = useState("");
   const [sent, setSent] = useState(false);
-  const [fromEmail, setFromEmail] = useLocalStorage("fromEmail", "");
 
   useEffect(() => {
     const [name, sendLink, viewLink, subject] = getCreateEmailLink(email);
@@ -91,9 +90,6 @@ const CreateAccount: React.FC<{
                 onClick={async () => {
                   console.log(email);
                   // setSent(true);
-
-                  // set email input into local storage of 'fromEmail'
-                  setFromEmail(email);
                 }}
               >
                 {sent ? "Created ✔" : "Create"}
