@@ -6,18 +6,25 @@ import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ToolTip from "@/components/ToolTip";
 import { EmailDropdown } from "./email-dropdown";
+import { useReadLocalStorage } from "usehooks-ts";
+import { FromEmailInput } from "./from-email-input";
 
 const Send: React.FC = () => {
-  const searchParams = new URLSearchParams(window.location.search);
-  const [fromEmail, setFromEmail] = useState<string>(
-    (searchParams.get("email") as string) || "",
-  );
+  const storedFromEmail = useReadLocalStorage("fromEmail");
+  /* The above code is using a custom hook called `useReadLocalStorage` to read the value stored in the
+  "fromEmail" key of the local storage. The value is then stored in the `storedFromEmail` variable. */
+
+  const [fromEmail, setFromEmail] = useState<string>(storedFromEmail as string);
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | undefined>(5);
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
-  const [isErrors, setIsErrors] = useState(false);
+  const [isErrors, setIsErrors] = useState({
+    toEmail: false,
+    fromEmail: false,
+  });
+  const isLargeScreen = useMediaQuery("(min-width: 740px)");
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
   const countdownMax = 120;
@@ -69,7 +76,6 @@ const Send: React.FC = () => {
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
     "You are sending with Email Wallet.\n\n❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n\n📤 sendeth.org (cc'd) relays your email on Arbitrum to transfer the funds. Expect a confirmation email when finished.\n\n🤏 This Arbitrum mainnet experiment will only run for 2 weeks, so withdraw any real funds by November 28, 2023.\n\n📖 Read more on our site, docs, or code at https://emailwallet.org",
   );
-  const isLargeScreen = useMediaQuery("(min-width: 740px)");
 
   return (
     <>
@@ -97,7 +103,7 @@ const Send: React.FC = () => {
                 value={toEmail}
                 className={cn(
                   "block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]",
-                  isErrors && "border-red-500",
+                  isErrors.toEmail && "border-red-500",
                 )}
                 placeholder="Email Address OR Wallet Address"
                 onChange={(e) => {
@@ -319,6 +325,13 @@ const Send: React.FC = () => {
             </div>
           </p>
         </div>
+
+        <FromEmailInput
+          fromEmail={fromEmail}
+          isErrors={isErrors}
+          setFromEmail={setFromEmail}
+        />
+
         <div className="start-0 flex w-full">
           <textarea
             className="mt-3 flex w-full rounded-lg border bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
@@ -358,7 +371,14 @@ const Send: React.FC = () => {
               //     : emailLink
               // }
               onClick={() => {
-                if (toEmail.length === 0) return setIsErrors(true);
+                // Prevent opening an email app if no email provided in the field
+                if (toEmail.length === 0 && fromEmail.length > 0) {
+                  return setIsErrors({ toEmail: true, fromEmail: false });
+                } else if (toEmail.length > 0 && fromEmail.length === 0) {
+                  return setIsErrors({ toEmail: false, fromEmail: true });
+                } else if (toEmail.length === 0 && fromEmail.length === 0) {
+                  return setIsErrors({ toEmail: true, fromEmail: true });
+                } else setIsErrors({ toEmail: false, fromEmail: false });
 
                 setEmailSent(true);
                 setCountdown(countdownMax);
