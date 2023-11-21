@@ -1,5 +1,5 @@
 import { getCreateEmailLink } from "@/lib/send";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ElementRef, useRef } from "react";
 import BlueButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,8 @@ import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 const CreateAccount: React.FC<{
   setSelectedTab: (tab: "create" | "send" | "deposit") => void;
 }> = ({ setSelectedTab }) => {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
+  const emailRef = useRef<ElementRef<"input">>(null);
   const [emailLink, setEmailLink] = useState("");
   const [emailProviderName, setEmailProviderName] = useState("");
   const [subject, setSubject] = useState("");
@@ -17,7 +18,9 @@ const CreateAccount: React.FC<{
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const [name, sendLink, viewLink, subject] = getCreateEmailLink(email);
+    const [name, sendLink, viewLink, subject] = getCreateEmailLink(
+      emailRef.current?.value as string,
+    );
     setEmailProviderName(name);
     setEmailSearchLink(viewLink);
     setEmailLink(sendLink);
@@ -44,7 +47,7 @@ const CreateAccount: React.FC<{
     } else {
       setSent(true);
     }
-  }, [email]);
+  }, [emailRef.current?.value]);
 
   function copyText(e: any) {
     const target = e.target;
@@ -70,10 +73,11 @@ const CreateAccount: React.FC<{
       <div className={"flex flex-col gap-2.5"}>
         <div className={"flex items-center gap-2.5"}>
           <Input
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            // value={emailRef.current?.value}
+            ref={emailRef}
+            // onChange={(e) => {
+            //   setEmail(e.target.value);
+            // }}
             className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
             placeholder={"Your Email Address"}
             type="email"
@@ -88,7 +92,7 @@ const CreateAccount: React.FC<{
               <BlueButton
                 className="py-6 text-primary"
                 onClick={async () => {
-                  console.log(email);
+                  console.log(emailRef.current?.value);
                   // setSent(true);
                 }}
               >

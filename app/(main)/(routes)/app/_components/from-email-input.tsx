@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronDown } from "lucide-react";
 import { inputStyles } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
 import { cn } from "@/lib/utils";
+import { useReadLocalStorage } from "usehooks-ts";
 
 interface FromEmailInputProps {
   fromEmail: string;
@@ -21,6 +22,7 @@ export const FromEmailInput = ({
   isErrors,
   storedEmails,
 }: FromEmailInputProps) => {
+  const fromEmailCode = useReadLocalStorage<Record<string, string>>(fromEmail);
   const [query, setQuery] = useState("");
 
   const filteredEmail =
@@ -40,8 +42,10 @@ export const FromEmailInput = ({
             </Combobox.Label>
             <Combobox.Input
               className={cn(
+                "min-w-[250px] sm:min-w-[400px]",
                 inputStyles,
                 isErrors.fromEmail && "border-red-500",
+                "border-2 border-gray-700 bg-slate-950 text-white",
               )}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="john@doe.com"
@@ -60,7 +64,7 @@ export const FromEmailInput = ({
             leaveTo="opacity-0"
             afterLeave={() => setQuery("")}
           >
-            <Combobox.Options className="absolute ml-11 mt-1 max-h-60 w-full overflow-auto rounded-md bg-primary-foreground py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute ml-11 mt-1 max-h-60 w-full overflow-auto rounded-md bg-slate-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
               {filteredEmail.length === 0 || query !== "" ? (
                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                   Nothing found.
@@ -71,7 +75,9 @@ export const FromEmailInput = ({
                     key={email}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-slate-500 text-gray-900" : "text-white"
+                        active
+                          ? "mx-1 rounded-md bg-slate-500 text-gray-900"
+                          : "text-white"
                       }`
                     }
                     value={email}
