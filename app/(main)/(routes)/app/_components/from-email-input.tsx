@@ -4,7 +4,6 @@ import { CheckIcon, ChevronDown } from "lucide-react";
 import { inputStyles } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
 import { cn } from "@/lib/utils";
-import { useReadLocalStorage } from "usehooks-ts";
 
 interface FromEmailInputProps {
   fromEmail: string;
@@ -22,7 +21,6 @@ export const FromEmailInput = ({
   isErrors,
   storedEmails,
 }: FromEmailInputProps) => {
-  const fromEmailCode = useReadLocalStorage<Record<string, string>>(fromEmail);
   const [query, setQuery] = useState("");
 
   const filteredEmail =
