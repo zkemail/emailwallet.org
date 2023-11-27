@@ -16,7 +16,7 @@ const Send: React.FC = () => {
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
-  const [amount, setAmount] = useState<number | undefined>(5);
+  const [amount, setAmount] = useState<string | number | undefined>("5");
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [isErrors, setIsErrors] = useState({
     toEmail: false,
@@ -41,14 +41,14 @@ const Send: React.FC = () => {
       setAmount(undefined);
       return;
     }
-    if (!Number.isInteger(Number(value))) {
-      const roundedValue = Math.floor(Number(value));
-      setAmount(roundedValue);
-    } else {
-      setAmount(Number(value));
-    }
+    // if (!Number.isInteger(Number(value))) {
+    //   const roundedValue = Math.floor(Number(value));
+    //   setAmount(roundedValue.toString());
+    // } else {
+    setAmount(value);
+    // }
     if (Number(value) > 100 && currency === Currency.TEST) {
-      setAmount(100);
+      setAmount("100");
     }
   }
 
@@ -195,8 +195,9 @@ const Send: React.FC = () => {
                 id="to_email"
                 type="email"
                 size={5}
-                className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
-                placeholder="Email Address OR Wallet Address"
+                maxLength={4}
+                className="mx-1 w-16 resize rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+                // placeholder="Email Address OR Wallet Address"
                 defaultValue={5}
                 onChange={(e) => {
                   handleAmountChange(e);
@@ -297,7 +298,7 @@ const Send: React.FC = () => {
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `Send ${amount?.toFixed(0)} ${
+                      `Send ${Number(amount)?.toFixed(0)} ${
                         Currency[currency]
                       } to ${toEmail}`,
                     );

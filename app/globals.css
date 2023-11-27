@@ -12,6 +12,12 @@ body {
   background-color: transparent;
 }
 
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -91,7 +97,6 @@ body {
   }
 }
 
-
 .pulse {
   animation: pulse-animation 2s infinite;
   border-radius: 100%;
@@ -128,6 +133,7 @@ body {
   font-size: 1.25rem;
 } */
 
-.manual-instructions code:focus, .manual-instructions code:active {
+.manual-instructions code:focus,
+.manual-instructions code:active {
   background-color: rgb(178, 195, 162);
 }
