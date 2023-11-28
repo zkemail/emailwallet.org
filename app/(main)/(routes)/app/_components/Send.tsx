@@ -7,6 +7,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import ToolTip from "@/components/ToolTip";
 import { EmailDropdown } from "./email-dropdown";
 import { FromEmailInput } from "./from-email-input";
+import { useCountdown } from "usehooks-ts";
 
 const Send: React.FC = () => {
   const storedEmails = Object.keys(localStorage).filter((key) =>
@@ -15,7 +16,6 @@ const Send: React.FC = () => {
   const [fromEmail, setFromEmail] = useState<string>(storedEmails[0] || "");
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
-  const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<string | number | undefined>("5");
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [isErrors, setIsErrors] = useState({
@@ -26,6 +26,12 @@ const Send: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
   const countdownMax = 120;
+  // Count down tiimer hook
+  const [count, { startCountdown }] = useCountdown({
+    countStart: countdownMax,
+    intervalMs: 1000,
+  });
+
   function getCurrencyOptionClass(selected: boolean): string {
     const baseClasses =
       "text-gray-50 block px-4 py-2 text-sm m-2 rounded-md cursor-pointer hover:transition-all";
@@ -381,18 +387,11 @@ const Send: React.FC = () => {
                 } else setIsErrors({ toEmail: false, fromEmail: false });
 
                 setEmailSent(true);
-                setCountdown(countdownMax);
-                const intervalId = setInterval(() => {
-                  setCountdown((prevCountdown) =>
-                    prevCountdown ? prevCountdown - 1 : null,
-                  );
-                }, 1000);
-                setTimeout(() => {
-                  clearInterval(intervalId);
-                  setCountdown(null);
-                }, 60000);
+
+                // start countdown
+                startCountdown();
                 window.open(
-                  emailSent && (!countdown || countdown < countdownMax - 2)
+                  emailSent && (!count || count < countdownMax - 2)
                     ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
                     : emailLink,
                 );
@@ -413,8 +412,8 @@ const Send: React.FC = () => {
           <>
             <div className="my-4 text-center">
               <p className="text-lg font-medium">
-                {countdown
-                  ? `Expect a response in ${countdown} seconds...`
+                {count
+                  ? `Expect a response in ${count} seconds...`
                   : "Done processing! You should receive a reply shortly."}
               </p>
             </div>

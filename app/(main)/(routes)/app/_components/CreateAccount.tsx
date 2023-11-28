@@ -4,7 +4,7 @@ import BlueButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
-import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
+import { useCountdown } from "usehooks-ts";
 
 const CreateAccount: React.FC<{
   setSelectedTab: (tab: "create" | "send" | "deposit") => void;
@@ -16,6 +16,12 @@ const CreateAccount: React.FC<{
   const [subject, setSubject] = useState("");
   const [emailSearchLink, setEmailSearchLink] = useState("");
   const [sent, setSent] = useState(false);
+  //Countdown timer hook
+  const [count, { startCountdown, resetCountdown, stopCountdown }] =
+    useCountdown({
+      countStart: 3,
+      intervalMs: 1000,
+    });
 
   useEffect(() => {
     const [name, sendLink, viewLink, subject] = getCreateEmailLink(
@@ -94,6 +100,8 @@ const CreateAccount: React.FC<{
                 onClick={async () => {
                   console.log(emailRef.current?.value);
                   // setSent(true);
+
+                  startCountdown();
                 }}
               >
                 {sent ? "Created ✔" : "Create"}
@@ -133,6 +141,20 @@ const CreateAccount: React.FC<{
               : "Created? Go to 'Send Money' tab ➜"}
           </Button>
         </div>
+      </div>
+
+      <div className="flex gap-4">
+        <button onClick={startCountdown}>start</button>
+        <button onClick={stopCountdown}>stop</button>
+        <button onClick={resetCountdown}>reset</button>
+      </div>
+
+      <div className="my-4 text-center">
+        <p className="text-lg font-medium">
+          {count
+            ? `Expect a response in ${count} seconds...`
+            : "Account created!"}
+        </p>
       </div>
     </div>
   );
