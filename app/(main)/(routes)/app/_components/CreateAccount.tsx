@@ -147,12 +147,6 @@ const CreateAccount: React.FC<{
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <button onClick={startCountdown}>start</button>
-        <button onClick={stopCountdown}>stop</button>
-        <button onClick={resetCountdown}>reset</button>
-      </div>
-
       {count !== 61 && (
         <div className="my-4 text-center">
           <p className="text-lg font-medium">
