@@ -19,7 +19,7 @@ const CreateAccount: React.FC<{
   //Countdown timer hook
   const [count, { startCountdown, resetCountdown, stopCountdown }] =
     useCountdown({
-      countStart: 3,
+      countStart: 61,
       intervalMs: 1000,
     });
 
@@ -50,10 +50,15 @@ const CreateAccount: React.FC<{
           inst.style.display = "block";
         }, 500);
       });
+
+      // Reset countdown so dismiss countdown message
+      setTimeout(() => {
+        resetCountdown();
+      }, 121000);
     } else {
       setSent(true);
     }
-  }, [emailRef.current?.value]);
+  }, [emailRef.current?.value, resetCountdown]);
 
   function copyText(e: any) {
     const target = e.target;
@@ -100,7 +105,6 @@ const CreateAccount: React.FC<{
                 onClick={async () => {
                   console.log(emailRef.current?.value);
                   // setSent(true);
-
                   startCountdown();
                 }}
               >
@@ -149,13 +153,15 @@ const CreateAccount: React.FC<{
         <button onClick={resetCountdown}>reset</button>
       </div>
 
-      <div className="my-4 text-center">
-        <p className="text-lg font-medium">
-          {count
-            ? `Expect a response in ${count} seconds...`
-            : "Account created!"}
-        </p>
-      </div>
+      {count !== 61 && (
+        <div className="my-4 text-center">
+          <p className="text-lg font-medium">
+            {count
+              ? `Creating account in ${count} seconds...`
+              : "Account created!"}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
