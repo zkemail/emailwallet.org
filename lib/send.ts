@@ -18,13 +18,13 @@ export function getCreateEmailLink(
   fromEmail: string,
 ): [string, string, string, string] {
   let code;
-  localStorage.setItem("recentEmail", fromEmail);
+  localStorage.setItem("recentEmailSepolia", fromEmail);
   let storedData = JSON.parse(localStorage.getItem(fromEmail) || "{}");
-  if (storedData && storedData.code) {
+  if (storedData && storedData.code && storedData.chain == "sepolia") {
     code = storedData.code; // If code is in localstorage for this email, use it
   } else {
     code = generateNewKey();
-    storedData = { ...storedData, code: code }; // Add the code to the stored data for this email
+    storedData = { ...storedData, code: code, chain: "sepolia" }; // Add the code to the stored data for this email
     localStorage.setItem(fromEmail, JSON.stringify(storedData)); // Cache the data in localstorage for this email
   }
 
@@ -62,8 +62,9 @@ export function getEmailLink(
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
   if (!fromEmail) {
-    fromEmail = localStorage.getItem("recentEmail") || "";
+    fromEmail = localStorage.getItem("recentEmailSepolia") || "";
   }
+  console.log("From email: ", fromEmail);
 
   if (typeof window !== "undefined" && window.innerWidth <= 768) {
     return [

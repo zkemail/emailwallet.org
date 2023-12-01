@@ -21,7 +21,7 @@ const NewBlogPostHeader = () => {
         target="_blank"
         className="flex items-center font-bold text-slate-800"
       >
-        Read docs now <ArrowRight size={15} />
+        Read docs <ArrowRight size={15} />
       </a>
     </div>
   );

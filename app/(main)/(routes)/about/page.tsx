@@ -61,6 +61,7 @@ const AboutPage = () => {
               background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
               color: resolvedTheme === "dark" ? "white" : "gray",
             }}
+            dateClassName="text-primary"
             icon={<FaCoins />}
             contentStyle={{
               background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
@@ -77,9 +78,9 @@ const AboutPage = () => {
             </h3>
             <h4 className="mb-4 text-primary">Istanbul, Turkey</h4>
             <span className="text-sm text-muted-foreground">
-              Built by Saleel, Rasul, Yush, Sora, and Tyler, a 2-week experiment
+              Built by Sora, Yush, Saleel, Rasul, and Elo, a 2-week experiment
               for the decentralized email wallet V1 contracts is audited and
-              deployed.
+              deployed on Arbitrum Mainnet.
             </span>
             <br />
           </VerticalTimelineElement>
@@ -90,7 +91,7 @@ const AboutPage = () => {
               background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
               color: resolvedTheme === "dark" ? "white" : "gray",
             }}
-            dateClassName="sm:mt-5 md:mt-0"
+            dateClassName="text-primary"
             icon={<MdWork />}
             contentStyle={{
               background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
@@ -148,6 +149,7 @@ const AboutPage = () => {
               background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",
               color: resolvedTheme === "dark" ? "white" : "gray",
             }}
+            dateClassName="text-primary"
             icon={<IoMdCodeWorking />}
             contentStyle={{
               background: resolvedTheme === "dark" ? "#0f172a" : "#feead9",

@@ -370,7 +370,7 @@ const Send: React.FC = () => {
         {emailSent && (
           <>
             <div className="my-4 text-center">
-              <p className="text-lg font-medium">
+              <p className="text-lg font-medium text-white">
                 {countdown
                   ? `Expect a response in ${countdown} seconds...`
                   : "Done processing! You should receive a reply shortly."}
