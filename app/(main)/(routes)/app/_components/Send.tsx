@@ -401,7 +401,7 @@ const Send: React.FC = () => {
         {emailSent && (
           <>
             <div className="my-4 text-center">
-              <p className="text-lg font-medium">
+              <p className="text-lg font-medium text-white">
                 {count
                   ? `Expect a response in ${count} seconds...`
                   : "Done processing! You should receive a reply shortly."}
