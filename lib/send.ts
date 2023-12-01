@@ -1,5 +1,3 @@
-import { FaRegCommentAlt } from "react-icons/fa";
-
 export function isValidEmail(email: string): boolean {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
   return regex.test(email);
@@ -16,6 +14,7 @@ export function generateNewKey() {
 
 export function getCreateEmailLink(
   fromEmail: string,
+  provider: string,
 ): [string, string, string, string] {
   let code;
   localStorage.setItem("recentEmail", fromEmail);
@@ -24,7 +23,7 @@ export function getCreateEmailLink(
     code = storedData.code; // If code is in localstorage for this email, use it
   } else {
     code = generateNewKey();
-    storedData = { ...storedData, code: code }; // Add the code to the stored data for this email
+    storedData = { ...storedData, code: code, provider }; // Add the code to the stored data for this email
     localStorage.setItem(fromEmail, JSON.stringify(storedData)); // Cache the data in localstorage for this email
   }
 
@@ -41,7 +40,7 @@ export function getCreateEmailLink(
       subject,
       `You are creating your Email Wallet.\n
 ❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n
-📤 sendeth.org privately relays your email on Arbitrum to create your account. Expect a confirmation email in a minute.\n
+📤 sendeth.org privately relays your email on Sepolia testnet to create your account. Expect a confirmation email in a minute.\n
 🤫 Your unique secret code hides your email on-chain.\n
 📖 Read more on our docs at http://docs.emailwallet.org`,
       true,
@@ -69,7 +68,7 @@ export function getEmailLink(
     return [
       "Mail App",
       `mailto:${encodeURIComponent(
-        "arbitrum@sendeth.org",
+        "sepolia@sendeth.org",
       )}?subject=${encodedSubject}&body=${encodedBody}`,
       ``,
     ];
@@ -79,7 +78,7 @@ export function getEmailLink(
     return [
       "Mail App",
       `mailto:${encodeURIComponent(
-        "arbitrum@sendeth.org",
+        "sepolia@sendeth.org",
       )}?subject=${encodedSubject}&body=${encodedBody}`,
       ``,
     ];
@@ -91,7 +90,7 @@ export function getEmailLink(
       `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
         send_to_instead_of_cc ? "to" : "cc"
       }=${encodeURIComponent(
-        "arbitrum@sendeth.org",
+        "sepolia@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
       `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
     ];
@@ -102,7 +101,7 @@ export function getEmailLink(
     return [
       "Mail App",
       `mailto:${encodeURIComponent(
-        "arbitrum@sendeth.org",
+        "sepolia@sendeth.org",
       )}?subject=${encodedSubject}&body=${encodedBody}`,
       `https://outlook.live.com/mail/${fromEmail}/sentitems`,
     ];
@@ -110,7 +109,7 @@ export function getEmailLink(
     return [
       "Yahoo Mail",
       `https://mail.yahoo.com/d/compose-message?cc=${encodeURIComponent(
-        "arbitrum@sendeth.org",
+        "sepolia@sendeth.org",
       )}&subject=${encodedSubject}&body=${encodedBody}`,
       `https://mail.yahoo.com/d/search/keyword=sendeth.org`,
     ];
@@ -130,7 +129,7 @@ export function getEmailLink(
       `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
         send_to_instead_of_cc ? "to" : "cc"
       }=${encodeURIComponent(
-        "arbitrum@sendeth.org",
+        "sepolia@sendeth.org",
       )}&su=${encodedSubject}&body=${encodedBody}`,
       `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
     ];
@@ -139,7 +138,7 @@ export function getEmailLink(
     return [
       "Mail App",
       `mailto:${encodeURIComponent(
-        "arbitrum@sendeth.org",
+        "sepolia@sendeth.org",
       )}?subject=${encodedSubject}&body=${encodedBody}`,
       ``,
     ];

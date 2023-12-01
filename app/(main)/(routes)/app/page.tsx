@@ -8,11 +8,7 @@ export default function SendMoneyPage() {
         <h2 className="w-11/12 text-center text-muted-foreground sm:w-1/2">
           Create an account and send money, by sending emails from your
           currently logged-in email address. Everyone starts with 100 TEST
-          tokens (and 5 USDC during ProgCrypto).
-          <br />
-          <br />
-          This 2-week demo experiment on Arbitrum mainnet will shut down on
-          November 28, 2023. Make sure to withdraw your money by then!
+          tokens on the Sepolia testnet.
         </h2>
         <div className="text-center text-sm text-muted-foreground">
           By using this service, you agree to our{" "}

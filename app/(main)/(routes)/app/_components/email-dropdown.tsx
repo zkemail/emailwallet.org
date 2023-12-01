@@ -1,49 +1,57 @@
-import { Button } from "@/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { FaYahoo } from "react-icons/fa";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FaMailBulk, FaYahoo } from "react-icons/fa";
+import { PiMicrosoftOutlookLogo } from "react-icons/pi";
 import { TbBrandGmail } from "react-icons/tb";
 
+const providers = [
+  {
+    name: "Gmail",
+    value: "gmail",
+    icon: TbBrandGmail,
+  },
+  {
+    name: "Yahoo",
+    value: "yahoo",
+    icon: FaYahoo,
+  },
+  {
+    name: "Outlook",
+    value: "outlook",
+    icon: PiMicrosoftOutlookLogo,
+  },
+  {
+    name: "Default",
+    value: "mailto:",
+    icon: FaMailBulk,
+  },
+];
+
 interface EmailDropdownProps {
-  children: React.ReactNode;
-  side?: "top" | "right" | "bottom" | "left";
-  align?: "center" | "start" | "end";
-  buttonClassName?: string;
-  contentClassName?: string;
+  setProvider: (value: string) => void;
 }
 
-export const EmailDropdown = ({
-  children,
-  buttonClassName,
-  contentClassName,
-  side = "top",
-  align = "start",
-}: EmailDropdownProps) => {
+export const EmailDropdown = ({ setProvider }: EmailDropdownProps) => {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="p-0">
-        <Button className={buttonClassName}>{children}</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className={contentClassName}
-        side={side}
-        align={align}
-      >
-        <DropdownMenuLabel>Email Providers</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <TbBrandGmail className="mr-2" /> Gmail
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <FaYahoo className="mr-2" /> Yahoo
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Select onValueChange={setProvider}>
+      <SelectTrigger>
+        <SelectValue placeholder="Select Mail Provider" />
+      </SelectTrigger>
+      <SelectContent side="top">
+        {providers.map((provider) => (
+          <SelectItem value={provider.value} key={provider.value}>
+            <div className="flex items-center gap-2">
+              <provider.icon />
+              {provider.name}
+            </div>
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 };
