@@ -363,8 +363,13 @@ const Send: React.FC = () => {
           </ToolTip>
           <p className="text-sm">OR</p>
           <ToolTip text="This will auto-format the fields above into your default mail app.">
-            {/* changed to button so mailTo won't work if 'To field 'is empty */}
-            <button
+            <a
+              href={
+                emailSent && (!count || count < countdownMax - 2)
+                  ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                  : emailLink
+              }
+              target="_blank"
               onClick={() => {
                 // Prevent opening an email app if no email provided in the field
                 if (toEmail?.length === 0 && fromEmail?.length > 0) {
@@ -393,14 +398,14 @@ const Send: React.FC = () => {
               {!emailSent
                 ? `Send via Default Email App`
                 : `Failed? Re-send via default mail app`}
-            </button>
+            </a>
           </ToolTip>
         </div>
 
         {emailSent && (
           <>
             <div className="my-4 text-center">
-              <p className="text-lg font-medium text-white">
+              <p className="text-lg font-medium">
                 {count
                   ? `Expect a response in ${count} seconds...`
                   : "Done processing! You should receive a reply shortly."}

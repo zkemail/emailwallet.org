@@ -23,7 +23,7 @@ export function getCreateEmailLink(
     code = storedData.code; // If code is in localstorage for this email, use it
   } else {
     code = generateNewKey();
-    storedData = { ...storedData, code: code, provider, chain: "sepolia" }; // Add the code to the stored data for this email
+    storedData = { ...storedData, code, provider, chain: "sepolia" }; // Add the code to the stored data for this email
     localStorage.setItem(fromEmail, JSON.stringify(storedData)); // Cache the data in localstorage for this email
   }
 
