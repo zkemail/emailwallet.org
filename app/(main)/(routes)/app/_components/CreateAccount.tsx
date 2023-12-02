@@ -19,6 +19,7 @@ const CreateAccount: React.FC<{
   const [subject, setSubject] = useState("");
   const [emailSearchLink, setEmailSearchLink] = useState("");
   const [sent, setSent] = useState(false);
+
   //Countdown timer hook
   const [count, { startCountdown, resetCountdown }] = useCountdown({
     countStart: 61,

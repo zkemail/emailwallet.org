@@ -5,7 +5,6 @@ import { Currency } from "./Form";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ToolTip from "@/components/ToolTip";
-import { EmailDropdown } from "./email-dropdown";
 import { FromEmailInput } from "./from-email-input";
 import { useCountdown } from "usehooks-ts";
 
