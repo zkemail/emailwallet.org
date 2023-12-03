@@ -8,6 +8,7 @@ import {
 import { FaMailBulk, FaYahoo } from "react-icons/fa";
 import { PiMicrosoftOutlookLogo } from "react-icons/pi";
 import { TbBrandGmail } from "react-icons/tb";
+import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
 
 const providers = [
   {
@@ -34,11 +35,28 @@ const providers = [
 
 interface EmailDropdownProps {
   setProvider: (value: string) => void;
+  provider: string;
 }
 
-export const EmailDropdown = ({ setProvider }: EmailDropdownProps) => {
+export const EmailDropdown = ({
+  setProvider,
+  provider,
+}: EmailDropdownProps) => {
+  const [selectedProvider, setSelectedProvider] = useLocalStorage(
+    "selectedProvider",
+    provider,
+  );
+
+  const handleSelect = (value: string) => {
+    setProvider(value);
+    setSelectedProvider(value);
+  };
+
   return (
-    <Select onValueChange={setProvider}>
+    <Select
+      value={selectedProvider ? selectedProvider : provider}
+      onValueChange={handleSelect}
+    >
       <SelectTrigger>
         <SelectValue placeholder="Select Mail Provider" />
       </SelectTrigger>

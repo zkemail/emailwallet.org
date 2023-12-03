@@ -98,7 +98,7 @@ const CreateAccount: React.FC<{
               type="email"
             />
 
-            <EmailDropdown setProvider={setProvider} />
+            <EmailDropdown setProvider={setProvider} provider={provider} />
           </div>
 
           <ToolTip text="This will open your default email client, with your private code in the subject.">

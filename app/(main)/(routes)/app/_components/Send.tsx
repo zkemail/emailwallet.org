@@ -9,10 +9,11 @@ import { FromEmailInput } from "./from-email-input";
 import { useCountdown } from "usehooks-ts";
 
 const Send: React.FC = () => {
+  const recentEmail = localStorage.getItem("recentEmailSepolia");
   const storedEmails = Object.keys(localStorage).filter((key) =>
     key.includes("@"),
   );
-  const [fromEmail, setFromEmail] = useState<string>(storedEmails[0] || "");
+  const [fromEmail, setFromEmail] = useState<string>(recentEmail || "");
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [amount, setAmount] = useState<string | number | undefined>("5");
