@@ -1,10 +1,10 @@
 import { getCreateEmailLink } from "@/lib/send";
-import { useState, useEffect, ElementRef, useRef } from "react";
+import { useState, ElementRef, useRef } from "react";
 import CreateButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
-import { useCountdown, useLocalStorage } from "usehooks-ts";
+import { useCountdown } from "usehooks-ts";
 import { EmailDropdown } from "./email-dropdown";
 
 const CreateAccount: React.FC<{
