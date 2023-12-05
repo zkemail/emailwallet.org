@@ -8,7 +8,9 @@ import {
 import { FaMailBulk, FaYahoo } from "react-icons/fa";
 import { PiMicrosoftOutlookLogo } from "react-icons/pi";
 import { TbBrandGmail } from "react-icons/tb";
-import { useLocalStorage, useReadLocalStorage } from "usehooks-ts";
+import { useLocalStorage } from "usehooks-ts";
+import { SiProton } from "react-icons/si";
+import { CiCloudOn } from "react-icons/ci";
 
 const providers = [
   {
@@ -22,9 +24,19 @@ const providers = [
     icon: FaYahoo,
   },
   {
+    name: "iCloud",
+    value: "icloud",
+    icon: CiCloudOn,
+  },
+  {
     name: "Outlook",
     value: "outlook",
     icon: PiMicrosoftOutlookLogo,
+  },
+  {
+    name: "Proton",
+    value: "proton",
+    icon: SiProton,
   },
   {
     name: "Default",
