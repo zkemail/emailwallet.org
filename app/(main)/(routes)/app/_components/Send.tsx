@@ -5,17 +5,33 @@ import { Currency } from "./Form";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ToolTip from "@/components/ToolTip";
+import { FromEmailInput } from "./from-email-input";
+import { useCountdown } from "usehooks-ts";
 
 const Send: React.FC = () => {
-  const [fromEmail, setFromEmail] = useState<string>("");
+  const recentEmail = localStorage.getItem("recentEmailSepolia");
+  const storedEmails = Object.keys(localStorage).filter((key) =>
+    key.includes("@"),
+  );
+  const [fromEmail, setFromEmail] = useState<string>(recentEmail || "");
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
-  const [countdown, setCountdown] = useState<number | null>(null);
-  const [amount, setAmount] = useState<number | undefined>(5);
+  const [amount, setAmount] = useState<string | number | undefined>("5");
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
+  const [isErrors, setIsErrors] = useState({
+    toEmail: false,
+    fromEmail: false,
+  });
+  const isLargeScreen = useMediaQuery("(min-width: 740px)");
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
   const countdownMax = 120;
+  // Count down tiimer hook
+  const [count, { startCountdown }] = useCountdown({
+    countStart: countdownMax,
+    intervalMs: 1000,
+  });
+
   function getCurrencyOptionClass(selected: boolean): string {
     const baseClasses =
       "text-gray-50 block px-4 py-2 text-sm m-2 rounded-md cursor-pointer hover:transition-all";
@@ -31,14 +47,14 @@ const Send: React.FC = () => {
       setAmount(undefined);
       return;
     }
-    if (!Number.isInteger(Number(value))) {
-      const roundedValue = Math.floor(Number(value));
-      setAmount(roundedValue);
-    } else {
-      setAmount(Number(value));
-    }
+    // if (!Number.isInteger(Number(value))) {
+    //   const roundedValue = Math.floor(Number(value));
+    //   setAmount(roundedValue.toString());
+    // } else {
+    setAmount(value);
+    // }
     if (Number(value) > 100 && currency === Currency.TEST) {
-      setAmount(100);
+      setAmount("100");
     }
   }
 
@@ -58,16 +74,16 @@ const Send: React.FC = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
   const [emailProviderName, emailLink, emailSearchLink] = getEmailLink(
     fromEmail,
     `Send ${amount} ${Currency[currency]} to ${toEmail}`,
     "You are sending with Email Wallet.\n\n❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n\n📤 sendeth.org (cc'd) relays your email on Sepolia testnet to transfer the funds. Expect a confirmation email when finished.\n\n📖 Read more on our site, docs, or code at https://emailwallet.org",
   );
-  const isLargeScreen = useMediaQuery("(min-width: 740px)");
 
   return (
     <>
-      <div className="flex w-[95%] flex-col items-center justify-center gap-2 rounded-[32px] bg-black px-6 py-4 sm:w-[600px] md:w-[700px] lg:w-[850px]">
+      <div className="flex w-[380px] flex-col items-center justify-center gap-2 overflow-x-scroll rounded-[32px] bg-black px-6 py-4 sm:w-[600px] md:w-[700px] lg:w-[850px]">
         <h3 className={`text-[1.625rem] font-bold text-white`}>Send Money</h3>
         <div className={"text-center leading-5 text-[#878AA1]"}>
           Send money via sending an email through a relayer, with transaction
@@ -88,7 +104,11 @@ const Send: React.FC = () => {
                 id="to_email"
                 type="email"
                 size={isLargeScreen ? 55 : 31}
-                className="block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]"
+                value={toEmail}
+                className={cn(
+                  "block rounded-lg border-2 border-[#515364] bg-black px-2 py-2 text-sm text-white placeholder:text-[#515364]",
+                  isErrors.toEmail && "border-red-500",
+                )}
                 placeholder="Email Address OR Wallet Address"
                 onChange={(e) => {
                   setToEmail(e.target.value);
@@ -138,7 +158,7 @@ const Send: React.FC = () => {
               >
                 sepolia@sendeth.org
               </p>
-              <ToolTip text="Copy to clipboard">
+              <ToolTip text="Copy to clipboard" side="bottom">
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText("sepolia@sendeth.org");
@@ -181,8 +201,9 @@ const Send: React.FC = () => {
                 id="to_email"
                 type="email"
                 size={5}
-                className="mx-1 rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
-                placeholder="Email Address OR Wallet Address"
+                maxLength={4}
+                className="mx-1 w-16 resize rounded-lg border-2 border-[#515364] bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
+                // placeholder="Email Address OR Wallet Address"
                 defaultValue={5}
                 onChange={(e) => {
                   handleAmountChange(e);
@@ -271,7 +292,7 @@ const Send: React.FC = () => {
                 <p
                   className={`${
                     toEmail.length > 0 ? "" : "text-[#515364]"
-                  } inline w-[210px] overflow-x-scroll sm:w-[280px] lg:max-w-full`}
+                  } inline lg:max-w-full`}
                 >
                   <span className="mr-2 text-white">to</span>
                   {toEmail.length > 0
@@ -283,7 +304,7 @@ const Send: React.FC = () => {
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(
-                      `Send ${amount?.toFixed(0)} ${
+                      `Send ${Number(amount)?.toFixed(0)} ${
                         Currency[currency]
                       } to ${toEmail}`,
                     );
@@ -309,6 +330,14 @@ const Send: React.FC = () => {
             </div>
           </p>
         </div>
+
+        <FromEmailInput
+          storedEmails={storedEmails}
+          fromEmail={fromEmail}
+          isErrors={isErrors}
+          setFromEmail={setFromEmail}
+        />
+
         <div className="start-0 flex w-full">
           <textarea
             className="mt-3 flex w-full rounded-lg border bg-black px-4 py-2 text-sm text-white placeholder:text-[#515364]"
@@ -337,28 +366,35 @@ const Send: React.FC = () => {
           <ToolTip text="This will auto-format the fields above into your default mail app.">
             <a
               href={
-                emailSent && (!countdown || countdown < countdownMax - 2)
-                  ? `mailto:sepolia@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                emailSent && (!count || count < countdownMax - 2)
+                  ? `mailto:arbitrum@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
                   : emailLink
               }
               target="_blank"
               onClick={() => {
+                // Prevent opening an email app if no email provided in the field
+                if (toEmail?.length === 0 && fromEmail?.length > 0) {
+                  return setIsErrors({ toEmail: true, fromEmail: false });
+                } else if (toEmail.length > 0 && fromEmail.length === 0) {
+                  return setIsErrors({ toEmail: false, fromEmail: true });
+                } else if (toEmail.length === 0 && fromEmail.length === 0) {
+                  return setIsErrors({ toEmail: true, fromEmail: true });
+                } else setIsErrors({ toEmail: false, fromEmail: false });
+
                 setEmailSent(true);
-                setCountdown(countdownMax);
-                const intervalId = setInterval(() => {
-                  setCountdown((prevCountdown) =>
-                    prevCountdown ? prevCountdown - 1 : null,
-                  );
-                }, 1000);
-                setTimeout(() => {
-                  clearInterval(intervalId);
-                  setCountdown(null);
-                }, 60000);
+
+                // start countdown
+                startCountdown();
+                window.open(
+                  emailSent && (!count || count < countdownMax - 2)
+                    ? `mailto:sepolia@sendeth.org?subject=Send%20${amount}%20${Currency[currency]}%20to%20${toEmail}`
+                    : emailLink,
+                );
               }}
               style={{
                 background: `linear-gradient(180deg, #4D94FF 0%, #1766DC 100%)`,
               }}
-              className={cn(buttonVariants({ className: "text-white" }))}
+              className={buttonVariants({ className: "text-white" })}
             >
               {!emailSent
                 ? `Send via Default Email App`
@@ -370,9 +406,9 @@ const Send: React.FC = () => {
         {emailSent && (
           <>
             <div className="my-4 text-center">
-              <p className="text-lg font-medium text-white">
-                {countdown
-                  ? `Expect a response in ${countdown} seconds...`
+              <p className="text-lg font-medium">
+                {count
+                  ? `Expect a response in ${count} seconds...`
                   : "Done processing! You should receive a reply shortly."}
               </p>
             </div>

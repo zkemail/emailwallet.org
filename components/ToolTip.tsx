@@ -8,15 +8,17 @@ import {
 const ToolTip = ({
   children,
   text,
+  side,
 }: {
   children: React.ReactNode;
   text: string;
+  side?: "top" | "right" | "bottom" | "left";
 }) => {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={200}>
         <TooltipTrigger>{children}</TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent side={side}>
           <p>{text}</p>
         </TooltipContent>
       </Tooltip>

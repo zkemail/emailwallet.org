@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const BlueButton: React.FC<{
+const CreateButton: React.FC<{
   children: React.ReactNode;
   onClick: () => void;
   className?: string;
@@ -20,4 +20,4 @@ const BlueButton: React.FC<{
   );
 };
 
-export default BlueButton;
+export default CreateButton;
