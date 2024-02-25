@@ -1,26 +1,42 @@
 import { getCreateEmailLink } from "@/lib/send";
-import { useState, useEffect } from "react";
-import BlueButton from "./BlueButton";
+import { useState, ElementRef, useRef } from "react";
+import CreateButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
+import { useCountdown } from "usehooks-ts";
+import { EmailDropdown } from "./email-dropdown";
 
 const CreateAccount: React.FC<{
   setSelectedTab: (tab: "create" | "send" | "deposit") => void;
 }> = ({ setSelectedTab }) => {
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
+
+  const emailRef = useRef<ElementRef<"input">>(null);
+  const [provider, setProvider] = useState<string>("mailto:");
   const [emailLink, setEmailLink] = useState("");
   const [emailProviderName, setEmailProviderName] = useState("");
   const [subject, setSubject] = useState("");
   const [emailSearchLink, setEmailSearchLink] = useState("");
   const [sent, setSent] = useState(false);
 
-  useEffect(() => {
-    const [name, sendLink, viewLink, subject] = getCreateEmailLink(email);
+  //Countdown timer hook
+  const [count, { startCountdown, resetCountdown }] = useCountdown({
+    countStart: 61,
+    intervalMs: 1000,
+  });
+
+  const handleCreate = () => {
+    const [name, sendLink, viewLink, subject] = getCreateEmailLink(
+      emailRef.current?.value as string,
+      provider,
+    );
     setEmailProviderName(name);
     setEmailSearchLink(viewLink);
     setEmailLink(sendLink);
     setSubject(subject);
+
+    startCountdown(); //Start create timer
 
     if (sendLink?.startsWith("mailto:")) {
       const emailLink = document.getElementById("emailLink");
@@ -43,7 +59,7 @@ const CreateAccount: React.FC<{
     } else {
       setSent(true);
     }
-  }, [email]);
+  };
 
   function copyText(e: any) {
     const target = e.target;
@@ -66,17 +82,25 @@ const CreateAccount: React.FC<{
         Email a relayer to create an account.
         {/* w-1/2 `Create Account` pops out your default email client with your private code in the subject. */}
       </div>
+      {/* Dropdown menu for email providers */}
+
       <div className={"flex flex-col gap-2.5"}>
-        <div className={"flex items-center gap-2.5"}>
-          <Input
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
-            placeholder={"Your Email Address"}
-            type="email"
-          />
+        <div className={"flex items-end gap-2.5"}>
+          <div className="flex flex-col gap-2.5">
+            <Input
+              // value={emailRef.current?.value}
+              ref={emailRef}
+              // onChange={(e) => {
+              //   setEmail(e.target.value);
+              // }}
+              className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
+              placeholder={"Your Email Address"}
+              type="email"
+            />
+
+            <EmailDropdown setProvider={setProvider} provider={provider} />
+          </div>
+
           <ToolTip text="This will open your default email client, with your private code in the subject.">
             <a
               id="emailLink"
@@ -84,15 +108,19 @@ const CreateAccount: React.FC<{
               target="_blank"
               rel="noopener noreferrer"
             >
-              <BlueButton
+              <CreateButton
                 className="py-6 text-primary"
                 onClick={async () => {
-                  console.log(email);
                   // setSent(true);
+                  handleCreate();
+                  // Reset countdown to dismiss countdown message
+                  setTimeout(() => {
+                    resetCountdown();
+                  }, 121000);
                 }}
               >
                 {sent ? "Created ✔" : "Create"}
-              </BlueButton>
+              </CreateButton>
             </a>
           </ToolTip>
         </div>
@@ -129,6 +157,16 @@ const CreateAccount: React.FC<{
           </Button>
         </div>
       </div>
+
+      {count !== 61 && (
+        <div className="my-4 text-center">
+          <p className="text-lg font-medium">
+            {count
+              ? `Creating account in ${count} seconds...`
+              : "Account created!"}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

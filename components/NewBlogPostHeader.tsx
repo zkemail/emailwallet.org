@@ -11,7 +11,7 @@ const NewBlogPostHeader = () => {
   );
 
   return (
-    <div className="fixed inset-x-0 top-0 z-10 mx-auto flex w-full justify-center gap-1 bg-tertiary p-2 py-1 text-sm drop-shadow">
+    <div className="sticky inset-x-0 top-0 z-10 mx-auto mb-2 flex w-full justify-center gap-1 bg-tertiary p-2 py-1 text-sm drop-shadow">
       <p className="text-secondary-foreground">
         The Istanbul Arbitrum mainnet experiment has concluded! Retrospective
         coming soon.
@@ -21,7 +21,7 @@ const NewBlogPostHeader = () => {
         target="_blank"
         className="flex items-center font-bold text-slate-800"
       >
-        Read docs <ArrowRight size={15} />
+        Read docs now <ArrowRight size={15} />
       </a>
     </div>
   );

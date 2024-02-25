@@ -1,5 +1,3 @@
-import { FaRegCommentAlt } from "react-icons/fa";
-
 export function isValidEmail(email: string): boolean {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
   return regex.test(email);
@@ -16,15 +14,17 @@ export function generateNewKey() {
 
 export function getCreateEmailLink(
   fromEmail: string,
+  provider: string,
 ): [string, string, string, string] {
   let code;
   localStorage.setItem("recentEmailSepolia", fromEmail);
   let storedData = JSON.parse(localStorage.getItem(fromEmail) || "{}");
+
   if (storedData && storedData.code && storedData.chain == "sepolia") {
     code = storedData.code; // If code is in localstorage for this email, use it
   } else {
     code = generateNewKey();
-    storedData = { ...storedData, code: code, chain: "sepolia" }; // Add the code to the stored data for this email
+    storedData = { ...storedData, code, provider, chain: "sepolia" }; // Add the code to the stored data for this email
     localStorage.setItem(fromEmail, JSON.stringify(storedData)); // Cache the data in localstorage for this email
   }
 
@@ -61,6 +61,8 @@ export function getEmailLink(
 ): [string, string, string] {
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
+  const selectedProvider = JSON.parse(localStorage.getItem(fromEmail) || "{}");
+
   if (!fromEmail) {
     fromEmail = localStorage.getItem("recentEmailSepolia") || "";
   }
@@ -76,74 +78,122 @@ export function getEmailLink(
     ];
   }
 
-  if (fromEmail.endsWith("@me.com") || fromEmail.endsWith("@icloud.com")) {
-    return [
-      "Mail App",
-      `mailto:${encodeURIComponent(
-        "sepolia@sendeth.org",
-      )}?subject=${encodedSubject}&body=${encodedBody}`,
-      ``,
-    ];
-  }
+  switch (selectedProvider.provider) {
+    case "yahoo":
+      return [
+        "Yahoo Mail",
+        `https://mail.yahoo.com/d/compose-message?cc=${encodeURIComponent(
+          "sepolia@sendeth.org",
+        )}&subject=${encodedSubject}&body=${encodedBody}`,
+        `https://mail.yahoo.com/d/search/keyword=sendeth.org`,
+      ];
 
-  if (fromEmail.endsWith("@gmail.com")) {
-    return [
-      "Gmail",
-      `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
-        send_to_instead_of_cc ? "to" : "cc"
-      }=${encodeURIComponent(
-        "sepolia@sendeth.org",
-      )}&su=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
-    ];
-  } else if (
-    fromEmail.endsWith("@outlook.com") ||
-    fromEmail.endsWith("@hotmail.com")
-  ) {
-    return [
-      "Mail App",
-      `mailto:${encodeURIComponent(
-        "sepolia@sendeth.org",
-      )}?subject=${encodedSubject}&body=${encodedBody}`,
-      `https://outlook.live.com/mail/${fromEmail}/sentitems`,
-    ];
-  } else if (fromEmail.endsWith("@yahoo.com")) {
-    return [
-      "Yahoo Mail",
-      `https://mail.yahoo.com/d/compose-message?cc=${encodeURIComponent(
-        "sepolia@sendeth.org",
-      )}&subject=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.yahoo.com/d/search/keyword=sendeth.org`,
-    ];
-  } else if (
-    fromEmail.endsWith("@protonmail.com") ||
-    fromEmail.endsWith("@proton.me") ||
-    fromEmail.endsWith("@pm.me")
-  ) {
-    return [
-      "Protonmail [manually copy details!]",
-      `https://mail.proton.me/u/0/`,
-      `https://mail.proton.me/u/0/almost-all-mail#keyword=sendeth.org`,
-    ];
-  } else if (googleDomainList.includes(fromEmail.split("@").pop() || "")) {
-    return [
-      "Gmail",
-      `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
-        send_to_instead_of_cc ? "to" : "cc"
-      }=${encodeURIComponent(
-        "sepolia@sendeth.org",
-      )}&su=${encodedSubject}&body=${encodedBody}`,
-      `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
-    ];
-  } else {
-    // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
-    return [
-      "Mail App",
-      `mailto:${encodeURIComponent(
-        "sepolia@sendeth.org",
-      )}?subject=${encodedSubject}&body=${encodedBody}`,
-      ``,
-    ];
+    case "gmail":
+      return [
+        "Gmail",
+        `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
+          send_to_instead_of_cc ? "to" : "cc"
+        }=${encodeURIComponent(
+          "sepolia@sendeth.org",
+        )}&su=${encodedSubject}&body=${encodedBody}`,
+        `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
+      ];
+
+    case "icloud":
+      return [
+        "Mail App",
+        `mailto:${encodeURIComponent(
+          "sepolia@sendeth.org",
+        )}?subject=${encodedSubject}&body=${encodedBody}`,
+        ``,
+      ];
+
+    case "outlook":
+      return [
+        "Mail App",
+        `mailto:${encodeURIComponent(
+          "sepolia@sendeth.org",
+        )}?subject=${encodedSubject}&body=${encodedBody}`,
+        `https://outlook.live.com/mail/${fromEmail}/sentitems`,
+      ];
+
+    case "proton":
+      return [
+        "Protonmail [manually copy details!]",
+        `https://mail.proton.me/u/0/`,
+        `https://mail.proton.me/u/0/almost-all-mail#keyword=sendeth.org`,
+      ];
+
+    default:
+      if (fromEmail.endsWith("@me.com") || fromEmail.endsWith("@icloud.com")) {
+        return [
+          "Mail App",
+          `mailto:${encodeURIComponent(
+            "sepolia@sendeth.org",
+          )}?subject=${encodedSubject}&body=${encodedBody}`,
+          ``,
+        ];
+      }
+
+      if (fromEmail.endsWith("@gmail.com")) {
+        return [
+          "Gmail",
+          `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
+            send_to_instead_of_cc ? "to" : "cc"
+          }=${encodeURIComponent(
+            "sepolia@sendeth.org",
+          )}&su=${encodedSubject}&body=${encodedBody}`,
+          `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
+        ];
+      } else if (
+        fromEmail.endsWith("@outlook.com") ||
+        fromEmail.endsWith("@hotmail.com")
+      ) {
+        return [
+          "Mail App",
+          `mailto:${encodeURIComponent(
+            "sepolia@sendeth.org",
+          )}?subject=${encodedSubject}&body=${encodedBody}`,
+          `https://outlook.live.com/mail/${fromEmail}/sentitems`,
+        ];
+      } else if (fromEmail.endsWith("@yahoo.com")) {
+        return [
+          "Yahoo Mail",
+          `https://mail.yahoo.com/d/compose-message?cc=${encodeURIComponent(
+            "sepolia@sendeth.org",
+          )}&subject=${encodedSubject}&body=${encodedBody}`,
+          `https://mail.yahoo.com/d/search/keyword=sendeth.org`,
+        ];
+      } else if (
+        fromEmail.endsWith("@protonmail.com") ||
+        fromEmail.endsWith("@proton.me") ||
+        fromEmail.endsWith("@pm.me")
+      ) {
+        return [
+          "Protonmail [manually copy details!]",
+          `https://mail.proton.me/u/0/`,
+          `https://mail.proton.me/u/0/almost-all-mail#keyword=sendeth.org`,
+        ];
+      } else if (googleDomainList.includes(fromEmail.split("@").pop() || "")) {
+        return [
+          "Gmail",
+          `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
+            send_to_instead_of_cc ? "to" : "cc"
+          }=${encodeURIComponent(
+            "sepolia@sendeth.org",
+          )}&su=${encodedSubject}&body=${encodedBody}`,
+          `https://mail.google.com/mail?authuser=${fromEmail}#search/sendeth.org`,
+        ];
+      } else {
+        // Default to Gmail? (not mailto:) if the domain is not recognized, since most orgs are on gmail
+        return [
+          "Mail App",
+          `mailto:${encodeURIComponent(
+            "sepolia@sendeth.org",
+          )}?subject=${encodedSubject}&body=${encodedBody}`,
+          ``,
+        ];
+      }
   }
 }
 

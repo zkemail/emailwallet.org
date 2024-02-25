@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import BlueButton from "./BlueButton";
+import CreateButton from "./BlueButton";
 import { Currency } from "./Form";
 
 const Deposit: React.FC = () => {

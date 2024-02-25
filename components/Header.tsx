@@ -2,7 +2,7 @@
 
 import MobileHeader from "./MobileHeader";
 import Logo from "./Logo";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
@@ -19,7 +19,6 @@ const routes = [
 const Header = () => {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -28,7 +27,7 @@ const Header = () => {
   if (!isMounted) return null;
 
   return (
-    <header className="sticky mt-14 bg-transparent sm:mt-7">
+    <header className="sticky bg-transparent">
       <div className="flex w-full items-center justify-between px-4 py-1">
         <Logo />
         <nav className="hidden gap-4 md:flex">
