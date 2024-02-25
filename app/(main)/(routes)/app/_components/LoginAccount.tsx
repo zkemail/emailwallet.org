@@ -3,6 +3,7 @@ import { getWalletAddress } from "@/lib/callRelayerAPI";
 import CreateButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { setAccountCode } from "@/lib/send";
 
 const LoginAccount: React.FC<{
   setSelectedTab: (tab: "login" | "view" | "deposit") => void;
@@ -36,6 +37,7 @@ const LoginAccount: React.FC<{
     const address = await getWalletAddress(email, accountCode);
     setLoading(false);
     if (address !== "No address found") {
+      setAccountCode(email, accountCode);
       setLoggedIn(true);
       setSelectedTab("view");
       setSignedInState(true);

@@ -15,7 +15,7 @@ async function createAccount(email: string): Promise<string> {
     console.log(response);
     const textResponse = await response.text();
     console.log("Parsed response:", textResponse);
-    return textResponse ? textResponse : "0";
+    return textResponse != "0x" ? textResponse : "";
   } catch (error) {
     console.error("Error creating account:", error);
     return "Account creation failed due to an error";
@@ -34,7 +34,8 @@ async function isAccountCreated(email: string): Promise<string> {
         body: JSON.stringify({ email_addr: email }),
       },
     );
-    const data: ApiResponse = (await response.json()) as ApiResponse;
+    const text = await response.text();
+    const data: ApiResponse = (await response.text()) as ApiResponse;
     return data.success ? "Account exists" : "Account does not exist";
   } catch (error) {
     console.error("Error checking account existence:", error);

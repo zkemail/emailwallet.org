@@ -19,22 +19,39 @@ function setLoggedInUser(email: string) {
 }
 
 export async function isSignedIn(): Promise<boolean> {
+  console.log("Checking if user is signed in...");
   const loggedInUser = localStorage.getItem("loggedInUser");
-  if (!loggedInUser) return false;
+  if (!loggedInUser) {
+    console.log("No logged in user found.");
+    return false;
+  }
 
+  console.log(`Retrieving stored data for user: ${loggedInUser}`);
   const storedData = JSON.parse(localStorage.getItem(loggedInUser) || "{}");
-  if (!storedData.code) return false;
+  if (!storedData.code) {
+    console.log("No code found in stored data.");
+    return false;
+  }
 
+  console.log(
+    `Fetching wallet address for user: ${loggedInUser} with code: ${storedData.code}`,
+  );
   const address = await getWalletAddress(loggedInUser, storedData.code);
+  console.log(`Wallet address fetched: ${address}`);
   return !!address;
 }
 
 export function setAccountCode(email: string, code: string): string {
+  console.log(`Setting account code for user: ${email}`);
   setLoggedInUser(email); // Set the current user as logged in
+  console.log(`Logged in user set to: ${email}`);
   let storedData = JSON.parse(localStorage.getItem(email) || "{}");
+  console.log(`Current stored data for user: ${email} is:`, storedData);
   storedData = { ...storedData, code, chain: "sepolia" };
+  console.log(`Updated stored data for user: ${email} is:`, storedData);
   // Add the code to the stored data for this email
   localStorage.setItem(email, JSON.stringify(storedData)); // Cache the data in localstorage for this email
+  console.log(`Stored data for user: ${email} updated in localStorage.`);
   return code;
 }
 
@@ -42,7 +59,8 @@ export async function getCreateEmailLink(
   fromEmail: string,
   provider: string,
 ): Promise<[string, string, string, string]> {
-  const code = setAccountCode(fromEmail, provider);
+  const code = setAccountCode(fromEmail, generateNewKey());
+  console.log(`Code set for user: ${fromEmail} is: ${code}`);
 
   const accountRegistrationRequest = {
     email_address: `${fromEmail}`, // replace with actual email address
@@ -216,9 +234,10 @@ export async function getEmailLink(
 }
 
 async function checkForGoogleSelector(domain: string) {
+  const proxyUrl = `https://cors-proxy.fringe.zone/`;
   try {
     const response = await fetch(
-      `https://registry.prove.email/api/domains/${domain}`,
+      `${proxyUrl}https://registry.prove.email/api/domains/${domain}`,
     );
     const data = await response.json();
     return data.some(

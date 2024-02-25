@@ -1,4 +1,4 @@
-import { createAccount } from "@/lib/callRelayerAPI";
+import { createAccount, isAccountCreated } from "@/lib/callRelayerAPI";
 import { useState, useRef } from "react";
 import CreateButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ const CreateAccount: React.FC<{
 }> = ({ setSelectedTab, setSignedInState }) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const [status, setStatus] = useState("");
+
+  // Whether the request has been sent
   const [sent, setSent] = useState(false);
 
   //Countdown timer hook
@@ -23,20 +25,54 @@ const CreateAccount: React.FC<{
 
   const handleCreate = async () => {
     const email = emailRef.current?.value;
+    setSent(true);
     if (!email) {
       alert("Please enter an email address.");
       return;
     }
 
-    setStatus("Creating account...");
+    setStatus("Sending confirmation email...");
     const response = await createAccount(email);
-    setStatus(response);
+    setStatus("Sent! Waiting for reply...");
     if (response === "Account creation successful") {
-      setSent(true);
       setAccountCode(email, response);
       setSignedInState(true);
-      startCountdown(); //Start create timer
+      startPolling(); //Start create timer
     } else {
+      setSent(false);
+    }
+  };
+
+  const startPolling = async () => {
+    let accountCreated = false;
+    const maxAttempts = 120;
+    let attempts = 0;
+
+    while (!accountCreated && attempts < maxAttempts) {
+      attempts++;
+      try {
+        const result = await isAccountCreated(emailRef.current?.value || "");
+        if (result === "Account exists") {
+          accountCreated = true;
+          setStatus("Account successfully created!");
+          break;
+        } else {
+          console.log(
+            `Attempt ${attempts}: Account not created yet. Polling again in 1 second...`,
+          );
+          // Wait for 1 second before the next poll
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      } catch (error) {
+        console.error("Error polling account creation status:", error);
+        setStatus("Error checking account creation status. Please try again.");
+        setSent(false);
+        return;
+      }
+    }
+
+    if (!accountCreated) {
+      setStatus("Account creation timed out. Please try again.");
       setSent(false);
     }
   };
@@ -76,22 +112,23 @@ const CreateAccount: React.FC<{
                   resetCountdown();
                 }, 121000);
               }}
+              disabled={sent}
             >
-              {sent ? "Created ✔" : "Create"}
+              {sent ? "Creating..." : "Create"}
             </CreateButton>
           </ToolTip>
         </div>
 
-        <div className="flex w-full items-start">
+        {/* <div className="flex w-full items-start">
           <Button
             onClick={() => setSelectedTab("send")}
             className="hover:bg-neutral/80 w-full border border-solid border-primary bg-secondary text-primary"
           >
             {sent
-              ? "Account created! Go to 'Send Money' tab ➜"
+              ? "Replied to email? Go to 'Send Money' tab ➜"
               : "Create account to proceed to 'Send Money' tab ➜"}
           </Button>
-        </div>
+        </div> */}
       </div>
 
       {status && (

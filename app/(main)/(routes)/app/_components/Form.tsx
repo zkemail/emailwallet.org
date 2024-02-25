@@ -14,15 +14,21 @@ const Form = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
     "create" | "send" | "deposit" | "view" | "login"
-  >("create");
+  >("view");
   const [signedInState, setSignedInState] = useState(false);
-
   useEffect(() => {
     const checkSignIn = async () => {
       const signedIn = await isSignedIn();
       setSignedInState(signedIn);
     };
+
+    // Run once on load
     checkSignIn();
+
+    window.addEventListener("storage", checkSignIn);
+
+    // Cleanup listener when component unmounts
+    return () => window.removeEventListener("storage", checkSignIn);
   }, []);
 
   useEffect(() => {
