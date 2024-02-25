@@ -1,4 +1,4 @@
-import { getAddress } from "./callRelayerAPI";
+import { getWalletAddress } from "./callRelayerAPI";
 
 export function isValidEmail(email: string): boolean {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
@@ -25,7 +25,7 @@ export async function isSignedIn(): Promise<boolean> {
   const storedData = JSON.parse(localStorage.getItem(loggedInUser) || "{}");
   if (!storedData.code) return false;
 
-  const address = await getAddress(loggedInUser, storedData.code);
+  const address = await getWalletAddress(loggedInUser, storedData.code);
   return !!address;
 }
 

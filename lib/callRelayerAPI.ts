@@ -5,13 +5,16 @@ interface ApiResponse {
 
 async function createAccount(email: string): Promise<string> {
   try {
-    const response = await fetch("https://api.emailwallet.org/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://relayer.emailwallet.org/api/createAccount",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email_addr: email }),
       },
-      body: JSON.stringify({ email }),
-    });
+    );
     const data: ApiResponse = (await response.json()) as ApiResponse;
     return data.success
       ? "Account creation successful"
@@ -22,41 +25,45 @@ async function createAccount(email: string): Promise<string> {
   }
 }
 
-async function getAddress(email: string, accountKey: string): Promise<string> {
+async function isAccountCreated(email: string): Promise<string> {
   try {
-    const response = await fetch("https://api.emailwallet.org/getAddress", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://relayer.emailwallet.org/api/isAccountCreated",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email_addr: email }),
       },
-      body: JSON.stringify({ email, accountKey }),
-    });
+    );
     const data: ApiResponse = (await response.json()) as ApiResponse;
-    return data.address || "No address found";
+    return data.success ? "Account exists" : "Account does not exist";
   } catch (error) {
-    console.error("Error fetching address:", error);
-    return "Failed to fetch address";
+    console.error("Error checking account existence:", error);
+    return "Failed to check if account exists";
   }
 }
+
 async function sendAsset(
   email: string,
-  accountKey: string,
   amount: number,
-  tokenName: string,
-  recipient: string,
+  tokenId: string,
+  recipientAddr: string,
+  isRecipientEmail: boolean,
 ): Promise<string> {
   try {
-    const response = await fetch("https://api.emailwallet.org/send", {
+    const response = await fetch("https://relayer.emailwallet.org/api/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email,
-        accountKey,
+        email_addr: email,
         amount,
-        tokenName,
-        recipient,
+        token_id: tokenId,
+        recipient_addr: recipientAddr,
+        is_recipient_email: isRecipientEmail,
       }),
     });
     const data: ApiResponse = (await response.json()) as ApiResponse;
@@ -66,27 +73,54 @@ async function sendAsset(
     return "Failed to send asset due to an error";
   }
 }
-async function transferNFT(
+
+async function getWalletAddress(
   email: string,
   accountKey: string,
-  nftAddress: string,
-  nftId: string,
-  recipient: string,
 ): Promise<string> {
   try {
-    const response = await fetch("https://api.emailwallet.org/transfer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://relayer.emailwallet.org/api/getWalletAddress",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email_addr: email, account_key: accountKey }),
       },
-      body: JSON.stringify({
-        email,
-        accountKey,
-        nftAddress,
-        nftId,
-        recipient,
-      }),
-    });
+    );
+    const data: ApiResponse = (await response.json()) as ApiResponse;
+    return data.address || "No address found";
+  } catch (error) {
+    console.error("Error fetching address:", error);
+    return "Failed to fetch address";
+  }
+}
+
+async function transferNFT(
+  email: string,
+  nftId: string,
+  nftAddr: string,
+  recipientAddr: string,
+  isRecipientEmail: boolean,
+): Promise<string> {
+  try {
+    const response = await fetch(
+      "https://relayer.emailwallet.org/api/nftTransfer",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email_addr: email,
+          nft_id: nftId,
+          nft_addr: nftAddr,
+          recipient_addr: recipientAddr,
+          is_recipient_email: isRecipientEmail,
+        }),
+      },
+    );
     const data: ApiResponse = (await response.json()) as ApiResponse;
     return data.success
       ? "NFT transferred successfully"
@@ -97,4 +131,10 @@ async function transferNFT(
   }
 }
 
-export { createAccount, getAddress, sendAsset, transferNFT };
+export {
+  createAccount,
+  getWalletAddress,
+  sendAsset,
+  transferNFT,
+  isAccountCreated,
+};
