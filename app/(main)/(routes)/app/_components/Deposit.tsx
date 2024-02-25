@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import CreateButton from "./BlueButton";
 import { Currency } from "./Form";
+import { getWalletAddress } from "@/lib/callRelayerAPI";
+import { getWalletFromEmail } from "@/lib/send";
 
 const Deposit: React.FC<{
   setSelectedTab: (tab: "login" | "send" | "deposit" | "view") => void;
 }> = ({ setSelectedTab }) => {
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [address, setAddress] = useState<string>("");
+
   const dropdownRef = useRef(null);
 
   function getCurrencyOptionClass(selected: boolean): string {
@@ -34,6 +38,17 @@ const Deposit: React.FC<{
     };
   }, [dropdownRef]);
 
+  useEffect(() => {
+    const fetchAddress = async () => {
+      const email = localStorage.getItem("loggedInUser");
+      if (email) {
+        const addr = await getWalletFromEmail(email);
+        setAddress(addr);
+      }
+    };
+    fetchAddress();
+  }, []);
+
   return (
     <div
       className={
@@ -43,10 +58,24 @@ const Deposit: React.FC<{
       <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
         Deposit Money
       </h3>
-      <div className="mx-auto w-1/2 self-center text-center text-white">
-        To optionally top-up your wallet address, send additional funds directly
-        to your address mentioned in your confirmation emails.
-      </div>
+      {!address ? (
+        <div className="mx-auto w-1/2 self-center text-center text-white">
+          To optionally top-up your wallet address, send additional funds
+          directly to your address mentioned in your confirmation emails.
+        </div>
+      ) : (
+        <div className="mx-auto w-1/2 self-center text-center text-white">
+          <p>To send assets to your wallet, send funds to this address:</p>
+          <br />
+          <div className="flex flex-col items-center">
+            <img
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${address}`}
+              alt="QR Code"
+            />
+            <p>{address}</p>
+          </div>
+        </div>
+      )}
       <div className={"grid grid-cols-4 grid-rows-2 gap-2.5"}>
         {/* <input
           className={`col-span-3 rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}

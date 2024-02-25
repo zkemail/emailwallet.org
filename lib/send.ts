@@ -18,6 +18,25 @@ function setLoggedInUser(email: string) {
   localStorage.setItem("loggedInUser", email);
 }
 
+export async function getWalletFromEmail(email: string): Promise<string> {
+  const loggedInUser = localStorage.getItem("loggedInUser");
+  if (!loggedInUser || loggedInUser !== email) {
+    console.log(
+      "User is not logged in or email does not match the logged in user.",
+    );
+    return "";
+  }
+
+  const storedData = JSON.parse(localStorage.getItem(email) || "{}");
+  if (!storedData.code) {
+    console.log("No code found for this user.");
+    return "";
+  }
+
+  const walletAddress = await getWalletAddress(email, storedData.code);
+  return walletAddress;
+}
+
 export async function isSignedIn(): Promise<boolean> {
   console.log("Checking if user is signed in...");
   const loggedInUser = localStorage.getItem("loggedInUser");
