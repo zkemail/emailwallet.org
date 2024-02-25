@@ -8,7 +8,9 @@ import { useCountdown } from "usehooks-ts";
 import { setAccountCode } from "@/lib/send";
 
 const CreateAccount: React.FC<{
-  setSelectedTab: (tab: "create" | "send" | "deposit") => void;
+  setSelectedTab: (
+    tab: "create" | "send" | "deposit" | "view" | "login",
+  ) => void;
   setSignedInState: (state: boolean) => void;
 }> = ({ setSelectedTab, setSignedInState }) => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -45,7 +47,7 @@ const CreateAccount: React.FC<{
 
   const startPolling = async () => {
     let accountCreated = false;
-    const maxAttempts = 120;
+    const maxAttempts = 300;
     let attempts = 0;
 
     while (!accountCreated && attempts < maxAttempts) {
@@ -55,13 +57,15 @@ const CreateAccount: React.FC<{
         if (result === "Account exists") {
           accountCreated = true;
           setStatus("Account successfully created!");
+          setSelectedTab("view");
+          setSignedInState(true);
           break;
         } else {
           console.log(
             `Attempt ${attempts}: Account not created yet. Polling again in 1 second...`,
           );
           // Wait for 1 second before the next poll
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 1500));
         }
       } catch (error) {
         console.error("Error polling account creation status:", error);

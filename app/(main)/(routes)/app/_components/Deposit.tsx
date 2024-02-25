@@ -56,16 +56,18 @@ const Deposit: React.FC<{
       }
     >
       <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
-        Deposit Money
+        Deposit Assets
       </h3>
       {!address ? (
         <div className="mx-auto w-1/2 self-center text-center text-white">
-          To optionally top-up your wallet address, send additional funds
-          directly to your address mentioned in your confirmation emails.
+          To optionally top-up your wallet address, send additional funds or
+          NFTs directly to your address mentioned in your confirmation emails.
         </div>
       ) : (
         <div className="mx-auto w-1/2 self-center text-center text-white">
-          <p>To send assets to your wallet, send funds to this address:</p>
+          <p>
+            To send assets to your wallet, send funds or NFTs to this address:
+          </p>
           <br />
           <div className="flex flex-col items-center">
             <img
