@@ -1,11 +1,11 @@
 import { createAccount, isAccountCreated } from "@/lib/callRelayerAPI";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import CreateButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
 import { useCountdown } from "usehooks-ts";
-import { setAccountCode } from "@/lib/send";
+import { isValidEmail, setAccountCode } from "@/lib/send";
 
 const CreateAccount: React.FC<{
   setSelectedTab: (
@@ -18,6 +18,7 @@ const CreateAccount: React.FC<{
 
   // Whether the request has been sent
   const [sent, setSent] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
 
   //Countdown timer hook
   const [count, { startCountdown, resetCountdown }] = useCountdown({
@@ -36,7 +37,7 @@ const CreateAccount: React.FC<{
     setStatus("Sending confirmation email...");
     const response = await createAccount(email);
     setStatus("Sent! Waiting for reply...");
-    if (response === "Account creation successful") {
+    if (!response.includes("fail")) {
       setAccountCode(email, response);
       setSignedInState(true);
       startPolling(); //Start create timer
@@ -103,6 +104,7 @@ const CreateAccount: React.FC<{
               className={`h-[48px] rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] text-center text-white placeholder-[#5C5E71]`}
               placeholder={"Your Email Address"}
               type="email"
+              onChange={(e) => setIsEmailValid(isValidEmail(e.target.value))}
             />
           </div>
 
@@ -116,7 +118,7 @@ const CreateAccount: React.FC<{
                   resetCountdown();
                 }, 121000);
               }}
-              disabled={sent}
+              disabled={sent || !isEmailValid}
             >
               {sent ? "Creating..." : "Create"}
             </CreateButton>

@@ -64,8 +64,8 @@ const YouOwnMoneySection = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-md text-muted-foreground"
         >
-          We can&apos;t take your funds, they can only be authorized by your
-          email.
+          We can&apos;t take your funds, they can only be authorized by{" "}
+          <a href="mailto:prove.email">your email</a>.
         </motion.p>
       </div>
       {/* <motion.div

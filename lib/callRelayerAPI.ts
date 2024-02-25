@@ -5,13 +5,16 @@ interface ApiResponse {
 
 async function createAccount(email: string): Promise<string> {
   try {
-    const response = await fetch("http://35.192.88.157/api/createAccount", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "http://relayerapi.emailwallet.org/api/createAccount",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email_addr: email }),
       },
-      body: JSON.stringify({ email_addr: email }),
-    });
+    );
     console.log(response);
     const textResponse = await response.text();
     console.log("Parsed response:", textResponse);
@@ -25,7 +28,7 @@ async function createAccount(email: string): Promise<string> {
 async function isAccountCreated(email: string): Promise<string> {
   try {
     const response = await fetch(
-      "http://relayer.emailwallet.org/api/isAccountCreated",
+      "http://relayerapi.emailwallet.org/api/isAccountCreated",
       {
         method: "POST",
         headers: {
@@ -44,14 +47,16 @@ async function isAccountCreated(email: string): Promise<string> {
 }
 
 async function sendAsset(
-  email: string,
-  amount: number,
+  amountString: string,
   tokenId: string,
   recipientAddr: string,
-  isRecipientEmail: boolean,
 ): Promise<string> {
   try {
-    const response = await fetch("http://relayer.emailwallet.org/api/send", {
+    const email = localStorage.getItem("loggedInUser") || "";
+    const isRecipientEmail = recipientAddr.includes("@");
+    const amount = parseFloat(amountString);
+
+    const response = await fetch("http://relayerapi.emailwallet.org/api/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,13 +77,35 @@ async function sendAsset(
   }
 }
 
+export async function recoverAccountKey(email: string): Promise<string> {
+  try {
+    const response = await fetch(
+      "http://relayerapi.emailwallet.org/api/recoverAccountKey",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email_addr: email }),
+      },
+    );
+    const data: ApiResponse = (await response.json()) as ApiResponse;
+    return data.success
+      ? "Account key recovery email sent"
+      : "Failed to send account key recovery email";
+  } catch (error) {
+    console.error("Error recovering account key:", error);
+    return "Failed to recover account key due to an error";
+  }
+}
+
 async function getWalletAddress(
   email: string,
   accountKey: string,
 ): Promise<string> {
   try {
     const response = await fetch(
-      "http://relayer.emailwallet.org/api/getWalletAddress",
+      "http://relayerapi.emailwallet.org/api/getWalletAddress",
       {
         method: "POST",
         headers: {
@@ -96,15 +123,16 @@ async function getWalletAddress(
 }
 
 async function transferNFT(
-  email: string,
   nftId: string,
   nftAddr: string,
   recipientAddr: string,
-  isRecipientEmail: boolean,
 ): Promise<string> {
   try {
+    const email = localStorage.getItem("loggedInUser") || "";
+    const isRecipientEmail = recipientAddr.includes("@");
+
     const response = await fetch(
-      "http://relayer.emailwallet.org/api/nftTransfer",
+      "http://relayerapi.emailwallet.org/api/nftTransfer",
       {
         method: "POST",
         headers: {
