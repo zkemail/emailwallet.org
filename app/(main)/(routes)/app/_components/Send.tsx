@@ -9,7 +9,7 @@ import { FromEmailInput } from "./from-email-input";
 import { useCountdown } from "usehooks-ts";
 
 const Send: React.FC = () => {
-  const recentEmail = localStorage.getItem("recentEmailSepolia");
+  const recentEmail = localStorage.getItem("loggedInUser");
   const storedEmails = Object.keys(localStorage).filter((key) =>
     key.includes("@"),
   );
@@ -26,11 +26,16 @@ const Send: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
   const countdownMax = 120;
-  // Count down tiimer hook
+  // Count down timer hook
   const [count, { startCountdown }] = useCountdown({
     countStart: countdownMax,
     intervalMs: 1000,
   });
+
+  // State for email provider name, link, and search link
+  const [emailProviderName, setEmailProviderName] = useState<string>("");
+  const [emailLink, setEmailLink] = useState<string>("");
+  const [emailSearchLink, setEmailSearchLink] = useState<string>("");
 
   function getCurrencyOptionClass(selected: boolean): string {
     const baseClasses =
@@ -47,12 +52,7 @@ const Send: React.FC = () => {
       setAmount(undefined);
       return;
     }
-    // if (!Number.isInteger(Number(value))) {
-    //   const roundedValue = Math.floor(Number(value));
-    //   setAmount(roundedValue.toString());
-    // } else {
     setAmount(value);
-    // }
     if (Number(value) > 100 && currency === Currency.TEST) {
       setAmount("100");
     }
@@ -75,12 +75,21 @@ const Send: React.FC = () => {
     };
   }, [dropdownRef]);
 
-  const [emailProviderName, emailLink, emailSearchLink] = getEmailLink(
-    fromEmail,
-    `Send ${amount} ${Currency[currency]} to ${toEmail}`,
-    "You are sending with Email Wallet.\n\n❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n\n📤 sendeth.org (cc'd) relays your email on Sepolia testnet to transfer the funds. Expect a confirmation email when finished.\n\n📖 Read more on our site, docs, or code at https://emailwallet.org",
-  );
+  useEffect(() => {
+    async function fetchEmailLink() {
+      const [emailProviderName, emailLink, emailSearchLink] =
+        await getEmailLink(
+          fromEmail,
+          `Send ${amount} ${Currency[currency]} to ${toEmail}`,
+          "You are sending with Email Wallet.\n\n❗ This transaction is triggered when you send this email. Don't edit the cc: or subject: fields, or else it will fail!\n\n📤 sendeth.org (cc'd) relays your email on Sepolia testnet to transfer the funds. Expect a confirmation email when finished.\n\n📖 Read more on our site, docs, or code at https://emailwallet.org",
+        );
+      setEmailProviderName(emailProviderName);
+      setEmailLink(emailLink);
+      setEmailSearchLink(emailSearchLink);
+    }
 
+    fetchEmailLink();
+  }, [fromEmail, toEmail, amount, currency]); // Add dependencies as needed
   return (
     <>
       <div className="flex w-[380px] flex-col items-center justify-center gap-2 overflow-x-scroll rounded-[32px] bg-black px-6 py-4 sm:w-[600px] md:w-[700px] lg:w-[850px]">

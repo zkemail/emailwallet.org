@@ -5,7 +5,8 @@ const CreateButton: React.FC<{
   children: React.ReactNode;
   onClick: () => void;
   className?: string;
-}> = ({ children, onClick, className }) => {
+  disabled?: boolean;
+}> = ({ children, onClick, className, disabled }) => {
   return (
     <Button
       className={cn(
@@ -14,6 +15,7 @@ const CreateButton: React.FC<{
       )}
       onClick={onClick}
       style={{ minWidth: "12ch" }}
+      disabled={disabled}
     >
       {children}
     </Button>

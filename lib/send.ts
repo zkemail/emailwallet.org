@@ -1,5 +1,7 @@
+import { getAddress } from "./callRelayerAPI";
+
 export function isValidEmail(email: string): boolean {
-  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
   return regex.test(email);
 }
 
@@ -12,12 +14,27 @@ export function generateNewKey() {
   );
 }
 
-export function getCreateEmailLink(
+function setLoggedInUser(email: string) {
+  localStorage.setItem("loggedInUser", email);
+}
+
+export async function isSignedIn(): Promise<boolean> {
+  const loggedInUser = localStorage.getItem("loggedInUser");
+  if (!loggedInUser) return false;
+
+  const storedData = JSON.parse(localStorage.getItem(loggedInUser) || "{}");
+  if (!storedData.code) return false;
+
+  const address = await getAddress(loggedInUser, storedData.code);
+  return !!address;
+}
+
+export async function getCreateEmailLink(
   fromEmail: string,
   provider: string,
-): [string, string, string, string] {
+): Promise<[string, string, string, string]> {
   let code;
-  localStorage.setItem("recentEmailSepolia", fromEmail);
+  setLoggedInUser(fromEmail); // Set the current user as logged in
   let storedData = JSON.parse(localStorage.getItem(fromEmail) || "{}");
 
   if (storedData && storedData.code && storedData.chain == "sepolia") {
@@ -36,7 +53,7 @@ export function getCreateEmailLink(
   let subject = "Create my email wallet! CODE:" + code;
   // let test_message = "🧪 Each new account starts with 100 TEST tokens.";
   return [
-    ...getEmailLink(
+    ...(await getEmailLink(
       fromEmail,
       subject,
       `You are creating your Email Wallet.\n
@@ -45,26 +62,26 @@ export function getCreateEmailLink(
 🤫 Your unique secret code hides your email on-chain.\n
 📖 Read more on our docs at http://docs.emailwallet.org`,
       true,
-    ),
+    )),
     subject,
   ];
 }
 
 // TODO: Dynamically look up the DKIM and depending on what's enabled,
 // change the default client
-export function getEmailLink(
+export async function getEmailLink(
   fromEmail: string,
   subject: string,
   body: string,
   send_to_instead_of_cc = false,
   force_mailto = false,
-): [string, string, string] {
+): Promise<[string, string, string]> {
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
   const selectedProvider = JSON.parse(localStorage.getItem(fromEmail) || "{}");
 
   if (!fromEmail) {
-    fromEmail = localStorage.getItem("recentEmailSepolia") || "";
+    fromEmail = localStorage.getItem("loggedInUser") || "";
   }
   console.log("From email: ", fromEmail);
 
@@ -174,7 +191,9 @@ export function getEmailLink(
           `https://mail.proton.me/u/0/`,
           `https://mail.proton.me/u/0/almost-all-mail#keyword=sendeth.org`,
         ];
-      } else if (googleDomainList.includes(fromEmail.split("@").pop() || "")) {
+      } else if (
+        await checkForGoogleSelector(fromEmail.split("@").pop() || "")
+      ) {
         return [
           "Gmail",
           `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
@@ -197,97 +216,17 @@ export function getEmailLink(
   }
 }
 
-// List of domains at ProgCrypto with a 'google' selector
-let googleDomainList = [
-  "0xparc.org",
-  "1kx.capital",
-  "a16z.com",
-  "albiona.dev",
-  "alchemy.com",
-  "ethereum.foundation",
-  "altresear.ch",
-  "antalpha.com",
-  "ante.xyz",
-  "arpachain.io",
-  "arx.org",
-  "atomlabs.one",
-  "aztecprotocol.com",
-  "berkeley.edu",
-  "blockchain.capital",
-  "blockchaincapital.com",
-  "chainsafe.io",
-  "cherry.vc",
-  "clave.team",
-  "coinbase.com",
-  "cyber.fund",
-  "dalstonlabs.com",
-  "dcpos.ch",
-  "defi.sucks",
-  "dexlabs.xyz",
-  "dfinity.org",
-  "dodoex.io",
-  "essec.edu",
-  "ethereal.xyz",
-  "ethereum.org",
-  "figmentcapital.io",
-  "framework.ventures",
-  "garillot.net",
-  "gizatech.xyz",
-  "gnosis.io",
-  "hypersphere.ventures",
-  "i-globalsociety.com",
-  "immutable.com",
-  "ingonyama.com",
-  "intrinsictech.xyz",
-  "iosg.vc",
-  "ironfish.network",
-  "jonashals.me",
-  "kaleido.io",
-  "kevincharm.com",
-  "kirastudio.xyz",
-  "ku.edu.tr",
-  "litprotocol.com",
-  "maddevs.io",
-  "mainstream.so",
-  "matterlabs.dev",
-  "maya-zk.com",
-  "mixbytes.io",
-  "monad.xyz",
-  "nethermind.io",
-  "nil.foundation",
-  "nocturnelabs.xyz",
-  "nodeguardians.io",
-  "nucypher.com",
-  "o1labs.org",
-  "obol.tech",
-  "openblocklabs.com",
-  "openzeppelin.com",
-  "panteracapital.com",
-  "paribu.com",
-  "pauldowman.com",
-  "polygon.technology",
-  "primev.xyz",
-  "puffer.fi",
-  "puzzle.online",
-  "quantstamp.com",
-  "risczero.com",
-  "scroll.io",
-  "semiotic.ai",
-  "shamirlabs.org",
-  "sigmaprime.io",
-  "sinaxyz.io",
-  "snu.ac.kr",
-  "spacemesh.io",
-  "starkware.co",
-  "status.im",
-  "talentprotocol.com",
-  "token.im",
-  "tuneinsight.com",
-  "ucm.es",
-  "ucsb.edu",
-  "yacademy.dev",
-  "yale.edu",
-  "zkonduit.com",
-  "fireblocks.com",
-  "wharton.upenn.edu",
-];
+async function checkForGoogleSelector(domain: string) {
+  try {
+    const response = await fetch(
+      `https://registry.prove.email/api/domains/${domain}`,
+    );
+    const data = await response.json();
+    return data.some(
+      (entry: { selector: string }) => entry.selector === "google",
+    );
+  } catch (error: any) {
+    console.error("Error fetching domain data:", error);
+    return false;
+  }
+}

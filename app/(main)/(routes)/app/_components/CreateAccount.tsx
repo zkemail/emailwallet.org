@@ -26,8 +26,8 @@ const CreateAccount: React.FC<{
     intervalMs: 1000,
   });
 
-  const handleCreate = () => {
-    const [name, sendLink, viewLink, subject] = getCreateEmailLink(
+  const handleCreate = async () => {
+    const [name, sendLink, viewLink, subject] = await getCreateEmailLink(
       emailRef.current?.value as string,
       provider,
     );
@@ -105,7 +105,7 @@ const CreateAccount: React.FC<{
               <CreateButton
                 className="h-[48px] text-primary"
                 onClick={async () => {
-                  handleCreate();
+                  await handleCreate();
                   // Reset countdown to dismiss countdown message
                   setTimeout(() => {
                     resetCountdown();

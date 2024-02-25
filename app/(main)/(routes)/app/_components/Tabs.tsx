@@ -1,13 +1,17 @@
 import CreateAccount from "./CreateAccount";
 import Deposit from "./Deposit";
+import LoginAccount from "./LoginAccount";
 import Send from "./Send";
 import TabButton from "./TabButtons";
+import ViewAssets from "./ViewAssets";
 
 const Tabs: React.FC<{
   selectedTab: string;
-  setSelectedTab: (tab: "create" | "send" | "deposit") => void;
-  // isSignedIn: boolean;
-}> = ({ setSelectedTab, selectedTab }) => {
+  setSelectedTab: (
+    tab: "create" | "send" | "deposit" | "login" | "view",
+  ) => void;
+  isSignedIn: boolean;
+}> = ({ selectedTab, setSelectedTab, isSignedIn }) => {
   return (
     <div className={"flex flex-col items-center gap-[1.5rem]"}>
       <div
@@ -16,36 +20,63 @@ const Tabs: React.FC<{
         }
         style={{ borderRadius: "0.5625rem", background: "#000" }}
       >
-        <TabButton
-          selected={selectedTab === "create"}
-          onClick={() => {
-            setSelectedTab("create");
-          }}
-        >
-          Create
-        </TabButton>
-        <TabButton
-          selected={selectedTab === "send"}
-          onClick={() => {
-            setSelectedTab("send");
-          }}
-        >
-          Send Money
-        </TabButton>
-        <TabButton
-          selected={selectedTab === "deposit"}
-          onClick={() => {
-            setSelectedTab("deposit");
-          }}
-        >
-          Deposit
-        </TabButton>
+        {!isSignedIn ? (
+          <>
+            <TabButton
+              selected={selectedTab === "create"}
+              onClick={() => {
+                setSelectedTab("create");
+              }}
+            >
+              Create
+            </TabButton>
+            <TabButton
+              selected={selectedTab === "login"}
+              onClick={() => {
+                setSelectedTab("login");
+              }}
+            >
+              Login
+            </TabButton>
+          </>
+        ) : (
+          <>
+            <TabButton
+              selected={selectedTab === "send"}
+              onClick={() => {
+                setSelectedTab("send");
+              }}
+            >
+              Send Money
+            </TabButton>
+            <TabButton
+              selected={selectedTab === "deposit"}
+              onClick={() => {
+                setSelectedTab("deposit");
+              }}
+            >
+              Deposit
+            </TabButton>
+            <TabButton
+              selected={selectedTab === "view"}
+              onClick={() => {
+                setSelectedTab("view");
+              }}
+            >
+              View Assets
+            </TabButton>
+          </>
+        )}
       </div>
       {selectedTab === "create" && (
         <CreateAccount setSelectedTab={setSelectedTab} />
       )}
       {selectedTab === "send" && <Send />}
-      {selectedTab === "deposit" && <Deposit />}
+      {selectedTab === "login" && (
+        <LoginAccount setSelectedTab={setSelectedTab} />
+      )}
+      {selectedTab === "view" && <ViewAssets setSelectedTab={setSelectedTab} />}
+      {selectedTab === "deposit" && <Deposit setSelectedTab={setSelectedTab} />}
     </div>
   );
 };

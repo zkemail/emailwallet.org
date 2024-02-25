@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import CreateButton from "./BlueButton";
 import { Currency } from "./Form";
 
-const Deposit: React.FC = () => {
+const Deposit: React.FC<{
+  setSelectedTab: (tab: "login" | "send" | "deposit" | "view") => void;
+}> = ({ setSelectedTab }) => {
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef(null);
