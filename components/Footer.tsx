@@ -14,6 +14,8 @@ const Footer = () => {
     // TODO: Fix cors hack
     setResult("pending");
     const proxy = `https://cors-proxy.fringe.zone/`;
+
+    // Subscriptions accessible at https://docs.google.com/spreadsheets/d/16idprh-H11HqqDG6RHg0Fk_wLi9DWYXwIzI_3Bewpe4/edit
     const url = `https://script.google.com/macros/s/AKfycbwFEpszXsb5PPsc6mrls71fWI4o6RAbV64okWWZ6yZBcv960oF-3ITi7-hw-5wA6ptV/exec`;
     const response = await fetch(proxy + url, {
       method: "POST",

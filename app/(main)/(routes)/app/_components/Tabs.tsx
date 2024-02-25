@@ -6,6 +6,7 @@ import TabButton from "./TabButtons";
 const Tabs: React.FC<{
   selectedTab: string;
   setSelectedTab: (tab: "create" | "send" | "deposit") => void;
+  // isSignedIn: boolean;
 }> = ({ setSelectedTab, selectedTab }) => {
   return (
     <div className={"flex flex-col items-center gap-[1.5rem]"}>

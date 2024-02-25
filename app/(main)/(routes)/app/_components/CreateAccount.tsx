@@ -85,20 +85,14 @@ const CreateAccount: React.FC<{
       {/* Dropdown menu for email providers */}
 
       <div className={"flex flex-col gap-2.5"}>
-        <div className={"flex items-end gap-2.5"}>
+        <div className={"flex items-center gap-2.5"}>
           <div className="flex flex-col gap-2.5">
             <Input
-              // value={emailRef.current?.value}
               ref={emailRef}
-              // onChange={(e) => {
-              //   setEmail(e.target.value);
-              // }}
-              className={`rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] py-[0.625rem] text-center text-white placeholder-[#5C5E71]`}
+              className={`h-[48px] rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] text-center text-white placeholder-[#5C5E71]`}
               placeholder={"Your Email Address"}
               type="email"
             />
-
-            <EmailDropdown setProvider={setProvider} provider={provider} />
           </div>
 
           <ToolTip text="This will open your default email client, with your private code in the subject.">
@@ -109,9 +103,8 @@ const CreateAccount: React.FC<{
               rel="noopener noreferrer"
             >
               <CreateButton
-                className="py-6 text-primary"
+                className="h-[48px] text-primary"
                 onClick={async () => {
-                  // setSent(true);
                   handleCreate();
                   // Reset countdown to dismiss countdown message
                   setTimeout(() => {
