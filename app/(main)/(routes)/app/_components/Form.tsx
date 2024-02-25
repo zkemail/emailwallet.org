@@ -41,6 +41,7 @@ const Form = () => {
       <Tabs
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
+        setSignedInState={setSignedInState}
         isSignedIn={signedInState}
       />
     </>

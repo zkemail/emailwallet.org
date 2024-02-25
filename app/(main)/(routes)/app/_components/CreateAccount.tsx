@@ -1,23 +1,18 @@
-import { getCreateEmailLink } from "@/lib/send";
-import { useState, ElementRef, useRef } from "react";
+import { createAccount } from "@/lib/callRelayerAPI";
+import { useState, useRef } from "react";
 import CreateButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
 import { useCountdown } from "usehooks-ts";
-import { EmailDropdown } from "./email-dropdown";
+import { setAccountCode } from "@/lib/send";
 
 const CreateAccount: React.FC<{
   setSelectedTab: (tab: "create" | "send" | "deposit") => void;
-}> = ({ setSelectedTab }) => {
-  // const [email, setEmail] = useState("");
-
-  const emailRef = useRef<ElementRef<"input">>(null);
-  const [provider, setProvider] = useState<string>("mailto:");
-  const [emailLink, setEmailLink] = useState("");
-  const [emailProviderName, setEmailProviderName] = useState("");
-  const [subject, setSubject] = useState("");
-  const [emailSearchLink, setEmailSearchLink] = useState("");
+  setSignedInState: (state: boolean) => void;
+}> = ({ setSelectedTab, setSignedInState }) => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const [status, setStatus] = useState("");
   const [sent, setSent] = useState(false);
 
   //Countdown timer hook
@@ -27,46 +22,24 @@ const CreateAccount: React.FC<{
   });
 
   const handleCreate = async () => {
-    const [name, sendLink, viewLink, subject] = await getCreateEmailLink(
-      emailRef.current?.value as string,
-      provider,
-    );
-    setEmailProviderName(name);
-    setEmailSearchLink(viewLink);
-    setEmailLink(sendLink);
-    setSubject(subject);
+    const email = emailRef.current?.value;
+    if (!email) {
+      alert("Please enter an email address.");
+      return;
+    }
 
-    startCountdown(); //Start create timer
-
-    if (sendLink?.startsWith("mailto:")) {
-      const emailLink = document.getElementById("emailLink");
-      if (!emailLink) return;
-
-      emailLink.addEventListener("click", function (event: any) {
-        var timeout: NodeJS.Timeout;
-
-        window.addEventListener("blur", function () {
-          clearTimeout(timeout);
-          setSent(true);
-        });
-
-        timeout = setTimeout(function () {
-          const inst = document.getElementById("manualInstructions");
-          if (!inst) return;
-          inst.style.display = "block";
-        }, 500);
-      });
-    } else {
+    setStatus("Creating account...");
+    const response = await createAccount(email);
+    setStatus(response);
+    if (response === "Account creation successful") {
       setSent(true);
+      setAccountCode(email, response);
+      setSignedInState(true);
+      startCountdown(); //Start create timer
+    } else {
+      setSent(false);
     }
   };
-
-  function copyText(e: any) {
-    const target = e.target;
-    if (!target) return;
-
-    navigator.clipboard.writeText(target.innerText);
-  }
 
   return (
     <div
@@ -80,9 +53,7 @@ const CreateAccount: React.FC<{
       </h3>
       <div className={"mb-3 text-center leading-5 text-[#878AA1]"}>
         Email a relayer to create an account.
-        {/* w-1/2 `Create Account` pops out your default email client with your private code in the subject. */}
       </div>
-      {/* Dropdown menu for email providers */}
 
       <div className={"flex flex-col gap-2.5"}>
         <div className={"flex items-center gap-2.5"}>
@@ -95,69 +66,37 @@ const CreateAccount: React.FC<{
             />
           </div>
 
-          <ToolTip text="This will open your default email client, with your private code in the subject.">
-            <a
-              id="emailLink"
-              href={emailLink}
-              target="_blank"
-              rel="noopener noreferrer"
+          <ToolTip text="This will create your account.">
+            <CreateButton
+              className="h-[48px] text-primary"
+              onClick={async () => {
+                await handleCreate();
+                // Reset countdown to dismiss countdown message
+                setTimeout(() => {
+                  resetCountdown();
+                }, 121000);
+              }}
             >
-              <CreateButton
-                className="h-[48px] text-primary"
-                onClick={async () => {
-                  await handleCreate();
-                  // Reset countdown to dismiss countdown message
-                  setTimeout(() => {
-                    resetCountdown();
-                  }, 121000);
-                }}
-              >
-                {sent ? "Created ✔" : "Create"}
-              </CreateButton>
-            </a>
+              {sent ? "Created ✔" : "Create"}
+            </CreateButton>
           </ToolTip>
         </div>
 
-        <div
-          id="manualInstructions"
-          className="manual-instructions bg-secondary"
-          style={{ display: "none" }}
-        >
-          <p>We were not able to able to open your email client.</p>
-          <p>
-            You can create an account by sending an email to
-            <div>
-              <code className="bg-tertiary" onClick={copyText}>
-                arbitrum@sendeth.org
-              </code>
-            </div>
-            <p> with subject</p>
-            <div>
-              <code className="bg-tertiary" onClick={copyText}>
-                {subject}
-              </code>
-            </div>
-          </p>
-        </div>
         <div className="flex w-full items-start">
           <Button
             onClick={() => setSelectedTab("send")}
             className="hover:bg-neutral/80 w-full border border-solid border-primary bg-secondary text-primary"
           >
             {sent
-              ? "Sent email? Go to 'Send Money' tab ➜"
-              : "Created? Go to 'Send Money' tab ➜"}
+              ? "Account created! Go to 'Send Money' tab ➜"
+              : "Create account to proceed to 'Send Money' tab ➜"}
           </Button>
         </div>
       </div>
 
-      {count !== 61 && (
+      {status && (
         <div className="my-4 text-center">
-          <p className="text-lg font-medium">
-            {count
-              ? `Creating account in ${count} seconds...`
-              : "Account created!"}
-          </p>
+          <p className="text-lg font-medium">{status}</p>
         </div>
       )}
     </div>

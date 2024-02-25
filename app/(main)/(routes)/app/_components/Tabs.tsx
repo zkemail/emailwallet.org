@@ -10,8 +10,9 @@ const Tabs: React.FC<{
   setSelectedTab: (
     tab: "create" | "send" | "deposit" | "login" | "view",
   ) => void;
+  setSignedInState: (state: boolean) => void;
   isSignedIn: boolean;
-}> = ({ selectedTab, setSelectedTab, isSignedIn }) => {
+}> = ({ selectedTab, setSelectedTab, setSignedInState, isSignedIn }) => {
   return (
     <div className={"flex flex-col items-center gap-[1.5rem]"}>
       <div
@@ -20,7 +21,7 @@ const Tabs: React.FC<{
         }
         style={{ borderRadius: "0.5625rem", background: "#000" }}
       >
-        {!isSignedIn ? (
+        {isSignedIn ? (
           <>
             <TabButton
               selected={selectedTab === "create"}
@@ -69,11 +70,17 @@ const Tabs: React.FC<{
         )}
       </div>
       {selectedTab === "create" && (
-        <CreateAccount setSelectedTab={setSelectedTab} />
+        <CreateAccount
+          setSelectedTab={setSelectedTab}
+          setSignedInState={setSignedInState}
+        />
       )}
       {selectedTab === "send" && <Send />}
       {selectedTab === "login" && (
-        <LoginAccount setSelectedTab={setSelectedTab} />
+        <LoginAccount
+          setSelectedTab={setSelectedTab}
+          setSignedInState={setSignedInState}
+        />
       )}
       {selectedTab === "view" && <ViewAssets setSelectedTab={setSelectedTab} />}
       {selectedTab === "deposit" && <Deposit setSelectedTab={setSelectedTab} />}

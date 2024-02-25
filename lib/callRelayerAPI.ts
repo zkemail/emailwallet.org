@@ -5,20 +5,17 @@ interface ApiResponse {
 
 async function createAccount(email: string): Promise<string> {
   try {
-    const response = await fetch(
-      "https://relayer.emailwallet.org/api/createAccount",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email_addr: email }),
+    const response = await fetch("http://35.192.88.157/api/createAccount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
-    const data: ApiResponse = (await response.json()) as ApiResponse;
-    return data.success
-      ? "Account creation successful"
-      : "Account creation failed";
+      body: JSON.stringify({ email_addr: email }),
+    });
+    console.log(response);
+    const textResponse = await response.text();
+    console.log("Parsed response:", textResponse);
+    return textResponse ? textResponse : "0";
   } catch (error) {
     console.error("Error creating account:", error);
     return "Account creation failed due to an error";
@@ -28,7 +25,7 @@ async function createAccount(email: string): Promise<string> {
 async function isAccountCreated(email: string): Promise<string> {
   try {
     const response = await fetch(
-      "https://relayer.emailwallet.org/api/isAccountCreated",
+      "http://relayer.emailwallet.org/api/isAccountCreated",
       {
         method: "POST",
         headers: {
@@ -53,7 +50,7 @@ async function sendAsset(
   isRecipientEmail: boolean,
 ): Promise<string> {
   try {
-    const response = await fetch("https://relayer.emailwallet.org/api/send", {
+    const response = await fetch("http://relayer.emailwallet.org/api/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +77,7 @@ async function getWalletAddress(
 ): Promise<string> {
   try {
     const response = await fetch(
-      "https://relayer.emailwallet.org/api/getWalletAddress",
+      "http://relayer.emailwallet.org/api/getWalletAddress",
       {
         method: "POST",
         headers: {
@@ -106,7 +103,7 @@ async function transferNFT(
 ): Promise<string> {
   try {
     const response = await fetch(
-      "https://relayer.emailwallet.org/api/nftTransfer",
+      "http://relayer.emailwallet.org/api/nftTransfer",
       {
         method: "POST",
         headers: {

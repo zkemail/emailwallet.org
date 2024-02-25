@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { getAddress } from "@/lib/callRelayerAPI";
+import { getWalletAddress } from "@/lib/callRelayerAPI";
 import { Alchemy, Network } from "alchemy-sdk";
 
 const ViewAssets: React.FC<{
@@ -27,7 +27,7 @@ const ViewAssets: React.FC<{
 
   useEffect(() => {
     if (email && accountKey) {
-      getAddress(email, accountKey).then(setAddress);
+      getWalletAddress(email, accountKey).then(setAddress);
     }
   }, [email, accountKey]);
 

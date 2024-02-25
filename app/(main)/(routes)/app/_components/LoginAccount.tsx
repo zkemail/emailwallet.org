@@ -1,32 +1,44 @@
-import { useState, useRef } from "react";
-import { getAddress } from "@/lib/callRelayerAPI";
+import { useState, useRef, useEffect } from "react";
+import { getWalletAddress } from "@/lib/callRelayerAPI";
 import CreateButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const LoginAccount: React.FC<{
   setSelectedTab: (tab: "login" | "view" | "deposit") => void;
-}> = ({ setSelectedTab }) => {
+  setSignedInState: (state: boolean) => void;
+}> = ({ setSelectedTab, setSignedInState }) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const accountCodeRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+
+  useEffect(() => {
+    const checkInputFields = () => {
+      const email = emailRef.current?.value;
+      const accountCode = accountCodeRef.current?.value;
+      if (email && accountCode) {
+        setIsButtonDisabled(false);
+      } else {
+        setIsButtonDisabled(true);
+      }
+    };
+
+    checkInputFields();
+  }, []);
 
   const handleLogin = async () => {
     setLoading(true);
-    const email = emailRef.current?.value;
-    const accountCode = accountCodeRef.current?.value;
-    if (!email || !accountCode) {
-      alert("Please fill in both fields.");
-      setLoading(false);
-      return;
-    }
+    const email = emailRef.current?.value || "";
+    const accountCode = accountCodeRef.current?.value || "";
 
-    const address = await getAddress(email, accountCode);
+    const address = await getWalletAddress(email, accountCode);
     setLoading(false);
     if (address !== "No address found") {
       setLoggedIn(true);
       setSelectedTab("view");
+      setSignedInState(true);
     } else {
       alert("Failed to log in. Please check your email and account code.");
     }
@@ -43,17 +55,27 @@ const LoginAccount: React.FC<{
           className="h-[48px] rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] text-center text-white placeholder-[#5C5E71]"
           placeholder="Your Email Address"
           type="email"
+          onChange={() =>
+            setIsButtonDisabled(
+              !(emailRef.current?.value && accountCodeRef.current?.value),
+            )
+          }
         />
         <Input
           ref={accountCodeRef}
           className="h-[48px] rounded-md border-[1px] border-solid border-[#515364] bg-transparent px-[1.5rem] text-center text-white placeholder-[#5C5E71]"
           placeholder="Your Account Code"
           type="text"
+          onChange={() =>
+            setIsButtonDisabled(
+              !(emailRef.current?.value && accountCodeRef.current?.value),
+            )
+          }
         />
         <CreateButton
           className="h-[48px] text-primary"
           onClick={handleLogin}
-          disabled={loading}
+          disabled={isButtonDisabled || loading}
         >
           {loading ? "Logging in..." : loggedIn ? "Logged In ✔" : "Login"}
         </CreateButton>

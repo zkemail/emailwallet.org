@@ -29,21 +29,20 @@ export async function isSignedIn(): Promise<boolean> {
   return !!address;
 }
 
+export function setAccountCode(email: string, code: string): string {
+  setLoggedInUser(email); // Set the current user as logged in
+  let storedData = JSON.parse(localStorage.getItem(email) || "{}");
+  storedData = { ...storedData, code, chain: "sepolia" };
+  // Add the code to the stored data for this email
+  localStorage.setItem(email, JSON.stringify(storedData)); // Cache the data in localstorage for this email
+  return code;
+}
+
 export async function getCreateEmailLink(
   fromEmail: string,
   provider: string,
 ): Promise<[string, string, string, string]> {
-  let code;
-  setLoggedInUser(fromEmail); // Set the current user as logged in
-  let storedData = JSON.parse(localStorage.getItem(fromEmail) || "{}");
-
-  if (storedData && storedData.code && storedData.chain == "sepolia") {
-    code = storedData.code; // If code is in localstorage for this email, use it
-  } else {
-    code = generateNewKey();
-    storedData = { ...storedData, code, provider, chain: "sepolia" }; // Add the code to the stored data for this email
-    localStorage.setItem(fromEmail, JSON.stringify(storedData)); // Cache the data in localstorage for this email
-  }
+  const code = setAccountCode(fromEmail, provider);
 
   const accountRegistrationRequest = {
     email_address: `${fromEmail}`, // replace with actual email address
