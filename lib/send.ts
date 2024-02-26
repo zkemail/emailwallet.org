@@ -59,9 +59,13 @@ export async function isSignedIn(): Promise<boolean> {
   console.log(
     `Fetching wallet address for user: ${loggedInUser} with code: ${storedData.code}`,
   );
+
   const address = await getWalletAddress(loggedInUser, storedData.code);
   console.log(`Wallet address fetched: ${address}`);
-  return address.toLowerCase().includes("fail") ? false : true;
+  const failed =
+    address.toLowerCase().includes("fail") ||
+    address.toLowerCase().includes("not found");
+  return failed ? false : true;
 }
 
 export function setAccountCode(email: string, code: string): string {
@@ -80,6 +84,22 @@ export function setAccountCode(email: string, code: string): string {
 
   console.log(`Stored data for user: ${email} updated in localStorage.`);
   return code;
+}
+
+async function checkForGoogleSelector(domain: string) {
+  const proxyUrl = `https://cors-proxy.fringe.zone/`;
+  try {
+    const response = await fetch(
+      `${proxyUrl}https://registry.prove.email/api/domains/${domain}`,
+    );
+    const data = await response.json();
+    return data.some(
+      (entry: { selector: string }) => entry.selector === "google",
+    );
+  } catch (error: any) {
+    console.error("Error fetching domain data:", error);
+    return false;
+  }
 }
 
 export async function getCreateEmailLink(
@@ -257,21 +277,5 @@ export async function getEmailLink(
           ``,
         ];
       }
-  }
-}
-
-async function checkForGoogleSelector(domain: string) {
-  const proxyUrl = `https://cors-proxy.fringe.zone/`;
-  try {
-    const response = await fetch(
-      `${proxyUrl}https://registry.prove.email/api/domains/${domain}`,
-    );
-    const data = await response.json();
-    return data.some(
-      (entry: { selector: string }) => entry.selector === "google",
-    );
-  } catch (error: any) {
-    console.error("Error fetching domain data:", error);
-    return false;
   }
 }

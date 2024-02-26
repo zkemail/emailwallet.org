@@ -22,6 +22,9 @@ const Form = () => {
     const checkSignIn = async () => {
       const signedIn = await isSignedIn();
       setSignedInState(signedIn);
+      if (signedIn && (selectedTab == "login" || selectedTab == "create")) {
+        setSelectedTab("send");
+      }
     };
 
     // Run once on load

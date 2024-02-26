@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export const useQueryParams = () => {
   const searchParams = useSearchParams();
-  console.log(searchParams);
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const email = searchParams.get("email");

@@ -56,6 +56,14 @@ async function sendAsset(
     const isRecipientEmail = recipientAddr.includes("@");
     const amount = parseFloat(amountString);
 
+    console.log("body", {
+      email_addr: email,
+      amount,
+      token_id: tokenId,
+      recipient_addr: recipientAddr,
+      is_recipient_email: isRecipientEmail,
+    });
+
     const response = await fetch("http://relayerapi.emailwallet.org/api/send", {
       method: "POST",
       headers: {
@@ -69,7 +77,7 @@ async function sendAsset(
         is_recipient_email: isRecipientEmail,
       }),
     });
-    const data: ApiResponse = (await response.json()) as ApiResponse;
+    const data: ApiResponse = (await response.text()) as ApiResponse;
     return data.success ? "Asset sent successfully" : "Failed to send asset";
   } catch (error) {
     console.error("Error sending asset:", error);
@@ -103,6 +111,7 @@ async function getWalletAddress(
   email: string,
   accountKey: string,
 ): Promise<string> {
+  let code = accountKey.startsWith("0x") ? accountKey : `0x${accountKey}`;
   try {
     const response = await fetch(
       "http://relayerapi.emailwallet.org/api/getWalletAddress",
@@ -111,11 +120,11 @@ async function getWalletAddress(
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email_addr: email, account_key: accountKey }),
+        body: JSON.stringify({ email_addr: email, account_key: code }),
       },
     );
-    const data: ApiResponse = (await response.json()) as ApiResponse;
-    return data.address || "Failed to fetch address, no address found";
+    const data = await response.text();
+    return data || "Failed to fetch address, no address found";
   } catch (error) {
     console.error("Error fetching address:", error);
     return "Failed to fetch address";

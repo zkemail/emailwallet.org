@@ -1,6 +1,6 @@
 import { createAccount, isAccountCreated } from "@/lib/callRelayerAPI";
 import { useState, useRef, useEffect } from "react";
-import CreateButton from "./BlueButton";
+import ClickButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ToolTip from "@/components/ToolTip";
@@ -109,7 +109,7 @@ const CreateAccount: React.FC<{
           </div>
 
           <ToolTip text="This will create your account.">
-            <CreateButton
+            <ClickButton
               className="h-[48px] text-primary"
               onClick={async () => {
                 await handleCreate();
@@ -121,7 +121,7 @@ const CreateAccount: React.FC<{
               disabled={sent || !isEmailValid}
             >
               {sent ? "Creating..." : "Create"}
-            </CreateButton>
+            </ClickButton>
           </ToolTip>
         </div>
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import CreateButton from "./BlueButton";
+// import CreateButton from "./BlueButton";
 import { Currency } from "./Form";
 import { getWalletAddress } from "@/lib/callRelayerAPI";
 import { getWalletFromEmail } from "@/lib/send";
@@ -74,6 +74,7 @@ const Deposit: React.FC<{
               src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${address}`}
               alt="QR Code"
             />
+            <br />
             <p>{address}</p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { getWalletAddress, recoverAccountKey } from "@/lib/callRelayerAPI";
-import CreateButton from "./BlueButton";
+import ClickButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { isValidEmail, setAccountCode } from "@/lib/send";
@@ -109,7 +109,7 @@ const LoginAccount: React.FC<{
           text="This will send an email with a link to login on this device"
           side="top"
         >
-          <CreateButton
+          <ClickButton
             className="h-[48px] text-primary"
             onClick={isManuallyEnteringCode ? handleManualLogin : handleLogin}
             disabled={isButtonDisabled || loading}
@@ -121,7 +121,7 @@ const LoginAccount: React.FC<{
               : isManuallyEnteringCode
               ? "Login"
               : "Send Login Email"}
-          </CreateButton>
+          </ClickButton>
         </ToolTip>
         {statusMessage && (
           <div
