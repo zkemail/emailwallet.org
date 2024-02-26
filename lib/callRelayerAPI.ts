@@ -6,7 +6,7 @@ interface ApiResponse {
 async function createAccount(email: string): Promise<string> {
   try {
     const response = await fetch(
-      "http://relayerapi.emailwallet.org/api/createAccount",
+      "https://relayerapi.emailwallet.org/api/createAccount",
       {
         method: "POST",
         headers: {
@@ -28,7 +28,7 @@ async function createAccount(email: string): Promise<string> {
 async function isAccountCreated(email: string): Promise<string> {
   try {
     const response = await fetch(
-      "http://relayerapi.emailwallet.org/api/isAccountCreated",
+      "https://relayerapi.emailwallet.org/api/isAccountCreated",
       {
         method: "POST",
         headers: {
@@ -64,19 +64,22 @@ async function sendAsset(
       is_recipient_email: isRecipientEmail,
     });
 
-    const response = await fetch("http://relayerapi.emailwallet.org/api/send", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://relayerapi.emailwallet.org/api/send",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email_addr: email,
+          amount,
+          token_id: tokenId,
+          recipient_addr: recipientAddr,
+          is_recipient_email: isRecipientEmail,
+        }),
       },
-      body: JSON.stringify({
-        email_addr: email,
-        amount,
-        token_id: tokenId,
-        recipient_addr: recipientAddr,
-        is_recipient_email: isRecipientEmail,
-      }),
-    });
+    );
     const data = await response.text();
     return data ? "Asset sent successfully" : "Failed to send asset";
   } catch (error) {
@@ -88,7 +91,7 @@ async function sendAsset(
 export async function recoverAccountKey(email: string): Promise<string> {
   try {
     const response = await fetch(
-      "http://relayerapi.emailwallet.org/api/recoverAccountKey",
+      "https://relayerapi.emailwallet.org/api/recoverAccountKey",
       {
         method: "POST",
         headers: {
@@ -114,7 +117,7 @@ async function getWalletAddress(
   let code = accountKey.startsWith("0x") ? accountKey : `0x${accountKey}`;
   try {
     const response = await fetch(
-      "http://relayerapi.emailwallet.org/api/getWalletAddress",
+      "https://relayerapi.emailwallet.org/api/getWalletAddress",
       {
         method: "POST",
         headers: {
@@ -141,7 +144,7 @@ async function transferNFT(
     const isRecipientEmail = recipientAddr.includes("@");
 
     const response = await fetch(
-      "http://relayerapi.emailwallet.org/api/nftTransfer",
+      "https://relayerapi.emailwallet.org/api/nftTransfer",
       {
         method: "POST",
         headers: {
