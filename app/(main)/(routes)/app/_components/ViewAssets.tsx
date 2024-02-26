@@ -86,34 +86,47 @@ const ViewAssets: React.FC<{
     }
   }, [address, alchemy]);
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-8 sm:px-16">
-      <h2 className="text-3xl font-medium text-gray-800">Your Assets</h2>
-      <section className="mt-6">
-        <h3
-          className="flex cursor-pointer items-center justify-between text-2xl font-light text-gray-700"
+    <div className="flex w-full flex-col  px-4 py-8">
+      <h2 className="text-3xl font-medium text-gray-800 dark:text-white">
+        Your Assets
+      </h2>
+      <section className="mt-6 w-full">
+        <div
+          className="space-between flex cursor-pointer items-center gap-2"
           onClick={() => setNftsVisible(!nftsVisible)}
         >
-          NFTs&nbsp;&nbsp;<span>{nftsVisible ? "▲" : "▼"}</span>
-        </h3>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-5 w-5 opacity-60"
+            transform={nftsVisible ? "rotate(0)" : "rotate(270)"}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+              clipRule="evenodd"
+            />
+          </svg>
+
+          <span className="font-medium opacity-60">NFTs</span>
+        </div>
         {nftsVisible && (
           <div className="mt-4 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
             {nfts.map((nft, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center rounded-xl bg-gray-100 p-6 shadow"
-              >
-                <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md">
+              <div key={index} className="relative flex flex-col">
+                <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden">
                   <img
                     src={nft.image}
                     alt={nft.title || "NFT Image"}
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
-                <div className="mt-4 text-center">
-                  <p className="text-lg font-light">
+                <div className="absolute bottom-0 flex w-full flex-col gap-2 rounded-b-md bg-gradient-to-t from-neutral-950/100 via-neutral-950/75 to-neutral-950/0  p-4">
+                  <p className="font-medium text-white">
                     {nft.name + " #" + nft.tokenId}
                   </p>
-                  <button className="mt-3 rounded-md bg-indigo-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-indigo-600">
+                  <button className="w-full rounded-md bg-indigo-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-indigo-600">
                     Transfer
                   </button>
                 </div>
@@ -122,32 +135,41 @@ const ViewAssets: React.FC<{
           </div>
         )}
       </section>
-      <section className="mt-6">
-        <h3
-          className="flex cursor-pointer items-center justify-between text-2xl font-light text-gray-700"
+      <section className="mt-6 w-full">
+        <div
+          className="space-between flex cursor-pointer items-center gap-2"
           onClick={() => setErc20sVisible(!erc20sVisible)}
         >
-          ERC20 Tokens&nbsp;&nbsp;<span>{erc20sVisible ? "▲" : "▼"}</span>
-        </h3>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-5 w-5 opacity-60"
+            transform={erc20sVisible ? "rotate(0)" : "rotate(270)"}
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+              clipRule="evenodd"
+            />
+          </svg>
+
+          <span className="font-medium opacity-60">ERC20 Tokens</span>
+        </div>
         {erc20sVisible && (
-          <div className="mt-4 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="mt-4 flex w-full flex-col gap-4">
             {erc20s.map((token, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center rounded-xl bg-gray-100 p-6 shadow"
+                className="flex w-full items-center rounded-xl p-4 transition-all duration-200 ease-in-out hover:bg-gray-100 dark:hover:bg-neutral-800"
               >
-                <div className="mt-4 text-center">
-                  <h4 className="text-xl font-semibold">{token.id}</h4>
-                  <p className="mt-2 text-lg font-medium text-gray-700">
-                    Balance: {token.tokenBalance}
-                  </p>
-                  <button
-                    className="mt-4 rounded-md bg-green-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-green-600"
-                    onClick={() => setSelectedTab("send")}
-                  >
-                    Transfer
-                  </button>
+                <div className="flex w-full flex-col gap-1">
+                  <span className="font-semibold">{token.id}</span>
+                  <span className="opacity-60">{token.tokenBalance}</span>
                 </div>
+                <button className="rounded-md bg-green-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-green-600 dark:bg-neutral-600 hover:dark:bg-neutral-500">
+                  Transfer
+                </button>
               </div>
             ))}
           </div>

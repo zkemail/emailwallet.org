@@ -97,7 +97,7 @@ const CreateAccount: React.FC<{
       </div>
 
       <div className={"flex flex-col gap-2.5"}>
-        <div className={"flex items-center gap-2.5"}>
+        <div className={"flex items-center justify-center gap-2.5"}>
           <div className="flex flex-col gap-2.5">
             <Input
               ref={emailRef}
