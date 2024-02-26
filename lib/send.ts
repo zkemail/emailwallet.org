@@ -17,6 +17,9 @@ export function generateNewKey() {
 
 function setLoggedInUser(email: string) {
   localStorage.setItem("loggedInUser", email);
+  window.dispatchEvent(
+    new CustomEvent("local-storage", { detail: { key: "loggedInUser" } }),
+  );
 }
 
 export async function getWalletFromEmail(email: string): Promise<string> {
@@ -58,7 +61,7 @@ export async function isSignedIn(): Promise<boolean> {
   );
   const address = await getWalletAddress(loggedInUser, storedData.code);
   console.log(`Wallet address fetched: ${address}`);
-  return !!address;
+  return address.toLowerCase().includes("fail") ? false : true;
 }
 
 export function setAccountCode(email: string, code: string): string {
@@ -71,6 +74,10 @@ export function setAccountCode(email: string, code: string): string {
   console.log(`Updated stored data for user: ${email} is:`, storedData);
   // Add the code to the stored data for this email
   localStorage.setItem(email, JSON.stringify(storedData)); // Cache the data in localstorage for this email
+  window.dispatchEvent(
+    new CustomEvent("local-storage", { detail: { key: email } }),
+  );
+
   console.log(`Stored data for user: ${email} updated in localStorage.`);
   return code;
 }

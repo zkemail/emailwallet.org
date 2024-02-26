@@ -8,9 +8,11 @@ import { TypingText } from "./TypingText";
 import { motion } from "framer-motion";
 import Equations from "./Equations";
 import { useRouter } from "next/navigation";
+import useQueryParams from "@/hooks/useQueryParams";
 
 const HeroSection = () => {
   const router = useRouter();
+  useQueryParams();
 
   return (
     <section className="mx-6 mt-32 flex md:mx-10">

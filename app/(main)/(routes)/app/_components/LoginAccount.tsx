@@ -73,7 +73,7 @@ const LoginAccount: React.FC<{
   return (
     <div className="flex w-[375px] flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem] sm:w-full">
       <h3 className="text-center text-[1.625rem] font-bold text-white">
-        Sign In
+        Log In
       </h3>
       <div className="flex flex-col gap-2.5">
         <Input
@@ -136,9 +136,9 @@ const LoginAccount: React.FC<{
           text={
             isManuallyEnteringCode
               ? "Switch to login by receiving an email."
-              : "Switch to login without receiving an email."
+              : "Switch to login via the code previously emailed to you."
           }
-          side="right"
+          side="bottom"
         >
           <a
             href="#"

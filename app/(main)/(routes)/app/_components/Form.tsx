@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { isSignedIn } from "../../../../../lib/send";
 import Tabs from "./Tabs";
+import useQueryParams from "@/hooks/useQueryParams";
 
 export enum Currency {
   USDC,
@@ -16,6 +17,7 @@ const Form = () => {
     "create" | "send" | "deposit" | "view" | "login"
   >("login");
   const [signedInState, setSignedInState] = useState(false);
+
   useEffect(() => {
     const checkSignIn = async () => {
       const signedIn = await isSignedIn();
@@ -26,9 +28,11 @@ const Form = () => {
     checkSignIn();
 
     window.addEventListener("storage", checkSignIn);
+    window.addEventListener("local-storage", checkSignIn);
 
     // Cleanup listener when component unmounts
     return () => window.removeEventListener("storage", checkSignIn);
+    return () => window.removeEventListener("local-storage", checkSignIn);
   }, []);
 
   useEffect(() => {

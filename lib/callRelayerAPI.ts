@@ -115,7 +115,7 @@ async function getWalletAddress(
       },
     );
     const data: ApiResponse = (await response.json()) as ApiResponse;
-    return data.address || "No address found";
+    return data.address || "Failed to fetch address, no address found";
   } catch (error) {
     console.error("Error fetching address:", error);
     return "Failed to fetch address";
