@@ -19,9 +19,13 @@ const Tabs: React.FC<{
     >
       <div
         className={
-          "flex w-full items-center gap-5 p-[0.625rem] text-[1rem] font-medium text-primary"
+          "flex items-center justify-center gap-5 p-[0.625rem] text-[1rem] font-medium text-primary"
         }
-        style={{ borderRadius: "0.5625rem", background: "#000" }}
+        style={{
+          borderRadius: "0.5625rem",
+          background: "#000",
+          display: "inline-flex",
+        }}
       >
         {!isSignedIn ? (
           <div className={"flex flex-row items-center gap-[1.5rem]"}>

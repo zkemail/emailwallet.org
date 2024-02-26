@@ -15,7 +15,7 @@ const Form = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
     "create" | "send" | "deposit" | "view" | "login"
-  >("create");
+  >("send");
   const [signedInState, setSignedInState] = useState(false);
 
   useEffect(() => {
@@ -34,8 +34,10 @@ const Form = () => {
     window.addEventListener("local-storage", checkSignIn);
 
     // Cleanup listener when component unmounts
-    return () => window.removeEventListener("storage", checkSignIn);
-    return () => window.removeEventListener("local-storage", checkSignIn);
+    return () => {
+      window.removeEventListener("storage", checkSignIn);
+      window.removeEventListener("local-storage", checkSignIn);
+    };
   }, []);
 
   useEffect(() => {
