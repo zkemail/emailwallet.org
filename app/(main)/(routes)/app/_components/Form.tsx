@@ -15,7 +15,7 @@ const Form = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [selectedTab, setSelectedTab] = useState<
     "create" | "send" | "deposit" | "view" | "login"
-  >("login");
+  >("create");
   const [signedInState, setSignedInState] = useState(false);
 
   useEffect(() => {
