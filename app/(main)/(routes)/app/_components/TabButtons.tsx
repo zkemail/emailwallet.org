@@ -10,7 +10,7 @@ const TabButton: React.FC<{
           ? `linear-gradient(179deg, rgba(255, 255, 255, 0.20) 0.8%, rgba(255, 255, 255, 0.00) 144.46%)`
           : "",
       }}
-      className={`cursor-pointer rounded-md px-[1rem] py-[0.625rem] text-white`}
+      className={`flex cursor-pointer items-center justify-center rounded-md px-[1rem] py-[0.625rem] text-center text-white`}
       onClick={props.onClick}
     >
       {props.children}

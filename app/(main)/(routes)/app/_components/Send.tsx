@@ -21,6 +21,8 @@ const Send = () => {
   const [amount, setAmount] = useState<number | undefined>(undefined);
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>("");
+  const [awaitingSend, setAwaitingSend] = useState<boolean>(false);
 
   const dropdownRef = useRef(null);
   const countdownMax = 120;
@@ -195,6 +197,7 @@ const Send = () => {
           <ClickButton
             className="h-[48px] text-primary"
             onClick={() => {
+              setAwaitingSend(true);
               const email = toEmail;
               const amountToSend = (amount || 0).toString();
               const tokenId = Currency[currency]; // Using enum name instead of index
@@ -202,72 +205,23 @@ const Send = () => {
 
               sendAsset(amountToSend, tokenId.toString(), recipientAddr)
                 .then((result) => {
-                  alert(result); // Notify the user of the result
+                  setStatus("Send queued, confirm transfer in your email.");
+                  setAwaitingSend(false);
                 })
                 .catch((error) => {
                   console.error("Failed to send asset:", error);
-                  alert("Failed to send asset. Please try again.");
+                  setStatus("Failed to send asset. Please try again.");
+                  setAwaitingSend(false);
                 });
               // Logic to handle sending email to confirm the transaction
             }}
+            disabled={awaitingSend}
           >
             Send Confirmation Email
           </ClickButton>
         </ToolTip>
       </div>
-      {/* 
-      {
-        <>
-          <p className="text-lg font-bold">Auto-Format Email</p>
-          <p className="text-md w-2/3">
-            This will format the email for you to send money from a new tab
-            (desktop) or your default mail app (mobile)!
-          </p>
-        </>
-      }
-
-      {emailSent && (
-        <div className="flex w-full items-start sm:w-1/2">
-          <a
-            href={emailSearchLink}
-            target="_blank"
-            className={
-              emailSearchLink
-                ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gradient-to-t from-tertiary to-tertiary-foreground px-4 py-2 text-primary drop-shadow transition ease-in-out hover:scale-105 hover:transition-all dark:text-primary-foreground"
-                : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-50"
-            }
-          >
-            {emailSearchLink
-              ? `View Sent Email in ${emailProviderName} ➜`
-              : `View your sent email for updates!`}
-          </a>
-        </div>
-      )} 
-*/}
-
-      {/* Default hidden on large screens. Small screen div; default to mailto regardless. */}
-      <div
-        onClick={() => {
-          setEmailSent(true);
-          setCountdown(countdownMax);
-          const intervalId = setInterval(() => {
-            setCountdown((prevCountdown) =>
-              prevCountdown ? prevCountdown - 1 : null,
-            );
-          }, 1000);
-          setTimeout(() => {
-            clearInterval(intervalId);
-            setCountdown(null);
-          }, 60000);
-        }}
-        className={
-          amount && amount > 0 && isValidEmail(toEmail)
-            ? "flex h-12 w-full items-center justify-center gap-4 rounded-lg border border-blue-500 bg-green-500 bg-gradient-to-t from-blue-600 to-blue-500 px-4 py-2 text-white ease-in-out hover:scale-105 hover:transition-all sm:hidden sm:w-1/2"
-            : "pointer-events-none flex h-12 w-full items-center justify-center gap-4 rounded-lg bg-gray-300 px-4 py-2 text-slate-500 sm:hidden sm:w-1/2"
-        }
-      >
-        {emailSent ? `Failed? Re-send` : `Send via default mail app`}
-      </div>
+      <div className="flex w-full items-center justify-center ">{status}</div>
     </div>
   );
 };

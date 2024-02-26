@@ -7,9 +7,7 @@ const ViewAssets: React.FC<{
 }> = ({ setSelectedTab }) => {
   const [email, setEmail] = useState<string | null>(null);
   const [accountKey, setAccountKey] = useState<string | null>(null);
-  const [address, setAddress] = useState<string>(
-    "0xAa613c7149d0D9df442ae1eBaab9879A6D870506",
-  );
+  const [address, setAddress] = useState<string>("");
   const [nfts, setNfts] = useState<any[]>([]);
   const [erc20s, setErc20s] = useState<any[]>([]);
   const [nftsVisible, setNftsVisible] = useState<boolean>(true);
@@ -37,12 +35,14 @@ const ViewAssets: React.FC<{
     };
 
     window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("local-storage", handleStorageChange);
 
     // Initial fetch
     handleStorageChange();
 
     return () => {
       window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("local-storage", handleStorageChange);
     };
   }, []);
 

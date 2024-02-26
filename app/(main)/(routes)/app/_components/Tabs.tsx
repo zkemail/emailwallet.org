@@ -22,7 +22,7 @@ const Tabs: React.FC<{
         style={{ borderRadius: "0.5625rem", background: "#000" }}
       >
         {!isSignedIn ? (
-          <>
+          <div className={"flex flex-row items-center gap-[1.5rem]"}>
             <TabButton
               selected={selectedTab === "create"}
               onClick={() => {
@@ -39,9 +39,11 @@ const Tabs: React.FC<{
             >
               Login
             </TabButton>
-          </>
+          </div>
         ) : (
-          <>
+          <div
+            className={"flex flex-row items-center gap-[1.5rem] sm:gap-[1rem]"}
+          >
             <TabButton
               selected={selectedTab === "send"}
               onClick={() => {
@@ -66,7 +68,7 @@ const Tabs: React.FC<{
             >
               View Assets
             </TabButton>
-          </>
+          </div>
         )}
       </div>
       {selectedTab === "create" && (

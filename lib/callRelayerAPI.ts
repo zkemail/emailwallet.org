@@ -77,8 +77,8 @@ async function sendAsset(
         is_recipient_email: isRecipientEmail,
       }),
     });
-    const data: ApiResponse = (await response.text()) as ApiResponse;
-    return data.success ? "Asset sent successfully" : "Failed to send asset";
+    const data = await response.text();
+    return data ? "Asset sent successfully" : "Failed to send asset";
   } catch (error) {
     console.error("Error sending asset:", error);
     return "Failed to send asset due to an error";
