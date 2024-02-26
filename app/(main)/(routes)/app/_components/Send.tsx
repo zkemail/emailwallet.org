@@ -183,7 +183,7 @@ const Send = () => {
           id="to_email"
           type="email"
           className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
-          placeholder="recipient@gmail.com OR 0xb10a..."
+          placeholder="recipient@... OR 0x..."
           onChange={(e) => {
             setToEmail(e.target.value);
           }}

@@ -3,7 +3,9 @@ import { getWalletAddress } from "@/lib/callRelayerAPI";
 import { Alchemy, Network } from "alchemy-sdk";
 
 const ViewAssets: React.FC<{
-  setSelectedTab: (tab: "login" | "view" | "deposit") => void;
+  setSelectedTab: (
+    tab: "login" | "view" | "deposit" | "create" | "send",
+  ) => void;
 }> = ({ setSelectedTab }) => {
   const [email, setEmail] = useState<string | null>(null);
   const [accountKey, setAccountKey] = useState<string | null>(null);
@@ -139,7 +141,10 @@ const ViewAssets: React.FC<{
                   <p className="mt-2 text-lg font-medium text-gray-700">
                     Balance: {token.tokenBalance}
                   </p>
-                  <button className="mt-4 rounded-md bg-green-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-green-600">
+                  <button
+                    className="mt-4 rounded-md bg-green-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-green-600"
+                    onClick={() => setSelectedTab("send")}
+                  >
                     Transfer
                   </button>
                 </div>

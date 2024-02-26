@@ -97,8 +97,8 @@ export async function recoverAccountKey(email: string): Promise<string> {
         body: JSON.stringify({ email_addr: email }),
       },
     );
-    const data: ApiResponse = (await response.json()) as ApiResponse;
-    return data.success
+    const data = await response.text();
+    return data
       ? "Account key recovery email sent"
       : "Failed to send account key recovery email";
   } catch (error) {
@@ -156,10 +156,8 @@ async function transferNFT(
         }),
       },
     );
-    const data: ApiResponse = (await response.json()) as ApiResponse;
-    return data.success
-      ? "NFT transferred successfully"
-      : "Failed to transfer NFT";
+    const data = await response.text();
+    return data ? "NFT transferred successfully" : "Failed to transfer NFT";
   } catch (error) {
     console.error("Error transferring NFT:", error);
     return "Failed to transfer NFT due to an error";
