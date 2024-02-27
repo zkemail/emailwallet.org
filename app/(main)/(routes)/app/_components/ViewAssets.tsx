@@ -21,7 +21,7 @@ const ViewAssets: React.FC<{
   const alchemy = useMemo(() => {
     const config = {
       apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
-      network: Network.ETH_SEPOLIA, // Replace with your target network
+      network: Network.BASE_SEPOLIA, // Replace with your target network
     };
     return new Alchemy(config);
   }, []);
