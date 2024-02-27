@@ -1,6 +1,6 @@
 import { getWalletAddress } from "./callRelayerAPI";
 
-const mock = true;
+const mock = false;
 
 export function isValidEmail(email: string): boolean {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
