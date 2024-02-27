@@ -8,9 +8,8 @@ export default function SendMoneyPage() {
           Send Assets via Email
         </h1>
         <h2 className="mx-auto w-11/12 text-center text-muted-foreground sm:w-1/2">
-          Create an account and send money, by sending emails from your
-          currently logged-in email address. Everyone starts with 100 TEST
-          tokens on the Sepolia testnet.
+          Create your account and send money by replying to emails. Everyone
+          starts with 100 TEST tokens on the Base Sepolia testnet.
         </h2>
         <div className="text-center text-sm text-muted-foreground">
           By using this service, you agree to our{" "}

@@ -71,7 +71,7 @@ const LoginAccount: React.FC<{
   };
 
   return (
-    <div className="flex w-[375px] flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem] sm:w-full">
+    <div className="flex w-[375px] flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem] sm:w-full md:w-1/2">
       <h3 className="text-center text-[1.625rem] font-bold text-white">
         Log In
       </h3>

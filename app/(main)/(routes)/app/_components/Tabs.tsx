@@ -19,10 +19,9 @@ const Tabs: React.FC<{
     >
       <div
         className={
-          "flex items-center justify-center gap-5 p-[0.625rem] text-[1rem] font-medium text-primary"
+          "flex items-center justify-center gap-5 rounded-lg border border-white p-[0.625rem] text-[1rem] font-medium text-primary"
         }
         style={{
-          borderRadius: "0.5625rem",
           background: "#000",
           display: "inline-flex",
         }}

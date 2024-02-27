@@ -85,7 +85,7 @@ const CreateAccount: React.FC<{
   return (
     <div
       className={
-        "flex w-[375px] flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem] sm:w-full"
+        "flex w-[375px] flex-col items-center gap-[1.25rem] rounded-[2rem] bg-black p-[2rem] sm:w-full md:w-1/2"
       }
       style={{ display: "block" }}
     >
