@@ -309,7 +309,9 @@ const Send = () => {
             </ClickButton>
           </ToolTip>
         </div>
-        <div className="flex w-full items-center justify-center ">{status}</div>
+        <div className="flex w-full items-center justify-center pb-3">
+          {status}
+        </div>
       </div>
     </div>
   );
