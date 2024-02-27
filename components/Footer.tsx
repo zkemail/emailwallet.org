@@ -43,7 +43,16 @@ const Footer = () => {
           </div>
 
           <p className="w-full text-foreground lg:w-4/5">
-            Subscribe and stay up-to-date on the latest developer news
+            See the most up to date developer news on our{" "}
+            <a
+              href="https://t.me/zkemail"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "underline" }}
+            >
+              Telegram
+            </a>
+            , or infrequently via email.
           </p>
         </div>
       </div>
