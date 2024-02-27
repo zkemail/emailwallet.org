@@ -4,7 +4,7 @@ import { getWalletFromEmail, isSignedIn } from "./send";
 export async function getNftsForAddress(address?: string) {
   const config = {
     apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
-    network: Network.ETH_SEPOLIA, // Replace with your target network
+    network: Network.BASE_SEPOLIA, // Replace with your target network
   };
   const alchemy = new Alchemy(config);
 
@@ -40,7 +40,7 @@ export async function getNftsForAddress(address?: string) {
 export async function getTokenBalancesForAddress(address?: string) {
   const config = {
     apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
-    network: Network.ETH_SEPOLIA, // Replace with your target network
+    network: Network.BASE_SEPOLIA, // Replace with your target network
   };
   const alchemy = new Alchemy(config);
 
