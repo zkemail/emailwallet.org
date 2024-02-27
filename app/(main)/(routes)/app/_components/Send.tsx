@@ -88,7 +88,7 @@ const Send = () => {
         contractAddress: nft.contract.address, // Adjust according to your actual data structure
         tokenId: nft.tokenId,
         url: nft.image,
-        id: nft.tokenId, // Assuming you want to use tokenId as id, adjust if needed
+        id: nft.contract.symbol || nft.tokenId, // Assuming you want to use tokenId as id, adjust if needed
       }));
       setNftOptions(formattedNfts);
       return formattedNfts;
@@ -101,7 +101,11 @@ const Send = () => {
       });
     } else if (assetType === "NFT") {
       fetchNftOptions().then((nfts) => {
-        setCurrency(nfts[0]?.id || "");
+        setCurrency(
+          nfts[0]?.id
+            ? `${nfts[0]?.id} - #${nfts[0]?.tokenId}`
+            : `#${nfts[0]?.tokenId}`,
+        );
         setMaxAmount(1);
       });
     }
@@ -160,7 +164,7 @@ const Send = () => {
               value={amount || ""}
             />
             <div className="relative inline-block text-left" ref={dropdownRef}>
-              <div className="flex-col items-center justify-between">
+              <div className="flex flex-col items-center justify-center">
                 <Button
                   type="button"
                   className="gap-x-1 font-semibold shadow-sm"
@@ -199,17 +203,28 @@ const Send = () => {
                     {assetType === "NFT"
                       ? nftOptions.map((nft) => (
                           <div
-                            key={nft.id ? nft.id : "unknown"}
+                            key={
+                              nft.id
+                                ? `${nft.id} - #${nft.tokenId}`
+                                : `#${nft.tokenId}`
+                            }
                             className={`flex items-center ${getCurrencyOptionClass(
-                              currency === (nft.id ? nft.id : "unknown"),
+                              currency ===
+                                (nft.id
+                                  ? `${nft.id} - #${nft.tokenId}`
+                                  : `#${nft.tokenId}`),
                             )}`}
                             role="menuitem"
                             onClick={() => {
-                              setCurrency(nft.id ? nft.id : "unknown");
+                              setCurrency(
+                                nft.id
+                                  ? `${nft.id} - #${nft.tokenId}`
+                                  : `#${nft.tokenId}`,
+                              );
                               setDropdownOpen(false);
                             }}
                           >
-                            <ExportedImage
+                            <img
                               src={
                                 nft.url
                                   ? nft.url

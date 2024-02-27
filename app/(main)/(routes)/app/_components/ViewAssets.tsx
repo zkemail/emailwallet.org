@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getWalletAddress } from "@/lib/callRelayerAPI";
 import { Alchemy, Network } from "alchemy-sdk";
 import { getWallet } from "@/lib/send";
+import ExportedImage from "next-image-export-optimizer";
 
 const ViewAssets: React.FC<{
   setSelectedTab: (
@@ -115,7 +116,10 @@ const ViewAssets: React.FC<{
                   <p className="font-medium text-white">
                     {nft.name + " #" + nft.tokenId}
                   </p>
-                  <button className="w-full rounded-md bg-indigo-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-indigo-600">
+                  <button
+                    onClick={() => setSelectedTab("send")}
+                    className="w-full rounded-md bg-indigo-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-indigo-600"
+                  >
                     Transfer
                   </button>
                 </div>
@@ -156,7 +160,10 @@ const ViewAssets: React.FC<{
                   <span className="font-semibold">{token.id}</span>
                   <span className="opacity-60">{token.tokenBalance}</span>
                 </div>
-                <button className="rounded-md bg-green-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-green-600 dark:bg-neutral-600 hover:dark:bg-neutral-500">
+                <button
+                  onClick={() => setSelectedTab("send")}
+                  className="rounded-md bg-green-500 px-6 py-2 font-medium text-white transition duration-200 ease-in-out hover:bg-green-600 dark:bg-neutral-600 hover:dark:bg-neutral-500"
+                >
                   Transfer
                 </button>
               </div>
