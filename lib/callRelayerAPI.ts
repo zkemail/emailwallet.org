@@ -38,8 +38,7 @@ async function isAccountCreated(email: string): Promise<string> {
       },
     );
     const text = await response.text();
-    const data: ApiResponse = (await response.text()) as ApiResponse;
-    return data.success ? "Account exists" : "Account does not exist";
+    return text == "true" ? "Account exists" : "Account does not exist";
   } catch (error) {
     console.error("Error checking account existence:", error);
     return "Failed to check if account exists";
