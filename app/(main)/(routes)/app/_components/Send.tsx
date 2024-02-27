@@ -23,19 +23,13 @@ export type NFTOption = {
   id: string | null;
 };
 
-enum Currency {
-  USDC,
-  DAI,
-  TEST,
-}
-
 const Send = () => {
   const [fromEmail, setFromEmail] = useState<string>("");
   const [toEmail, setToEmail] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | undefined>(undefined);
-  const [currency, setCurrency] = useState<Currency>(Currency.TEST);
+  const [currency, setCurrency] = useState<string>("TEST");
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("");
   const [awaitingSend, setAwaitingSend] = useState<boolean>(false);
@@ -71,7 +65,7 @@ const Send = () => {
     } else {
       setAmount(Number(value));
     }
-    if (Number(value) > 100 && currency === Currency.TEST) {
+    if (Number(value) > 100 && currency === "TEST") {
       setAmount(100);
     }
   }
@@ -152,9 +146,8 @@ const Send = () => {
               className="bg-secondary text-sm text-primary focus:outline-none"
               value={amount || ""}
             />
-
             <div className="relative inline-block text-left" ref={dropdownRef}>
-              <div>
+              <div className="flex-col items-center justify-between">
                 <Button
                   type="button"
                   className="gap-x-1 font-semibold shadow-sm"
@@ -163,7 +156,7 @@ const Send = () => {
                   aria-haspopup="true"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
-                  {Currency[currency]}
+                  {currency}
                   <svg
                     className="-mr-1 h-5 w-5 text-gray-400"
                     viewBox="0 0 20 20"
@@ -177,6 +170,9 @@ const Send = () => {
                     />
                   </svg>
                 </Button>
+                <span className="ml-2 text-sm text-gray-500">
+                  Max: {(amount || 0).toFixed(2)}
+                </span>
               </div>
               {dropdownOpen && (
                 <div
@@ -187,42 +183,46 @@ const Send = () => {
                   tabIndex={-1}
                 >
                   <div className="py-1" role="none">
-                    <span
-                      className={getCurrencyOptionClass(
-                        currency === Currency.TEST,
-                      )}
-                      role="menuitem"
-                      onClick={() => {
-                        setCurrency(Currency.TEST);
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      TEST
-                    </span>
-                    <span
-                      className={getCurrencyOptionClass(
-                        currency === Currency.USDC,
-                      )}
-                      role="menuitem"
-                      onClick={() => {
-                        setCurrency(Currency.USDC);
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      USDC
-                    </span>
-                    <span
-                      className={getCurrencyOptionClass(
-                        currency === Currency.DAI,
-                      )}
-                      role="menuitem"
-                      onClick={() => {
-                        setCurrency(Currency.DAI);
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      DAI
-                    </span>
+                    {assetType === "NFT"
+                      ? nftOptions.map((nft) => (
+                          <div
+                            key={nft.id ? nft.id : "unknown"}
+                            className={`flex items-center ${getCurrencyOptionClass(
+                              currency === (nft.id ? nft.id : "unknown"),
+                            )}`}
+                            role="menuitem"
+                            onClick={() => {
+                              setCurrency(nft.id ? nft.id : "unknown");
+                              setDropdownOpen(false);
+                            }}
+                          >
+                            <img
+                              src={
+                                nft.icon ? nft.icon : "/default-nft-icon.png"
+                              }
+                              alt="NFT icon"
+                              className="mr-2 h-6 w-6"
+                            />
+                            {nft.id
+                              ? `${nft.id} - #${nft.tokenId}`
+                              : `Unknown NFT - #${nft.tokenId}`}
+                          </div>
+                        ))
+                      : tokenOptions.map((token) => (
+                          <span
+                            key={token.contractAddress}
+                            className={getCurrencyOptionClass(
+                              currency === token.contractAddress,
+                            )}
+                            role="menuitem"
+                            onClick={() => {
+                              setCurrency(token.contractAddress);
+                              setDropdownOpen(false);
+                            }}
+                          >
+                            {token.id}
+                          </span>
+                        ))}
                   </div>
                 </div>
               )}
@@ -257,7 +257,7 @@ const Send = () => {
                 setAwaitingSend(true);
                 const email = toEmail;
                 const amountToSend = (amount || 0).toString();
-                const tokenId = Currency[currency]; // Using enum name instead of index
+                const tokenId = currency; // Using enum name instead of index
                 const recipientAddr = email; // Since we're sending to an email, recipient address is the email itself
 
                 sendAsset(amountToSend, tokenId.toString(), recipientAddr)

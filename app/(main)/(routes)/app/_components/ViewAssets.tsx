@@ -1,14 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { getWalletAddress } from "@/lib/callRelayerAPI";
 import { Alchemy, Network } from "alchemy-sdk";
+import { getWallet } from "@/lib/send";
 
 const ViewAssets: React.FC<{
   setSelectedTab: (
     tab: "login" | "view" | "deposit" | "create" | "send",
   ) => void;
 }> = ({ setSelectedTab }) => {
-  const [email, setEmail] = useState<string | null>(null);
-  const [accountKey, setAccountKey] = useState<string | null>(null);
+  // const [email, setEmail] = useState<string | null>(null);
+  // const [accountKey, setAccountKey] = useState<string | null>(null);
   const [address, setAddress] = useState<string>("");
   const [nfts, setNfts] = useState<any[]>([]);
   const [erc20s, setErc20s] = useState<any[]>([]);
@@ -25,15 +26,8 @@ const ViewAssets: React.FC<{
   }, []);
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      const loggedInUser = localStorage.getItem("loggedInUser");
-      if (loggedInUser) {
-        const storedData = JSON.parse(
-          localStorage.getItem(loggedInUser) || "{}",
-        );
-        setEmail(loggedInUser);
-        setAccountKey(storedData.code);
-      }
+    const handleStorageChange = async () => {
+      setAddress(await getWallet());
     };
 
     window.addEventListener("storage", handleStorageChange);
@@ -48,11 +42,6 @@ const ViewAssets: React.FC<{
     };
   }, []);
 
-  useEffect(() => {
-    if (email && accountKey) {
-      getWalletAddress(email, accountKey).then(setAddress);
-    }
-  }, [email, accountKey]);
   useEffect(() => {
     if (address) {
       alchemy.nft.getNftsForOwner(address).then((res) => {
