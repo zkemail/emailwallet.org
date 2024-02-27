@@ -50,14 +50,6 @@ const Footer = () => {
       <div className="mt-auto flex flex-1 flex-col items-center gap-4 lg:mt-4">
         <div className="flex w-full flex-col gap-3 lg:flex-row">
           <Input
-            type="text"
-            name="firstName"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
-            className="w-full"
-            placeholder="First name"
-          />
-          <Input
             type="email"
             name="email"
             onChange={(e) => setEmail(e.target.value)}

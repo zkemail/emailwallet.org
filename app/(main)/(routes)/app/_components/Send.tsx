@@ -3,7 +3,7 @@
 import ExportedImage from "next-image-export-optimizer";
 import ToolTip from "@/components/ToolTip";
 import { Button } from "@/components/ui/button";
-import { sendAsset } from "@/lib/callRelayerAPI";
+import { sendAsset, transferNFT } from "@/lib/callRelayerAPI";
 import { getEmailLink } from "@/lib/send";
 import { useEffect, useRef, useState } from "react";
 import { getTokenBalancesForAddress, getNftsForAddress } from "@/lib/chain";
@@ -31,7 +31,9 @@ const Send = () => {
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | undefined>(undefined);
-  const [currency, setCurrency] = useState<string>("TEST");
+  const [selectedAssetString, setSelectedAssetString] =
+    useState<string>("TEST"); // Selected ERC20
+  const [selectedNFT, setSelectedNFT] = useState<NFTOption>(); // Selected NFT
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("");
   const [awaitingSend, setAwaitingSend] = useState<boolean>(false);
@@ -68,7 +70,7 @@ const Send = () => {
     } else {
       setAmount(Number(value));
     }
-    if (Number(value) > 100 && currency === "TEST") {
+    if (Number(value) > 100 && selectedAssetString === "TEST") {
       setAmount(100);
     }
   }
@@ -96,12 +98,12 @@ const Send = () => {
 
     if (assetType === "ERC20") {
       fetchTokenOptions().then((tokens) => {
-        setCurrency(tokens[0]?.id || "");
+        setSelectedAssetString(tokens[0]?.id || "");
         setMaxAmount(Number(tokens[0]?.tokenBalance || 0));
       });
     } else if (assetType === "NFT") {
       fetchNftOptions().then((nfts) => {
-        setCurrency(
+        setSelectedAssetString(
           nfts[0]?.id
             ? `${nfts[0]?.id} - #${nfts[0]?.tokenId}`
             : `#${nfts[0]?.tokenId}`,
@@ -173,7 +175,7 @@ const Send = () => {
                   aria-haspopup="true"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
-                  {currency}
+                  {selectedAssetString}
                   <svg
                     className="-mr-1 h-5 w-5 text-gray-400"
                     viewBox="0 0 20 20"
@@ -209,18 +211,19 @@ const Send = () => {
                                 : `#${nft.tokenId}`
                             }
                             className={`flex items-center ${getCurrencyOptionClass(
-                              currency ===
+                              selectedAssetString ===
                                 (nft.id
                                   ? `${nft.id} - #${nft.tokenId}`
                                   : `#${nft.tokenId}`),
                             )}`}
                             role="menuitem"
                             onClick={() => {
-                              setCurrency(
+                              setSelectedAssetString(
                                 nft.id
                                   ? `${nft.id} - #${nft.tokenId}`
                                   : `#${nft.tokenId}`,
                               );
+                              setSelectedNFT(nft);
                               setDropdownOpen(false);
                             }}
                           >
@@ -242,11 +245,13 @@ const Send = () => {
                           <span
                             key={token.contractAddress}
                             className={getCurrencyOptionClass(
-                              currency === token.id,
+                              selectedAssetString === token.id,
                             )}
                             role="menuitem"
                             onClick={() => {
-                              setCurrency(token.id || token.contractAddress);
+                              setSelectedAssetString(
+                                token.id || token.contractAddress,
+                              );
                               setMaxAmount(Number(token.tokenBalance));
                               setDropdownOpen(false);
                             }}
@@ -286,19 +291,26 @@ const Send = () => {
               className="h-[48px] text-primary"
               onClick={() => {
                 setAwaitingSend(true);
-                const email = toEmail;
-                const amountToSend = (amount || 0).toString();
-                const tokenId = currency; // Using enum name instead of index
-                const recipientAddr = email; // Since we're sending to an email, recipient address is the email itself
+                const sendInfo =
+                  assetType === "ERC20"
+                    ? (amount || 0).toString()
+                    : selectedNFT?.tokenId || "";
+                const assetID =
+                  assetType === "ERC20"
+                    ? selectedAssetString.toString()
+                    : selectedNFT?.contractAddress || ""; // Using enum name instead of index
+                const recipientAddr = toEmail; // Since we're sending to an email, recipient address is the email itself
+                const sendFunction =
+                  assetType === "ERC20" ? sendAsset : transferNFT;
 
-                sendAsset(amountToSend, tokenId.toString(), recipientAddr)
+                sendFunction(sendInfo, assetID, recipientAddr)
                   .then((result) => {
                     setStatus("Send queued, confirm transfer in your email.");
                     setAwaitingSend(false);
                   })
                   .catch((error) => {
-                    console.error("Failed to send asset:", error);
-                    setStatus("Failed to send asset. Please try again.");
+                    console.error(`Failed to send ${assetType}:`, error);
+                    setStatus(`Failed to send ${assetType}. Please try again.`);
                     setAwaitingSend(false);
                   });
                 // Logic to handle sending email to confirm the transaction
