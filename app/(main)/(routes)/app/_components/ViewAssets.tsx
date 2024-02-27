@@ -75,7 +75,7 @@ const ViewAssets: React.FC<{
     }
   }, [address, alchemy]);
   return (
-    <div className="flex w-full flex-col  px-4 py-8">
+    <div className="flex w-full flex-col px-4 py-8 md:w-2/3">
       <h2 className="text-3xl font-medium text-gray-800 dark:text-white">
         Your Assets
       </h2>

@@ -69,6 +69,7 @@ export async function getTokenBalancesForAddress(address?: string) {
         ).toFixed(3),
         id: metadata.symbol, // Abbreviated name
         decimals: metadata.decimals || 18,
+        url: metadata.logo,
       })),
     );
     const enrichedTokens = await Promise.all(tokenDetailsPromises);

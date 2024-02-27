@@ -1,5 +1,6 @@
 "use client";
 
+import ExportedImage from "next-image-export-optimizer";
 import ToolTip from "@/components/ToolTip";
 import { Button } from "@/components/ui/button";
 import { sendAsset } from "@/lib/callRelayerAPI";
@@ -21,6 +22,7 @@ export type NFTOption = {
   contractAddress: string;
   tokenId: string;
   id: string | null;
+  url: string | null;
 };
 
 const Send = () => {
@@ -36,6 +38,7 @@ const Send = () => {
   const [tokenOptions, setTokenOptions] = useState<TokenOption[]>([]);
   const [nftOptions, setNftOptions] = useState<NFTOption[]>([]);
   const [assetType, setAssetType] = useState("ERC20");
+  const [maxAmount, setMaxAmount] = useState<number>(0);
 
   const dropdownRef = useRef(null);
   const countdownMax = 120;
@@ -75,22 +78,32 @@ const Send = () => {
       const tokens = await getTokenBalancesForAddress();
       // Assuming getTokenBalancesForAddress returns an array of { key, text, value }
       setTokenOptions(tokens);
+      return tokens;
     };
 
     const fetchNftOptions = async () => {
       const nfts = await getNftsForAddress();
+      console.log(nfts);
       const formattedNfts = nfts.map((nft) => ({
         contractAddress: nft.contract.address, // Adjust according to your actual data structure
         tokenId: nft.tokenId,
+        url: nft.image,
         id: nft.tokenId, // Assuming you want to use tokenId as id, adjust if needed
       }));
       setNftOptions(formattedNfts);
+      return formattedNfts;
     };
 
     if (assetType === "ERC20") {
-      fetchTokenOptions();
+      fetchTokenOptions().then((tokens) => {
+        setCurrency(tokens[0]?.id || "");
+        setMaxAmount(Number(tokens[0]?.tokenBalance || 0));
+      });
     } else if (assetType === "NFT") {
-      fetchNftOptions();
+      fetchNftOptions().then((nfts) => {
+        setCurrency(nfts[0]?.id || "");
+        setMaxAmount(1);
+      });
     }
   }, [assetType]); // This effect depends on assetType, it runs when assetType changes
 
@@ -171,7 +184,7 @@ const Send = () => {
                   </svg>
                 </Button>
                 <span className="ml-2 text-sm text-gray-500">
-                  Max: {(amount || 0).toFixed(2)}
+                  Max: {maxAmount.toFixed(2)}
                 </span>
               </div>
               {dropdownOpen && (
@@ -196,9 +209,11 @@ const Send = () => {
                               setDropdownOpen(false);
                             }}
                           >
-                            <img
+                            <ExportedImage
                               src={
-                                nft.icon ? nft.icon : "/default-nft-icon.png"
+                                nft.url
+                                  ? nft.url
+                                  : "https://www.jubmoji.quest/images/logo.svg"
                               }
                               alt="NFT icon"
                               className="mr-2 h-6 w-6"
@@ -212,11 +227,12 @@ const Send = () => {
                           <span
                             key={token.contractAddress}
                             className={getCurrencyOptionClass(
-                              currency === token.contractAddress,
+                              currency === token.id,
                             )}
                             role="menuitem"
                             onClick={() => {
-                              setCurrency(token.contractAddress);
+                              setCurrency(token.id || token.contractAddress);
+                              setMaxAmount(Number(token.tokenBalance));
                               setDropdownOpen(false);
                             }}
                           >
