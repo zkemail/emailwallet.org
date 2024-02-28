@@ -1,57 +1,50 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { getWalletFromEmail, isSignedIn } from "./send";
-// const { ethers } = require("ethers");
+import axios from "axios";
+// import { CovalentClient } from "@covalenthq/client-sdk";
 
-// export async function getERC20sforAddressZksync(ownerAddress?: string) {
-//   const provider = new ethers.providers.JsonRpcProvider("https://sepolia.era.zksync.dev");
+const COVALENT_BASE_URL = "https://api.covalenthq.com/v1";
+const API_KEY = "cqt_rQcDjKg79tVQVd6xKJ3YqrMYjqdx";
+const ZKSYNC_CHAIN_ID = "zksync-testnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
+const MOCK_ADDRESS = "0x3edD5105DC14AC16a5ca947f0F273B0E63DE4f94";
 
-//   const erc20Abi = [
-//       "function balanceOf(address owner) view returns (uint256)",
-//       "function decimals() view returns (uint8)",
-//       "function symbol() view returns (string)"
-//   ];
+export async function getZkSyncNFTsForAddress(address: string) {
+  const endpoint = `${COVALENT_BASE_URL}/${ZKSYNC_CHAIN_ID}/address/${address}/balances_v2/?nft=true&key=${API_KEY}`;
+  try {
+    const response = await axios.get(endpoint);
+    const nfts = response.data.data.items.filter(
+      (item: any) => item.type === "nft",
+    );
+    return nfts.map((nft: any) => ({
+      contractAddress: nft.contract_address,
+      tokenId: nft.token_id,
+      tokenUri: nft.nft_data[0].token_url,
+      metadata: nft.nft_data[0].external_data,
+    }));
+  } catch (error) {
+    console.error("Error fetching zkSync NFTs:", error);
+    return [];
+  }
+}
 
-//   const contractAddress = "0xFBE4Cb75C57c7552D5d392807c10697Df12587dC";
-
-//   const contract = new ethers.Contract(contractAddress, erc20Abi, provider);
-//     const balance = await contract.balanceOf(ownerAddress);
-//     const decimals = await contract.decimals();
-//     const symbol = await contract.symbol();
-
-//     const formattedBalance = ethers.utils.formatUnits(balance, decimals);
-
-//     return {
-//         contractAddress,
-//         balance: formattedBalance,
-//         symbol,
-//         decimals
-//     };
-// }
-
-// export async function getNftsForAddressZksync(ownerAddress?: string) {
-//   // Ethereum provider URL (e.g., Infura, Alchemy, or your own Ethereum node)
-//   const provider = new ethers.providers.JsonRpcProvider("https://sepolia.era.zksync.dev");
-
-//   const erc721Abi = [
-//       "function balanceOf(address owner) external view returns (uint256 balance)",
-//       "function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId)",
-//       "function tokenURI(uint256 tokenId) external view returns (string memory)"
-//   ];
-//   const contractAddress = 0xc989c0431feBb3557CCf4e59919D15305D591668;
-//   const contract = new ethers.Contract(contractAddress, erc721Abi, provider);
-//   const balance = await contract.balanceOf(ownerAddress);
-//   const nfts = [];
-
-//   for (let i = 0; i < balance; i++) {
-//       const tokenId = await contract.tokenOfOwnerByIndex(ownerAddress, i);
-//       const tokenURI = await contract.tokenURI(tokenId);
-//       // Here, you would fetch the metadata from the tokenURI if it's an HTTP URL
-//       // For simplicity, we're just returning the URI and token ID
-//       nfts.push({ tokenId: tokenId.toString(), tokenURI });
-//   }
-
-//   return nfts;
-// }
+export async function getZkSyncTokensForAddress(address: string) {
+  const endpoint = `${COVALENT_BASE_URL}/${ZKSYNC_CHAIN_ID}/address/${address}/balances_v2/?key=${API_KEY}`;
+  try {
+    const response = await axios.get(endpoint);
+    const tokens = response.data.data.items.filter(
+      (item: any) => item.type === "cryptocurrency",
+    );
+    return tokens.map((token: any) => ({
+      contractAddress: token.contract_address,
+      symbol: token.contract_ticker_symbol,
+      balance: token.balance,
+      decimals: token.contract_decimals,
+    }));
+  } catch (error) {
+    console.error("Error fetching zkSync Tokens:", error);
+    return [];
+  }
+}
 
 export async function getNftsForAddress(address?: string) {
   const config = {
@@ -135,21 +128,15 @@ export async function getTokenBalancesForAddress(address?: string) {
 
 // TODO: Fix for zksync test
 async function main() {
-  const config = {
-    apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
-    network: Network.BASE_SEPOLIA, // Replace with your target network
-  };
-  const alchemy = new Alchemy(config);
-  const testAddress = "0xYourTestAddressHere"; // Replace with a test address
-
+  const testAddress = MOCK_ADDRESS;
   try {
     console.log("Fetching NFTs for address:", testAddress);
-    const nfts = await alchemy.nft.getNftsForOwner(testAddress);
-    console.log("NFTs fetched:", nfts.ownedNfts.length);
+    const nfts = await getZkSyncNFTsForAddress(testAddress);
+    console.log("NFTs fetched:", nfts.length);
 
     console.log("Fetching ERC20 token balances for address:", testAddress);
-    const erc20s = await alchemy.core.getTokenBalances(testAddress);
-    console.log("ERC20 token balances fetched:", erc20s.tokenBalances.length);
+    const erc20s = await getZkSyncTokensForAddress(testAddress);
+    console.log("ERC20 token balances fetched:", erc20s.length);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
