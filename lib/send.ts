@@ -69,7 +69,7 @@ export async function isSignedIn(): Promise<boolean> {
   }
 
   console.log(`Retrieving stored data for user: ${loggedInUser}`);
-  const storedData = JSON.parse(getLoggedInEmail() || "{}");
+  const storedData = JSON.parse(localStorage.getItem(loggedInUser) || "{}");
   if (!storedData.code) {
     console.log("No code found in stored data.");
     return false;
