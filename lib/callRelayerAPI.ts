@@ -151,7 +151,7 @@ async function transferNFT(
         },
         body: JSON.stringify({
           email_addr: email,
-          nft_id: nftId,
+          nft_id: Number(nftId),
           nft_addr: nftAddr,
           recipient_addr: recipientAddr,
           is_recipient_email: isRecipientEmail,
