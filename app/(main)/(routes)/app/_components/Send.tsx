@@ -27,7 +27,7 @@ export type NFTOption = {
 
 const Send = () => {
   const [fromEmail, setFromEmail] = useState<string>("");
-  const [toEmail, setToEmail] = useState<string>("");
+  const [recipient, setRecipient] = useState<string>("");
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | undefined>(undefined);
@@ -48,6 +48,10 @@ const Send = () => {
   function isValidEmail(email: string): boolean {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
     return regex.test(email);
+  }
+
+  function isValidAddress(address: string): boolean {
+    return /^0x[a-fA-F0-9]{40}$/.test(address);
   }
 
   function getCurrencyOptionClass(selected: boolean): string {
@@ -189,9 +193,11 @@ const Send = () => {
                     />
                   </svg>
                 </Button>
-                <span className="ml-2 text-sm text-gray-500">
-                  Max: {maxAmount.toFixed(2)}
-                </span>
+                {assetType === "ERC20" && (
+                  <span className="ml-2 text-sm text-gray-500">
+                    Max: {maxAmount.toFixed(2)}
+                  </span>
+                )}
               </div>
               {dropdownOpen && (
                 <div
@@ -274,14 +280,36 @@ const Send = () => {
           </label>
           <input
             id="to_email"
-            type="email"
-            className="h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 invalid:border-pink-500 invalid:text-pink-600 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary"
+            type="text"
+            className={`h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 ${
+              isValidEmail(recipient) || isValidAddress(recipient)
+                ? "border-green-500 text-green-600"
+                : "border-pink-500 text-pink-600"
+            } focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary`}
             placeholder="recipient@... OR 0x..."
             onChange={(e) => {
-              setToEmail(e.target.value);
+              const value = e.target.value;
+              const isEmail =
+                /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/.test(value);
+              const isAddress = /^0x[a-fA-F0-9]{40}$/.test(value);
+              if (isEmail || isAddress) {
+                setRecipient(value);
+              } else {
+                setRecipient("");
+                // Optionally, show some error feedback here
+              }
             }}
             onBlur={(e) => {
-              setToEmail(e.target.value);
+              const value = e.target.value;
+              const isEmail =
+                /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/.test(value);
+              const isAddress = /^0x[a-fA-F0-9]{40}$/.test(value);
+              if (isEmail || isAddress) {
+                setRecipient(value);
+              } else {
+                setRecipient("");
+                // Optionally, show some error feedback here
+              }
             }}
           />
         </div>
@@ -299,7 +327,7 @@ const Send = () => {
                   assetType === "ERC20"
                     ? selectedAssetString.toString()
                     : selectedNFT?.contractAddress || ""; // Using enum name instead of index
-                const recipientAddr = toEmail; // Since we're sending to an email, recipient address is the email itself
+                const recipientAddr = recipient; // Since we're sending to an email, recipient address is the email itself
                 const sendFunction =
                   assetType === "ERC20" ? sendAsset : transferNFT;
 
@@ -315,7 +343,10 @@ const Send = () => {
                   });
                 // Logic to handle sending email to confirm the transaction
               }}
-              disabled={awaitingSend}
+              disabled={
+                awaitingSend ||
+                (!isValidEmail(recipient) && !isValidAddress(recipient))
+              }
             >
               Send Confirmation Email
             </ClickButton>
