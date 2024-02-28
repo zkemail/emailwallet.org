@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getWalletAddress } from "@/lib/callRelayerAPI";
 import { Alchemy, Network } from "alchemy-sdk";
-import { getWallet } from "@/lib/send";
+import { getWallet, isValidAddress } from "@/lib/send";
 import ExportedImage from "next-image-export-optimizer";
 
 const ViewAssets: React.FC<{
@@ -43,8 +43,9 @@ const ViewAssets: React.FC<{
     };
   }, []);
 
+  // TODO: Make these calls to chain.ts
   useEffect(() => {
-    if (address) {
+    if (isValidAddress(address)) {
       alchemy.nft.getNftsForOwner(address).then((res) => {
         const updatedNfts = res.ownedNfts.map((nft) => ({
           ...nft,

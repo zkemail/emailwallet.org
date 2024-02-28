@@ -3,9 +3,12 @@ import { getWalletAddress } from "./callRelayerAPI";
 const mock = false;
 
 export function isValidEmail(email: string): boolean {
-  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
-  console.log(email, regex.test(email));
+  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
   return regex.test(email);
+}
+
+export function isValidAddress(address: string): boolean {
+  return /^0x[a-fA-F0-9]{40}$/.test(address);
 }
 
 export function generateNewKey() {
@@ -24,6 +27,12 @@ function setLoggedInUser(email: string) {
   );
 }
 
+export function getLoggedInEmail() {
+  if (mock) return "aayushgupta5000@gmail.com";
+  const loggedInUser = localStorage.getItem("loggedInUser") || "";
+  return loggedInUser;
+}
+
 export async function getWallet(): Promise<string> {
   if (mock) return "0xAa613c7149d0D9df442ae1eBaab9879A6D870506";
   const email = localStorage.getItem("loggedInUser");
@@ -32,7 +41,7 @@ export async function getWallet(): Promise<string> {
 
 export async function getWalletFromEmail(email: string): Promise<string> {
   if (mock) return "0xAa613c7149d0D9df442ae1eBaab9879A6D870506";
-  const loggedInUser = localStorage.getItem("loggedInUser");
+  const loggedInUser = getLoggedInEmail();
   if (!loggedInUser || loggedInUser !== email) {
     console.log(
       "User is not logged in or email does not match the logged in user.",
@@ -53,14 +62,14 @@ export async function getWalletFromEmail(email: string): Promise<string> {
 export async function isSignedIn(): Promise<boolean> {
   if (mock) return true;
   console.log("Checking if user is signed in...");
-  const loggedInUser = localStorage.getItem("loggedInUser");
+  const loggedInUser = getLoggedInEmail();
   if (!loggedInUser) {
     console.log("No logged in user found.");
     return false;
   }
 
   console.log(`Retrieving stored data for user: ${loggedInUser}`);
-  const storedData = JSON.parse(localStorage.getItem(loggedInUser) || "{}");
+  const storedData = JSON.parse(getLoggedInEmail() || "{}");
   if (!storedData.code) {
     console.log("No code found in stored data.");
     return false;
@@ -155,7 +164,7 @@ export async function getEmailLink(
   const selectedProvider = JSON.parse(localStorage.getItem(fromEmail) || "{}");
 
   if (!fromEmail) {
-    fromEmail = localStorage.getItem("loggedInUser") || "";
+    fromEmail = getLoggedInEmail();
   }
   console.log("From email: ", fromEmail);
 

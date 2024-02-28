@@ -4,7 +4,7 @@ import ExportedImage from "next-image-export-optimizer";
 import ToolTip from "@/components/ToolTip";
 import { Button } from "@/components/ui/button";
 import { sendAsset, transferNFT } from "@/lib/callRelayerAPI";
-import { getEmailLink } from "@/lib/send";
+import { getEmailLink, isValidAddress, isValidEmail } from "@/lib/send";
 import { useEffect, useRef, useState } from "react";
 import { getTokenBalancesForAddress, getNftsForAddress } from "@/lib/chain";
 import ClickButton from "./BlueButton";
@@ -44,15 +44,6 @@ const Send = () => {
 
   const dropdownRef = useRef(null);
   const countdownMax = 120;
-
-  function isValidEmail(email: string): boolean {
-    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
-    return regex.test(email);
-  }
-
-  function isValidAddress(address: string): boolean {
-    return /^0x[a-fA-F0-9]{40}$/.test(address);
-  }
 
   function getCurrencyOptionClass(selected: boolean): string {
     const baseClasses =

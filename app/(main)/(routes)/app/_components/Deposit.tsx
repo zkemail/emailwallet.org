@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 // import CreateButton from "./BlueButton";
 import { Currency } from "./Form";
 import { getWalletAddress } from "@/lib/callRelayerAPI";
-import { getWalletFromEmail } from "@/lib/send";
+import { getLoggedInEmail, getWalletFromEmail } from "@/lib/send";
 
 const Deposit: React.FC<{
   setSelectedTab: (tab: "login" | "send" | "deposit" | "view") => void;
@@ -40,7 +40,7 @@ const Deposit: React.FC<{
 
   useEffect(() => {
     const fetchAddress = async () => {
-      const email = localStorage.getItem("loggedInUser");
+      const email = getLoggedInEmail();
       if (email) {
         const addr = await getWalletFromEmail(email);
         setAddress(addr);
