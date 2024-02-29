@@ -1,6 +1,15 @@
+import { getWalletAddress } from "./callRelayerAPI";
+import { MOCK_ADDRESS, MOCK_EMAIL } from "./chain";
+
+const mock = false;
+
 export function isValidEmail(email: string): boolean {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
   return regex.test(email);
+}
+
+export function isValidAddress(address: string): boolean {
+  return /^0x[a-fA-F0-9]{40}$/.test(address);
 }
 
 export function generateNewKey() {
@@ -12,21 +21,113 @@ export function generateNewKey() {
   );
 }
 
-export function getCreateEmailLink(
+function setLoggedInUser(email: string) {
+  localStorage.setItem("loggedInUser", email);
+  window.dispatchEvent(
+    new CustomEvent("local-storage", { detail: { key: "loggedInUser" } }),
+  );
+}
+
+export function getLoggedInEmail() {
+  if (mock) return MOCK_EMAIL;
+  const loggedInUser = localStorage.getItem("loggedInUser") || "";
+  return loggedInUser;
+}
+
+export async function getWallet(): Promise<string> {
+  if (mock) return MOCK_ADDRESS;
+  const email = localStorage.getItem("loggedInUser");
+  return getWalletFromEmail(email || "");
+}
+
+export async function getWalletFromEmail(email: string): Promise<string> {
+  if (mock) return MOCK_ADDRESS;
+  const loggedInUser = getLoggedInEmail();
+  if (!loggedInUser || loggedInUser !== email) {
+    console.log(
+      "User is not logged in or email does not match the logged in user.",
+    );
+    return "";
+  }
+
+  const storedData = JSON.parse(localStorage.getItem(email) || "{}");
+  if (!storedData.code) {
+    console.log("No code found for this user.");
+    return "";
+  }
+
+  const walletAddress = await getWalletAddress(email, storedData.code);
+  return walletAddress;
+}
+
+export async function isSignedIn(): Promise<boolean> {
+  if (mock) return true;
+  console.log("Checking if user is signed in...");
+  const loggedInUser = getLoggedInEmail();
+  if (!loggedInUser) {
+    console.log("No logged in user found.");
+    return false;
+  }
+
+  console.log(`Retrieving stored data for user: ${loggedInUser}`);
+  const storedData = JSON.parse(localStorage.getItem(loggedInUser) || "{}");
+  if (!storedData.code) {
+    console.log("No code found in stored data.");
+    return false;
+  }
+
+  console.log(
+    `Fetching wallet address for user: ${loggedInUser} with code: ${storedData.code}`,
+  );
+
+  const address = await getWalletAddress(loggedInUser, storedData.code);
+  console.log(`Wallet address fetched: ${address}`);
+  const failed =
+    address.toLowerCase().includes("fail") ||
+    address.toLowerCase().includes("not found");
+  return failed ? false : true;
+}
+
+export function setAccountCode(email: string, code: string): string {
+  console.log(`Setting account code for user: ${email}`);
+  setLoggedInUser(email); // Set the current user as logged in
+  console.log(`Logged in user set to: ${email}`);
+  let storedData = JSON.parse(localStorage.getItem(email) || "{}");
+  console.log(`Current stored data for user: ${email} is:`, storedData);
+  storedData = { ...storedData, code, chain: "sepolia" };
+  console.log(`Updated stored data for user: ${email} is:`, storedData);
+  // Add the code to the stored data for this email
+  localStorage.setItem(email, JSON.stringify(storedData)); // Cache the data in localstorage for this email
+  window.dispatchEvent(
+    new CustomEvent("local-storage", { detail: { key: email } }),
+  );
+
+  console.log(`Stored data for user: ${email} updated in localStorage.`);
+  return code;
+}
+
+async function checkForGoogleSelector(domain: string) {
+  const proxyUrl = `https://cors-proxy.fringe.zone/`;
+  try {
+    const response = await fetch(
+      `${proxyUrl}https://registry.prove.email/api/domains/${domain}`,
+    );
+    const data = await response.json();
+    return data.some(
+      (entry: { selector: string }) => entry.selector === "google",
+    );
+  } catch (error: any) {
+    console.error("Error fetching domain data:", error);
+    return false;
+  }
+}
+
+export async function getCreateEmailLink(
   fromEmail: string,
   provider: string,
-): [string, string, string, string] {
-  let code;
-  localStorage.setItem("recentEmailSepolia", fromEmail);
-  let storedData = JSON.parse(localStorage.getItem(fromEmail) || "{}");
-
-  if (storedData && storedData.code && storedData.chain == "sepolia") {
-    code = storedData.code; // If code is in localstorage for this email, use it
-  } else {
-    code = generateNewKey();
-    storedData = { ...storedData, code, provider, chain: "sepolia" }; // Add the code to the stored data for this email
-    localStorage.setItem(fromEmail, JSON.stringify(storedData)); // Cache the data in localstorage for this email
-  }
+): Promise<[string, string, string, string]> {
+  const code = setAccountCode(fromEmail, generateNewKey());
+  console.log(`Code set for user: ${fromEmail} is: ${code}`);
 
   const accountRegistrationRequest = {
     email_address: `${fromEmail}`, // replace with actual email address
@@ -36,35 +137,35 @@ export function getCreateEmailLink(
   let subject = "Create my email wallet! CODE:" + code;
   // let test_message = "🧪 Each new account starts with 100 TEST tokens.";
   return [
-    ...getEmailLink(
+    ...(await getEmailLink(
       fromEmail,
       subject,
       `You are creating your Email Wallet.\n
 ❗ You must send this email without editing the to: or subject: fields, or else it will fail!\n
 📤 sendeth.org privately relays your email on Sepolia testnet to create your account. Expect a confirmation email in a minute.\n
 🤫 Your unique secret code hides your email on-chain.\n
-📖 Read more on our docs at http://docs.emailwallet.org`,
+📖 Read more on our docs at http://emailwallet.org/docs`,
       true,
-    ),
+    )),
     subject,
   ];
 }
 
 // TODO: Dynamically look up the DKIM and depending on what's enabled,
 // change the default client
-export function getEmailLink(
+export async function getEmailLink(
   fromEmail: string,
   subject: string,
   body: string,
   send_to_instead_of_cc = false,
   force_mailto = false,
-): [string, string, string] {
+): Promise<[string, string, string]> {
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
   const selectedProvider = JSON.parse(localStorage.getItem(fromEmail) || "{}");
 
   if (!fromEmail) {
-    fromEmail = localStorage.getItem("recentEmailSepolia") || "";
+    fromEmail = getLoggedInEmail();
   }
   console.log("From email: ", fromEmail);
 
@@ -174,7 +275,9 @@ export function getEmailLink(
           `https://mail.proton.me/u/0/`,
           `https://mail.proton.me/u/0/almost-all-mail#keyword=sendeth.org`,
         ];
-      } else if (googleDomainList.includes(fromEmail.split("@").pop() || "")) {
+      } else if (
+        await checkForGoogleSelector(fromEmail.split("@").pop() || "")
+      ) {
         return [
           "Gmail",
           `https://mail.google.com/mail/?authuser=${fromEmail}&view=cm&fs=1&${
@@ -196,98 +299,3 @@ export function getEmailLink(
       }
   }
 }
-
-// List of domains at ProgCrypto with a 'google' selector
-let googleDomainList = [
-  "0xparc.org",
-  "1kx.capital",
-  "a16z.com",
-  "albiona.dev",
-  "alchemy.com",
-  "ethereum.foundation",
-  "altresear.ch",
-  "antalpha.com",
-  "ante.xyz",
-  "arpachain.io",
-  "arx.org",
-  "atomlabs.one",
-  "aztecprotocol.com",
-  "berkeley.edu",
-  "blockchain.capital",
-  "blockchaincapital.com",
-  "chainsafe.io",
-  "cherry.vc",
-  "clave.team",
-  "coinbase.com",
-  "cyber.fund",
-  "dalstonlabs.com",
-  "dcpos.ch",
-  "defi.sucks",
-  "dexlabs.xyz",
-  "dfinity.org",
-  "dodoex.io",
-  "essec.edu",
-  "ethereal.xyz",
-  "ethereum.org",
-  "figmentcapital.io",
-  "framework.ventures",
-  "garillot.net",
-  "gizatech.xyz",
-  "gnosis.io",
-  "hypersphere.ventures",
-  "i-globalsociety.com",
-  "immutable.com",
-  "ingonyama.com",
-  "intrinsictech.xyz",
-  "iosg.vc",
-  "ironfish.network",
-  "jonashals.me",
-  "kaleido.io",
-  "kevincharm.com",
-  "kirastudio.xyz",
-  "ku.edu.tr",
-  "litprotocol.com",
-  "maddevs.io",
-  "mainstream.so",
-  "matterlabs.dev",
-  "maya-zk.com",
-  "mixbytes.io",
-  "monad.xyz",
-  "nethermind.io",
-  "nil.foundation",
-  "nocturnelabs.xyz",
-  "nodeguardians.io",
-  "nucypher.com",
-  "o1labs.org",
-  "obol.tech",
-  "openblocklabs.com",
-  "openzeppelin.com",
-  "panteracapital.com",
-  "paribu.com",
-  "pauldowman.com",
-  "polygon.technology",
-  "primev.xyz",
-  "puffer.fi",
-  "puzzle.online",
-  "quantstamp.com",
-  "risczero.com",
-  "scroll.io",
-  "semiotic.ai",
-  "shamirlabs.org",
-  "sigmaprime.io",
-  "sinaxyz.io",
-  "snu.ac.kr",
-  "spacemesh.io",
-  "starkware.co",
-  "status.im",
-  "talentprotocol.com",
-  "token.im",
-  "tuneinsight.com",
-  "ucm.es",
-  "ucsb.edu",
-  "yacademy.dev",
-  "yale.edu",
-  "zkonduit.com",
-  "fireblocks.com",
-  "wharton.upenn.edu",
-];

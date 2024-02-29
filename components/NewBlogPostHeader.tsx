@@ -12,16 +12,15 @@ const NewBlogPostHeader = () => {
 
   return (
     <div className="sticky inset-x-0 top-0 z-10 mx-auto mb-2 flex w-full justify-center gap-1 bg-tertiary p-2 py-1 text-sm drop-shadow">
-      <p className="text-secondary-foreground">
-        The Istanbul Arbitrum mainnet experiment has concluded! Retrospective
-        coming soon.
+      <p className="px-4 py-2 text-secondary-foreground sm:py-0">
+        Try out our experience with Cursive and IYK at EthDenver 2024!
       </p>
       <a
-        href={`http://docs.emailwallet.org/`}
+        href={`http://prove.email/blog/ethDenverNFT`}
         target="_blank"
         className="flex items-center font-bold text-slate-800"
       >
-        Read docs now <ArrowRight size={15} />
+        Read blog <ArrowRight size={15} />
       </a>
     </div>
   );

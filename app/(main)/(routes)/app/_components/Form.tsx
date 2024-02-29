@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { isSignedIn } from "../../../../../lib/send";
 import Tabs from "./Tabs";
+import useQueryParams from "@/hooks/useQueryParams";
 
 export enum Currency {
   USDC,
@@ -11,12 +13,35 @@ export enum Currency {
 
 const Form = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<"create" | "send" | "deposit">(
-    "create",
-  );
+  const [selectedTab, setSelectedTab] = useState<
+    "create" | "send" | "deposit" | "view" | "login"
+  >("create");
+  const [signedInState, setSignedInState] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("code")) {
+    const checkSignIn = async () => {
+      const signedIn = await isSignedIn();
+      setSignedInState(signedIn);
+      if (signedIn && (selectedTab == "login" || selectedTab == "create")) {
+        setSelectedTab("send");
+      }
+    };
+
+    // Run once on load
+    checkSignIn();
+
+    window.addEventListener("storage", checkSignIn);
+    window.addEventListener("local-storage", checkSignIn);
+
+    // Cleanup listener when component unmounts
+    return () => {
+      window.removeEventListener("storage", checkSignIn);
+      window.removeEventListener("local-storage", checkSignIn);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("accountKey")) {
       setSelectedTab("send");
     }
 
@@ -28,7 +53,12 @@ const Form = () => {
 
   return (
     <>
-      <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <Tabs
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+        setSignedInState={setSignedInState}
+        isSignedIn={signedInState}
+      />
     </>
   );
 };

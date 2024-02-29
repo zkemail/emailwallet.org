@@ -1,6 +1,6 @@
 # ZK-Email Wallet Documentation
 
-The ZK-Email Wallet is a unique type of non-custodial cryptocurrency wallet that is managed via email. This document provides an overview of its features and future development plans. You can try our demo at https://emailwallet.org, and view broader docs at [docs.emailwallet.org](http://docs.emailwallet.org).
+The ZK-Email Wallet is a unique type of non-custodial cryptocurrency wallet that is managed via email. This document provides an overview of its features and future development plans. You can try our demo at https://emailwallet.org, and view broader docs at [emailwallet.org/docs](http://emailwallet.org/docs).
 
 For the source code of the contracts, relayers, and other infrastructure, see the main repo here: [github.com/zkemail/email-wallet](https://github.com/zkemail/email-wallet).
 

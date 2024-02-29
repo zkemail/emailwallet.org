@@ -14,6 +14,8 @@ const Footer = () => {
     // TODO: Fix cors hack
     setResult("pending");
     const proxy = `https://cors-proxy.fringe.zone/`;
+
+    // Subscriptions accessible at https://docs.google.com/spreadsheets/d/16idprh-H11HqqDG6RHg0Fk_wLi9DWYXwIzI_3Bewpe4/edit
     const url = `https://script.google.com/macros/s/AKfycbwFEpszXsb5PPsc6mrls71fWI4o6RAbV64okWWZ6yZBcv960oF-3ITi7-hw-5wA6ptV/exec`;
     const response = await fetch(proxy + url, {
       method: "POST",
@@ -41,20 +43,21 @@ const Footer = () => {
           </div>
 
           <p className="w-full text-foreground lg:w-4/5">
-            Subscribe and stay up-to-date on the latest developer news
+            See the most up to date developer news on our{" "}
+            <a
+              href="https://t.me/zkemail"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "underline" }}
+            >
+              Telegram
+            </a>
+            , or infrequently via email.
           </p>
         </div>
       </div>
       <div className="mt-auto flex flex-1 flex-col items-center gap-4 lg:mt-4">
         <div className="flex w-full flex-col gap-3 lg:flex-row">
-          <Input
-            type="text"
-            name="firstName"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
-            className="w-full"
-            placeholder="First name"
-          />
           <Input
             type="email"
             name="email"

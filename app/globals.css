@@ -23,8 +23,8 @@ input::-webkit-outer-spin-button {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 98%; /* Lighter gray background */
+    --card-foreground: 210 4% 15%; /* Dark gray for contrast */
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -58,8 +58,8 @@ input::-webkit-outer-spin-button {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 98%; /* Lighter gray background */
+    --card-foreground: 210 4% 15%; /* Dark gray for contrast */
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;

@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const CreateButton: React.FC<{
+const ClickButton: React.FC<{
   children: React.ReactNode;
   onClick: () => void;
   className?: string;
-}> = ({ children, onClick, className }) => {
+  disabled?: boolean;
+}> = ({ children, onClick, className, disabled }) => {
   return (
     <Button
       className={cn(
@@ -14,10 +15,11 @@ const CreateButton: React.FC<{
       )}
       onClick={onClick}
       style={{ minWidth: "12ch" }}
+      disabled={disabled}
     >
       {children}
     </Button>
   );
 };
 
-export default CreateButton;
+export default ClickButton;

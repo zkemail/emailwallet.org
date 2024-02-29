@@ -8,9 +8,11 @@ import { TypingText } from "./TypingText";
 import { motion } from "framer-motion";
 import Equations from "./Equations";
 import { useRouter } from "next/navigation";
+import useQueryParams from "@/hooks/useQueryParams";
 
 const HeroSection = () => {
   const router = useRouter();
+  useQueryParams();
 
   return (
     <section className="mx-6 mt-32 flex md:mx-10">
@@ -63,7 +65,7 @@ const HeroSection = () => {
               className="rounded-lg border px-8 drop-shadow"
               variant={"outline"}
             >
-              <Link href="http://docs.emailwallet.org" target="_blank">
+              <Link href="http://emailwallet.org/docs" target="_blank">
                 Read Docs
               </Link>
             </Button>
