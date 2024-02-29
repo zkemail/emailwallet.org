@@ -1,9 +1,7 @@
 import { getWalletAddress } from "./callRelayerAPI";
+import { MOCK_ADDRESS, MOCK_EMAIL } from "./chain";
 
 const mock = false;
-const MOCK_ADDRESS = "0x3C666Cb99F50F2D1D96237248D96bF724b63D9aF";
-// "0xAa613c7149d0D9df442ae1eBaab9879A6D870506";
-const MOCK_EMAIL = "aayushgupta5000@gmail.com";
 
 export function isValidEmail(email: string): boolean {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
