@@ -3,6 +3,7 @@ import { getWalletFromEmail, isSignedIn } from "./send";
 import axios from "axios";
 // import { CovalentClient } from "@covalenthq/client-sdk";
 
+const MOCK_TOKEN = true;
 const COVALENT_BASE_URL = "https://api.covalenthq.com/v1";
 const API_KEY = "cqt_rQcDjKg79tVQVd6xKJ3YqrMYjqdx";
 const ZKSYNC_CHAIN_ID = "zksync-testnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
@@ -123,6 +124,18 @@ export async function getNftsForAddress(address?: string) {
 export async function getTokenBalancesForAddress(
   address?: string,
 ): Promise<TokenOption[]> {
+  if (MOCK_TOKEN) {
+    return Promise.resolve([
+      {
+        contractAddress: "0xA33c06ad440D322c77aa92E0420Acdd1dE2ad6F7",
+        balance: "100",
+        id: "TEST",
+        symbol: "TEST",
+        decimals: 18,
+      },
+    ]);
+  }
+
   if (!address) {
     console.log(
       "No address provided, attempting to fetch address for current user...",
