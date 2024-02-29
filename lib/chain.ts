@@ -5,9 +5,9 @@ import axios from "axios";
 
 const COVALENT_BASE_URL = "https://api.covalenthq.com/v1";
 const API_KEY = "cqt_rQcDjKg79tVQVd6xKJ3YqrMYjqdx";
-const ZKSYNC_CHAIN_ID = "zksync-testnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
+const ZKSYNC_CHAIN_ID = "zksync-mainnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
 const MOCK_ADDRESS = "0x8B51978b4a8b1C0D71391149ABdaF2524b1eED4C";
-const CHAIN_ID = 300; // 300 for zksync testnet, 324 for zksync mainnet
+const CHAIN_ID: number = 324; // 300 for zksync testnet, 324 for zksync mainnet
 
 export type NFTOption = {
   contractAddress: string;
