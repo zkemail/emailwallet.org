@@ -1,6 +1,9 @@
 import { getWalletAddress } from "./callRelayerAPI";
 
-const mock = false;
+const mock = true;
+const MOCK_ADDRESS = "0x3C666Cb99F50F2D1D96237248D96bF724b63D9aF";
+// "0xAa613c7149d0D9df442ae1eBaab9879A6D870506";
+const MOCK_EMAIL = "aayushgupta5000@gmail.com";
 
 export function isValidEmail(email: string): boolean {
   const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/;
@@ -28,19 +31,19 @@ function setLoggedInUser(email: string) {
 }
 
 export function getLoggedInEmail() {
-  if (mock) return "aayushgupta5000@gmail.com";
+  if (mock) return MOCK_EMAIL;
   const loggedInUser = localStorage.getItem("loggedInUser") || "";
   return loggedInUser;
 }
 
 export async function getWallet(): Promise<string> {
-  if (mock) return "0xAa613c7149d0D9df442ae1eBaab9879A6D870506";
+  if (mock) return MOCK_ADDRESS;
   const email = localStorage.getItem("loggedInUser");
   return getWalletFromEmail(email || "");
 }
 
 export async function getWalletFromEmail(email: string): Promise<string> {
-  if (mock) return "0xAa613c7149d0D9df442ae1eBaab9879A6D870506";
+  if (mock) return MOCK_ADDRESS;
   const loggedInUser = getLoggedInEmail();
   if (!loggedInUser || loggedInUser !== email) {
     console.log(

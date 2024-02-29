@@ -1,8 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { getWalletAddress } from "@/lib/callRelayerAPI";
-import { Alchemy, Network } from "alchemy-sdk";
+import { Alchemy, Network, OwnedNft } from "alchemy-sdk";
 import { getWallet, isValidAddress } from "@/lib/send";
 import ExportedImage from "next-image-export-optimizer";
+import {
+  NFTOption,
+  TokenOption,
+  getNftsForAddress,
+  getTokenBalancesForAddress,
+} from "@/lib/chain";
 
 const ViewAssets: React.FC<{
   setSelectedTab: (
@@ -12,19 +18,19 @@ const ViewAssets: React.FC<{
   // const [email, setEmail] = useState<string | null>(null);
   // const [accountKey, setAccountKey] = useState<string | null>(null);
   const [address, setAddress] = useState<string>("");
-  const [nfts, setNfts] = useState<any[]>([]);
-  const [erc20s, setErc20s] = useState<any[]>([]);
+  const [nfts, setNfts] = useState<NFTOption[]>([]);
+  const [erc20s, setErc20s] = useState<TokenOption[]>([]);
   const [nftsVisible, setNftsVisible] = useState<boolean>(true);
   const [erc20sVisible, setErc20sVisible] = useState<boolean>(true);
 
   // OOWUrxHDTRyPmbYOSGyq7izHNQB1QYOv
-  const alchemy = useMemo(() => {
-    const config = {
-      apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
-      network: Network.BASE_SEPOLIA, // Replace with your target network
-    };
-    return new Alchemy(config);
-  }, []);
+  // const alchemy = useMemo(() => {
+  //   const config = {
+  //     apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
+  //     network: Network.BASE_SEPOLIA, // Replace with your target network
+  //   };
+  //   return new Alchemy(config);
+  // }, []);
 
   useEffect(() => {
     const handleStorageChange = async () => {
@@ -46,36 +52,39 @@ const ViewAssets: React.FC<{
   // TODO: Make these calls to chain.ts
   useEffect(() => {
     if (isValidAddress(address)) {
-      alchemy.nft.getNftsForOwner(address).then((res) => {
-        const updatedNfts = res.ownedNfts.map((nft) => ({
-          ...nft,
-          image:
-            nft.image?.cachedUrl || "https://www.jubmoji.quest/images/logo.svg",
+      getNftsForAddress(address).then((nfts) => {
+        const updatedNfts = nfts.map((nft) => ({
+          id: nft.id,
+          contractAddress: nft.contractAddress,
+          tokenId: nft.tokenId,
+          name: nft.name, // Assuming metadata contains a name property
+          description: nft.description, // Assuming metadata contains a description property
+          url: nft.url,
         }));
         console.log("NFTs for owner:", updatedNfts);
         setNfts(updatedNfts);
       });
-      alchemy.core.getTokenBalances(address).then((res) => {
-        const tokenDetailsPromises = res.tokenBalances.map((token) =>
-          alchemy.core
-            .getTokenMetadata(token.contractAddress)
-            .then((metadata) => ({
+      getTokenBalancesForAddress(address).then((tokens) => {
+        const enrichedTokens: TokenOption[] = tokens.map(
+          (token: TokenOption) => {
+            console.log("Token:", token);
+            return {
               contractAddress: token.contractAddress,
-              tokenBalance: (
-                parseInt(token.tokenBalance || "0", 16) /
-                Math.pow(10, metadata.decimals || 18)
+              balance: (
+                parseInt(token.balance || "0", 10) /
+                Math.pow(10, token.decimals)
               ).toFixed(3),
-              id: metadata.symbol, // Abbreviated name
-              decimals: metadata.decimals || 18,
-            })),
+              id: token.id, // Abbreviated name
+              decimals: token.decimals,
+              symbol: token.symbol,
+            };
+          },
         );
-        Promise.all(tokenDetailsPromises).then((enrichedTokens) => {
-          console.log("All tokens for owner with details:", enrichedTokens);
-          setErc20s(enrichedTokens);
-        });
+        console.log("All tokens for owner with details:", enrichedTokens);
+        setErc20s(enrichedTokens);
       });
     }
-  }, [address, alchemy]);
+  }, [address]);
   return (
     <div className="flex w-full flex-col px-4 py-8 md:w-2/3">
       <h2 className="text-3xl font-medium text-gray-800 dark:text-white">
@@ -108,8 +117,8 @@ const ViewAssets: React.FC<{
               <div key={index} className="relative flex flex-col">
                 <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden">
                   <img
-                    src={nft.image}
-                    alt={nft.title || "NFT Image"}
+                    src={nft.url}
+                    alt={nft.name || "NFT Image"}
                     className="h-full w-full object-cover object-center"
                   />
                 </div>
@@ -159,7 +168,7 @@ const ViewAssets: React.FC<{
               >
                 <div className="flex w-full flex-col gap-1">
                   <span className="font-semibold">{token.id}</span>
-                  <span className="opacity-60">{token.tokenBalance}</span>
+                  <span className="opacity-60">{token.balance}</span>
                 </div>
                 <button
                   onClick={() => setSelectedTab("send")}

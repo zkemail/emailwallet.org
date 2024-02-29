@@ -10,20 +10,7 @@ import { getTokenBalancesForAddress, getNftsForAddress } from "@/lib/chain";
 import ClickButton from "./BlueButton";
 import TabButton from "./TabButtons";
 import SmallTabButton from "./SmallTabButtons";
-
-export type TokenOption = {
-  contractAddress: string;
-  tokenBalance: string;
-  id: string | null;
-  decimals: number;
-};
-
-export type NFTOption = {
-  contractAddress: string;
-  tokenId: string;
-  id: string | null;
-  url: string | null;
-};
+import { NFTOption, TokenOption } from "@/lib/chain";
 
 const Send = () => {
   const [fromEmail, setFromEmail] = useState<string>("");
@@ -79,14 +66,8 @@ const Send = () => {
     };
 
     const fetchNftOptions = async () => {
-      const nfts = await getNftsForAddress();
-      console.log(nfts);
-      const formattedNfts = nfts.map((nft) => ({
-        contractAddress: nft.contract.address, // Adjust according to your actual data structure
-        tokenId: nft.tokenId,
-        url: nft.image,
-        id: nft.contract.symbol || nft.tokenId, // Assuming you want to use tokenId as id, adjust if needed
-      }));
+      const formattedNfts = await getNftsForAddress();
+      console.log(formattedNfts);
       setNftOptions(formattedNfts);
       return formattedNfts;
     };
@@ -94,7 +75,7 @@ const Send = () => {
     if (assetType === "ERC20") {
       fetchTokenOptions().then((tokens) => {
         setSelectedAssetString(tokens[0]?.id || "");
-        setMaxAmount(Number(tokens[0]?.tokenBalance || 0));
+        setMaxAmount(Number(tokens[0]?.balance || 0));
       });
     } else if (assetType === "NFT") {
       fetchNftOptions().then((nfts) => {
@@ -249,7 +230,7 @@ const Send = () => {
                               setSelectedAssetString(
                                 token.id || token.contractAddress,
                               );
-                              setMaxAmount(Number(token.tokenBalance));
+                              setMaxAmount(Number(token.balance));
                               setDropdownOpen(false);
                             }}
                           >
@@ -265,14 +246,18 @@ const Send = () => {
         <div className="flex w-full items-start px-3 pr-4">
           <label
             htmlFor="to_email"
-            className="mr-2 flex items-center justify-center px-2 py-5 text-sm font-bold text-primary text-white"
+            className={`mr-2 flex items-center justify-center px-2 py-${
+              assetType == "NFT" ? "5" : "7"
+            } text-sm font-bold text-primary text-white`}
           >
             To:
           </label>
           <input
             id="to_email"
             type="text"
-            className={`h-15 block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 ${
+            className={`h-${
+              assetType == "NFT" ? "15" : "20"
+            } block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 ${
               isValidEmail(recipient) || isValidAddress(recipient)
                 ? "border-green-500 text-green-600"
                 : "border-pink-500 text-pink-600"
