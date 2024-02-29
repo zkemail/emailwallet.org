@@ -1,14 +1,15 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { getWalletFromEmail, isSignedIn } from "./send";
 import axios from "axios";
-// import { CovalentClient } from "@covalenthq/client-sdk";
+import { CovalentClient, ChainID } from "@covalenthq/client-sdk";
 
 const COVALENT_BASE_URL = "https://api.covalenthq.com/v1";
 const API_KEY = "cqt_rQcDjKg79tVQVd6xKJ3YqrMYjqdx";
 const ZKSYNC_CHAIN_ID = "zksync-testnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
-export const MOCK_ADDRESS = "0x3C666Cb99F50F2D1D96237248D96bF724b63D9aF"; // 0xAa613c7149d0D9df442ae1eBaab9879A6D870506 on Sepolia
+export const MOCK_ADDRESS = "0x137c0e8e80b4cbf760bdb75047b9163598d35d86"; // 0xAa613c7149d0D9df442ae1eBaab9879A6D870506 on Sepolia
 export const MOCK_EMAIL = "aayushgupta5000@gmail.com";
 const CHAIN_ID: number = 300; // 300 for zksync testnet, 324 for zksync mainnet
+const NOWNODES_APIKEY = "8632a54a-a81f-4c3b-b627-dd670c04ad11";
 
 export type NFTOption = {
   contractAddress: string;
@@ -49,6 +50,110 @@ export async function getZkSyncNFTsForAddress(
   } catch (error) {
     console.error("Error fetching zkSync NFTs:", error);
     return [];
+  }
+}
+
+const ApiServices = async () => {
+  const client = new CovalentClient(API_KEY);
+  const resp = await client.BalanceService.getTokenBalancesForWalletAddress(
+    ZKSYNC_CHAIN_ID,
+    MOCK_ADDRESS,
+  );
+  console.log(resp.data);
+};
+export async function getBalanceFromContract(
+  contractAddress: string,
+  walletAddress: string,
+): Promise<string> {
+  const rpcUrl =
+    "https://winter-wild-market.zksync-sepolia.quiknode.pro/8a948edd9cf57ad72cc382ddfb2853fd4ba50427/";
+  const method = "eth_call";
+  const params = [
+    {
+      to: contractAddress,
+      data: "0x70a08231000000000000000000000000" + walletAddress.substring(2), // getBalance function signature + wallet address without '0x'
+    },
+    "latest",
+  ];
+
+  try {
+    const response = await axios.post(rpcUrl, {
+      jsonrpc: "2.0",
+      method: method,
+      params: params,
+      id: 1,
+    });
+
+    console.log(response);
+    if (response.data && response.data.result) {
+      console.log("result", response.data.result);
+      // Convert the result from hex to decimal
+      const balance = parseInt(response.data.result, 16);
+      return balance.toString();
+    } else {
+      console.error("Failed to fetch balance from contract");
+      return "0";
+    }
+  } catch (error) {
+    console.error("Error fetching balance from contract:", error);
+    return "0";
+  }
+}
+
+export async function fetchTokensWithMinLiquidity(
+  apiUrl: string,
+): Promise<any[]> {
+  const tokens = [];
+  const params = new URLSearchParams({
+    limit: "100",
+  });
+  let page = 1;
+  let hasMore = true;
+
+  while (hasMore) {
+    const response = await fetch(
+      `${apiUrl}/tokens?${params.toString()}&page=${page}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch tokens");
+    }
+    const tokensResponse = await response.json();
+    tokens.push(...tokensResponse.items);
+    page++;
+    hasMore = tokensResponse.meta.totalPages > tokensResponse.meta.currentPage;
+  }
+
+  return tokens;
+}
+
+export async function getAllAccountBalances(
+  address: string,
+): Promise<{ [key: string]: string }> {
+  const url =
+    "https://winter-wild-market.zksync-sepolia.quiknode.pro/8a948edd9cf57ad72cc382ddfb2853fd4ba50427/";
+  const data = {
+    method: "zks_getAllAccountBalances",
+    params: [address],
+    id: 1,
+    jsonrpc: "2.0",
+  };
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  try {
+    const response = await axios.post(url, data, { headers });
+    console.log(`Response data: ${JSON.stringify(response.data)}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching account balances: ${error}`);
+    throw error;
   }
 }
 
@@ -174,6 +279,15 @@ export async function getTokenBalancesForAddress(
 // Test zksync functions
 async function main() {
   const testAddress = MOCK_ADDRESS;
+  const balance = await getBalanceFromContract(
+    testAddress,
+    "0xA33c06ad440D322c77aa92E0420Acdd1dE2ad6F7",
+  );
+  console.log(balance);
+  // await queryTokenBalanceForKnownAddress(testAddress, "0xA33c06ad440D322c77aa92E0420Acdd1dE2ad6F7");
+  await ApiServices();
+  const balances = await getAllAccountBalances(testAddress);
+  console.log(balances);
   try {
     console.log("Fetching NFTs for address:", testAddress);
     const nfts = await getZkSyncNFTsForAddress(testAddress);
