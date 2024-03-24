@@ -10,8 +10,8 @@ export default function SendMoneyPage() {
         <h2 className="mx-auto w-11/12 text-center text-muted-foreground sm:w-1/2">
           Create your account and send assets, by replying to emails. Your email
           address will not be posted on-chain. We cannot control your assets,
-          only your emails can. Everyone starts with 100 TEST tokens on the
-          ZKSync Sepolia testnet.
+          only your emails can. Everyone starts with 100 TEST tokens on the Base
+          Sepolia testnet.
         </h2>
         <div className="text-center text-sm text-muted-foreground">
           By using this service, you agree to our{" "}
