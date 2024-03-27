@@ -61,10 +61,7 @@ const ViewAssets: React.FC<{
             console.log("Token:", token);
             return {
               contractAddress: token.contractAddress,
-              balance: (
-                parseInt(token.balance || "0", 10) /
-                Math.pow(10, token.decimals)
-              ).toFixed(3),
+              balance: token.balance,
               id: token.id, // Abbreviated name
               decimals: token.decimals,
               symbol: token.symbol,
