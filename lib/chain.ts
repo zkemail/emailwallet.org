@@ -6,9 +6,13 @@ import axios from "axios";
 // Enable when manually calculating balance on zksync sepolia due to no get all erc20 function
 const MOCK_TOKEN = false;
 const COVALENT_BASE_URL = "https://api.covalenthq.com/v1";
-const API_KEY = "cqt_rQcDjKg79tVQVd6xKJ3YqrMYjqdx";
+const COVALENT_API_KEY = "cqt_rQcDjKg79tVQVd6xKJ3YqrMYjqdx";
+const ALCHEMY_API_KEY = "FwC4Ghhd-2MI3oRqLaldS2T-7cS8ZfNs";
 const ZKSYNC_CHAIN_ID = "zksync-testnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
-export const MOCK_ADDRESS = "0x3C666Cb99F50F2D1D96237248D96bF724b63D9aF"; // 0xAa613c7149d0D9df442ae1eBaab9879A6D870506 on Sepolia
+export const ZKSYNC_SEPOLIA_MOCK_ADDRESS =
+  "0x3C666Cb99F50F2D1D96237248D96bF724b63D9aF"; // 0xAa613c7149d0D9df442ae1eBaab9879A6D870506 on Sepolia
+export const BASE_SEPOLIA_MOCK_ADDRESS =
+  "0x178061375Cd7e7dCe0aa712E80D968054Bf4E599";
 export const MOCK_EMAIL = "aayushgupta5000@gmail.com";
 const CHAIN_ID: number = 84532; // 300 for zksync testnet, 324 for zksync mainnet
 
@@ -32,7 +36,7 @@ export type TokenOption = {
 export async function getZkSyncNFTsForAddress(
   address: string,
 ): Promise<NFTOption[]> {
-  const endpoint = `${COVALENT_BASE_URL}/${ZKSYNC_CHAIN_ID}/address/${address}/balances_v2/?nft=true&key=${API_KEY}`;
+  const endpoint = `${COVALENT_BASE_URL}/${ZKSYNC_CHAIN_ID}/address/${address}/balances_v2/?nft=true&key=${COVALENT_API_KEY}`;
   try {
     const response = await axios.get(endpoint);
     const nfts = response.data.data.items.filter(
@@ -57,7 +61,7 @@ export async function getZkSyncNFTsForAddress(
 export async function getZkSyncTokensForAddress(
   address: string,
 ): Promise<TokenOption[]> {
-  const endpoint = `${COVALENT_BASE_URL}/${ZKSYNC_CHAIN_ID}/address/${address}/balances_v2/?key=${API_KEY}`;
+  const endpoint = `${COVALENT_BASE_URL}/${ZKSYNC_CHAIN_ID}/address/${address}/balances_v2/?key=${COVALENT_API_KEY}`;
   try {
     const response = await axios.get(endpoint);
     const tokens = response.data.data.items.filter(
@@ -100,7 +104,7 @@ export async function getNftsForAddress(address?: string) {
   }
 
   const config = {
-    apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
+    apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
     network: Network.BASE_SEPOLIA, // Replace with your target network
   };
   const alchemy = new Alchemy(config);
@@ -156,7 +160,7 @@ export async function getTokenBalancesForAddress(
   }
 
   const config = {
-    apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
+    apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
     network: Network.BASE_SEPOLIA, // Replace with your target network
   };
   const alchemy = new Alchemy(config);
@@ -186,22 +190,37 @@ export async function getTokenBalancesForAddress(
 }
 
 // Test zksync functions
-async function main() {
-  const testAddress = MOCK_ADDRESS;
-  try {
-    console.log("Fetching NFTs for address:", testAddress);
-    const nfts = await getZkSyncNFTsForAddress(testAddress);
-    console.log("NFTs fetched:", nfts.length);
+async function test() {
+  if (CHAIN_ID == 300 || CHAIN_ID == 324) {
+    const testAddress = ZKSYNC_SEPOLIA_MOCK_ADDRESS;
+    try {
+      console.log("Fetching NFTs for address:", testAddress);
+      const nfts = await getZkSyncNFTsForAddress(testAddress);
+      console.log("NFTs fetched:", nfts.length);
 
-    console.log("Fetching ERC20 token balances for address:", testAddress);
-    const erc20s = await getZkSyncTokensForAddress(testAddress);
-    console.log("ERC20 token balances fetched:", erc20s.length);
-  } catch (error) {
-    console.error("Error fetching data:", error);
+      console.log("Fetching ERC20 token balances for address:", testAddress);
+      const erc20s = await getZkSyncTokensForAddress(testAddress);
+      console.log("ERC20 token balances fetched:", erc20s.length);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  } else if (CHAIN_ID == 84532) {
+    const testAddress = BASE_SEPOLIA_MOCK_ADDRESS;
+    try {
+      console.log("Fetching NFTs for address:", testAddress);
+      const nfts = await getNftsForAddress(testAddress);
+      console.log("NFTs fetched:", nfts.length);
+
+      console.log("Fetching ERC20 token balances for address:", testAddress);
+      const erc20s = await getTokenBalancesForAddress(testAddress);
+      console.log("ERC20 token balances fetched:", erc20s.length);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 }
 
 // Check if this file is being run directly by Node.js and is not being imported by another module
 if (require.main === module) {
-  main();
+  test();
 }

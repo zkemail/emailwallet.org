@@ -23,15 +23,6 @@ const ViewAssets: React.FC<{
   const [nftsVisible, setNftsVisible] = useState<boolean>(true);
   const [erc20sVisible, setErc20sVisible] = useState<boolean>(true);
 
-  // OOWUrxHDTRyPmbYOSGyq7izHNQB1QYOv
-  // const alchemy = useMemo(() => {
-  //   const config = {
-  //     apiKey: "euSwyu6Yf-VQ3NJ32KHxDhHmTta7OvIe", // Replace with your Alchemy API Key
-  //     network: Network.BASE_SEPOLIA, // Replace with your target network
-  //   };
-  //   return new Alchemy(config);
-  // }, []);
-
   useEffect(() => {
     const handleStorageChange = async () => {
       setAddress(await getWallet());
