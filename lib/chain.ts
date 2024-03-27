@@ -9,10 +9,10 @@ const COVALENT_BASE_URL = "https://api.covalenthq.com/v1";
 const COVALENT_API_KEY = "cqt_rQcDjKg79tVQVd6xKJ3YqrMYjqdx";
 const ALCHEMY_API_KEY = "FwC4Ghhd-2MI3oRqLaldS2T-7cS8ZfNs";
 const ZKSYNC_CHAIN_ID = "zksync-testnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
-export const ZKSYNC_SEPOLIA_MOCK_ADDRESS =
+const ZKSYNC_SEPOLIA_MOCK_ADDRESS =
   "0x3C666Cb99F50F2D1D96237248D96bF724b63D9aF"; // 0xAa613c7149d0D9df442ae1eBaab9879A6D870506 on Sepolia
-export const BASE_SEPOLIA_MOCK_ADDRESS =
-  "0x178061375Cd7e7dCe0aa712E80D968054Bf4E599";
+const BASE_SEPOLIA_MOCK_ADDRESS = "0x178061375Cd7e7dCe0aa712E80D968054Bf4E599";
+export const MOCK_ADDRESS = BASE_SEPOLIA_MOCK_ADDRESS;
 export const MOCK_EMAIL = "aayushgupta5000@gmail.com";
 const CHAIN_ID: number = 84532; // 300 for zksync testnet, 324 for zksync mainnet
 
