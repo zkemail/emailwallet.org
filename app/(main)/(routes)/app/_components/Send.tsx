@@ -246,9 +246,9 @@ const Send = () => {
         <div className="flex w-full items-start px-3 pr-4">
           <label
             htmlFor="to_email"
-            className={`mr-2 flex items-center justify-center px-2 py-${
+            className={`mr-2 flex items-center justify-center px-2 my-${
               assetType == "NFT" ? "5" : "7"
-            } text-sm font-bold text-primary text-white`}
+            } self-center text-sm font-bold text-primary text-white`}
           >
             To:
           </label>

@@ -38,7 +38,7 @@ const InfoGraphSm = () => {
 
       <div className="flex gap-4 rounded-lg p-4 max-sm:flex-col max-sm:border max-sm:shadow">
         <div className={box}>Prover</div>
-        <div className={box}>Privacy Layer</div>
+        <div className={box}>Relayer</div>
         <div className={box}>Ethereum</div>
       </div>
 

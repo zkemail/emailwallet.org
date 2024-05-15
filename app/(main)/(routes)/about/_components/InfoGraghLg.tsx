@@ -31,7 +31,7 @@ const InfoGraphLg = () => {
 
       <div className="flex flex-col gap-4">
         <div className={box}>Prover</div>
-        <div className={box}>Privacy Layer</div>
+        <div className={box}>Relayer</div>
         <div className={box}>Ethereum</div>
       </div>
 
