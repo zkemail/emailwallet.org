@@ -1,4 +1,7 @@
-const API_BASE_URL = process.env.RELAYER_API_URL;
+import dotenv from "dotenv";
+dotenv.config();
+
+const RELAYER_API_URL = process.env.RELAYER_API_URL || "";
 
 interface ApiResponse {
   success?: boolean;
@@ -7,7 +10,7 @@ interface ApiResponse {
 
 async function createAccount(email: string): Promise<string> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/createAccount`, {
+    const response = await fetch(`${RELAYER_API_URL}/api/createAccount`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +29,7 @@ async function createAccount(email: string): Promise<string> {
 
 async function isAccountCreated(email: string): Promise<string> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/isAccountCreated`, {
+    const response = await fetch(`${RELAYER_API_URL}/api/isAccountCreated`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +62,7 @@ async function sendAsset(
       is_recipient_email: isRecipientEmail,
     });
 
-    const response = await fetch(`${API_BASE_URL}/api/send`, {
+    const response = await fetch(`${RELAYER_API_URL}/api/send`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +85,7 @@ async function sendAsset(
 
 export async function recoverAccountKey(email: string): Promise<string> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/recoverAccountKey`, {
+    const response = await fetch(`${RELAYER_API_URL}/api/recoverAccountKey`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +108,7 @@ async function getWalletAddress(
 ): Promise<string> {
   let code = accountKey.startsWith("0x") ? accountKey : `0x${accountKey}`;
   try {
-    const response = await fetch(`${API_BASE_URL}/api/getWalletAddress`, {
+    const response = await fetch(`${RELAYER_API_URL}/api/getWalletAddress`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,7 +132,7 @@ async function transferNFT(
     const email = localStorage.getItem("loggedInUser") || "";
     const isRecipientEmail = recipientAddr.includes("@");
 
-    const response = await fetch(`${API_BASE_URL}/api/nftTransfer`, {
+    const response = await fetch(`${RELAYER_API_URL}/api/nftTransfer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
