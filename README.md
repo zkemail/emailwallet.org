@@ -46,8 +46,19 @@ Note that email addresses are salted via the message ID of your email, so you ca
 
 For a more detailed technical breakdown of the cryptographic technology used in emails, read the [technical blog post behind zk-email](https://blog.aayushg.com/posts/zkemail/)! For a more in-depth technical breakdown of our code, read through our [Github repository](https://github.com/zkemail/email-wallet)! For a detailed breakdown of the protocol, read through our [presentation slides](https://docs.google.com/presentation/d/1k8NNkdjZ47RbztI1Nn6rx0EcWRxPC2YI/edit#slide=id.p27).
 
+## Installation and Running
+
+Copy .env.example to .env and fill in the Alchemy API key, and include your deployed relayer API URL (ours is included as an example).
+
+```
+yarn
+yarn dev
+```
+
 ## Future Development
 
 In the next month or two, we intend to prioritize:
+
 - **KYC-Free Onboarding and Offboarding**: We intend to build a native integration with [ZK P2P](https://zkp2p.xyz/), which uses the same base email proving technology ([prove.email](https://prove.email)) to on and offramp via Venmo.
 - **Bulk Sending**: We intend to include bulk-sending a list of amounts to a list of email addresses, in one email or transaction.
+- **2FA Ability**: By adding ERC 1271 signatures, enable the ability to use your email wallet as a 2FA method for any Gnosis Safe.
