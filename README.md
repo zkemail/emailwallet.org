@@ -55,6 +55,12 @@ yarn
 yarn dev
 ```
 
+We use this command to deploy on Render:
+```
+sed -i 's|// output: "export",|output: "export",|' next.config.js && yarn; yarn build; yarn next export; ls -alhk && ls ./out
+```
+and set the publish directory to out/.
+
 ## Future Development
 
 In the next month or two, we intend to prioritize:
