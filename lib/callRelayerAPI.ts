@@ -6,6 +6,8 @@ if (!RELAYER_API_URL) {
   const hostname = window.location.hostname;
   if (hostname.endsWith("2fa.emailwallet.org")) {
     RELAYER_API_URL = "https://2fa-api.emailwallet.org";
+  } else if (hostname.endsWith("staging.emailwallet.org")) {
+    RELAYER_API_URL = "https://staging-api.emailwallet.org";
   } else if (hostname.endsWith("emailwallet.org")) {
     RELAYER_API_URL = "https://relayerapi.emailwallet.org";
   }
