@@ -94,7 +94,7 @@ async function sendAsset(
 
 export async function recoverAccountKey(email: string): Promise<string> {
   try {
-    const response = await fetch(`${RELAYER_API_URL}/api/recoverAccountKey`, {
+    const response = await fetch(`${RELAYER_API_URL}/api/recoverAccountCode`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
