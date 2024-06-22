@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { getWalletAddress, recoverAccountKey } from "@/lib/callRelayerAPI";
+import { getWalletAddress, recoverAccountCode } from "@/lib/callRelayerAPI";
 import ClickButton from "./BlueButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,7 +40,7 @@ const LoginAccount: React.FC<{
   const handleLogin = async () => {
     setLoading(true);
     const email = emailRef.current?.value || "";
-    const responseMessage = await recoverAccountKey(email);
+    const responseMessage = await recoverAccountCode(email);
     setLoading(false);
     if (responseMessage === "Account key recovery email sent") {
       setStatusMessage(
