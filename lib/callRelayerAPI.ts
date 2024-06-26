@@ -122,7 +122,7 @@ async function getWalletAddress(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email_addr: email, account_key: code }),
+      body: JSON.stringify({ email_addr: email, account_code: code }),
     });
     const data = await response.text();
     return data || "Failed to fetch address, no address found";
