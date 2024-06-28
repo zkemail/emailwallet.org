@@ -131,19 +131,21 @@ export async function getNftsForAddress(address?: string) {
   }
 }
 
+const TEST_TOKEN = [
+  {
+    contractAddress: "0xF60Ce6F85eebF6279784A7F1acB7653dDFEF86a3",
+    balance: "100",
+    id: "TEST",
+    symbol: "TEST",
+    decimals: 18,
+  },
+];
+
 export async function getTokenBalancesForAddress(
   address?: string,
 ): Promise<TokenOption[]> {
   if (MOCK_TOKEN) {
-    return Promise.resolve([
-      {
-        contractAddress: "0xA33c06ad440D322c77aa92E0420Acdd1dE2ad6F7",
-        balance: "100",
-        id: "TEST",
-        symbol: "TEST",
-        decimals: 18,
-      },
-    ]);
+    return Promise.resolve(TEST_TOKEN);
   }
 
   if (!address) {
@@ -190,7 +192,7 @@ export async function getTokenBalancesForAddress(
     return enrichedTokens;
   } catch (error) {
     console.error("Error fetching token balances for address:", error);
-    return [];
+    return Promise.resolve(TEST_TOKEN);
   }
 }
 
