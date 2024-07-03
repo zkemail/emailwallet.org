@@ -63,7 +63,9 @@ const Deposit: React.FC<{
         Deposit Assets
       </h3>
       {isFetchAddressLoading ? (
-        <div className="mx-auto w-1/2 self-center text-center text-white">Loading</div>
+        <div className="mx-auto w-1/2 self-center text-center text-white">
+          Loading...
+        </div>
       ) : (
         <>
           {!address ? (

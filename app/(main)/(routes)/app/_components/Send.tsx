@@ -18,8 +18,9 @@ const Send = () => {
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [amount, setAmount] = useState<number | undefined>(undefined);
-  const [selectedAssetString, setSelectedAssetString] =
-    useState<string>("TEST"); // Selected ERC20
+  const [selectedAssetString, setSelectedAssetString] = useState<
+    string | null
+  >(); // Selected ERC20
   const [selectedNFT, setSelectedNFT] = useState<NFTOption>(); // Selected NFT
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("");
@@ -74,11 +75,19 @@ const Send = () => {
 
     if (assetType === "ERC20") {
       fetchTokenOptions().then((tokens) => {
+        if (!tokens.length) {
+          setSelectedAssetString(null);
+          return;
+        }
         setSelectedAssetString(tokens[0]?.id || "");
         setMaxAmount(Number(tokens[0]?.balance || 0));
       });
     } else if (assetType === "NFT") {
       fetchNftOptions().then((nfts) => {
+        if (!nfts.length) {
+          setSelectedAssetString(null);
+          return;
+        }
         setSelectedAssetString(
           nfts[0]?.id
             ? `${nfts[0]?.id} - #${nfts[0]?.tokenId}`
@@ -149,9 +158,11 @@ const Send = () => {
                   id="menu-button"
                   aria-expanded="true"
                   aria-haspopup="true"
+                  disabled={!selectedAssetString}
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
-                  {selectedAssetString}
+                  {selectedAssetString ??
+                    `No ${assetType === "ERC20" ? "tokens" : "NFTs"} available`}
                   <svg
                     className="-mr-1 h-5 w-5 text-gray-400"
                     viewBox="0 0 20 20"
@@ -320,6 +331,7 @@ const Send = () => {
                 // Logic to handle sending email to confirm the transaction
               }}
               disabled={
+                !selectedAssetString ||
                 awaitingSend ||
                 (!isValidEmail(recipient) && !isValidAddress(recipient))
               }
