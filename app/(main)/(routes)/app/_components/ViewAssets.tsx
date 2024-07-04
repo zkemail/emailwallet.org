@@ -67,7 +67,6 @@ const ViewAssets: React.FC<{
   // TODO: Make these calls to chain.ts
   useEffect(() => {
     if (isValidAddress(address)) {
-      toast("Could not fetch ERC20 token for the owner. Please try again");
       getNftsForAddress(address)
         .then((nfts) => {
           const updatedNfts = nfts.map((nft) => ({

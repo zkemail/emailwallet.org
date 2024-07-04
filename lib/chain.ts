@@ -20,6 +20,11 @@ const BASE_SEPOLIA_MOCK_ADDRESS = "0x178061375Cd7e7dCe0aa712E80D968054Bf4E599";
 export const MOCK_ADDRESS = BASE_SEPOLIA_MOCK_ADDRESS;
 export const MOCK_EMAIL = "zkemailverify@gmail.com";
 const CHAIN_ID: number = 84532; // base sepolia
+const config = {
+  apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
+  network: Network.BASE_SEPOLIA, // Replace with your target network
+  url: `https://base-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+};
 
 export type NFTOption = {
   contractAddress: string;
@@ -108,10 +113,6 @@ export async function getNftsForAddress(address?: string) {
     return getZkSyncNFTsForAddress(address);
   }
 
-  const config = {
-    apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
-    network: Network.BASE_SEPOLIA, // Replace with your target network
-  };
   const alchemy = new Alchemy(config);
   try {
     const response = await alchemy.nft.getNftsForOwner(address);
@@ -164,10 +165,6 @@ export async function getTokenBalancesForAddress(
     return getZkSyncTokensForAddress(address);
   }
 
-  const config = {
-    apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
-    network: Network.BASE_SEPOLIA, // Replace with your target network
-  };
   const alchemy = new Alchemy(config);
 
   try {
