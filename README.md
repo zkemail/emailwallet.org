@@ -13,6 +13,7 @@ The ZK-Email Wallet currently supports the following functions:
 - **Native swaps on Uniswap**
 - **Changing your DKIM Registry**
 - **Transporting to another relayer**
+- **[Sign for any Safe{Wallet}](https://www.youtube.com/watch?v=rT7zLiOYX8s&t=2715s)**
 
 Currently, the wallet uniquely provides the following features:
 - **Send money to people without accounts**: Because transfers are authorized by an email address, you can mass send money or assets to people who have never used email wallet before but do have an email address. If the email address does not claim the money in 1 year (or another preset time), it can be returned to the sender. This avoids problems with dead email addresses or transactions the recipient does not want to recieve.
