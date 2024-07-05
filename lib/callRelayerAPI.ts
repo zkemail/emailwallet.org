@@ -8,7 +8,7 @@ if (!RELAYER_API_URL) {
     RELAYER_API_URL = "https://2fa-api.emailwallet.org";
   } else if (hostname.endsWith("staging.emailwallet.org")) {
     RELAYER_API_URL = "https://staging-api.emailwallet.org";
-  } else if (hostname.endsWith("emailwallet.org")) {
+  } else {
     RELAYER_API_URL = "https://relayerapi.emailwallet.org";
   }
 }
