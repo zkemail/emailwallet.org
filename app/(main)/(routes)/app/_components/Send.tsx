@@ -330,7 +330,7 @@ const Send = () => {
                         : selectedNFT?.tokenId || "";
                     const assetID =
                       assetType === "ERC20"
-                        ? selectedAssetString.toString()
+                        ? (selectedAssetString ?? "").toString()
                         : selectedNFT?.contractAddress || ""; // Using enum name instead of index
                     const recipientAddr = recipient; // Since we're sending to an email, recipient address is the email itself
                     const sendFunction =
