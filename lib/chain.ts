@@ -23,7 +23,7 @@ const CHAIN_ID: number = 84532; // base sepolia
 const config = {
   apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
   network: Network.BASE_SEPOLIA, // Replace with your target network
-  url: `https://base-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+  // url: `https://base-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
 };
 
 export type NFTOption = {
