@@ -328,7 +328,7 @@ const Send = () => {
                       assetType === "ERC20"
                         ? (amount || 0).toString()
                         : selectedNFT?.tokenId || "";
-                    const assetID =
+                    const assetID: string =
                       assetType === "ERC20"
                         ? (selectedAssetString ?? "").toString()
                         : selectedNFT?.contractAddress || ""; // Using enum name instead of index

@@ -59,7 +59,7 @@ const CreateAccount: React.FC<{
           accountCreated = true;
           setStatus("Account successfully created!");
           setSelectedTab("view");
-          setSignedInState(true);
+          // setSignedInState(true);
           break;
         } else {
           console.log(
