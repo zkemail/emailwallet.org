@@ -1,7 +1,6 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-let RELAYER_API_URL = process.env.RELAYER_API_URL || "";
+let RELAYER_API_URL =
+  process.env.NEXT_PUBLIC_RELAYER_API_URL ||
+  "https://relayerapi.emailwallet.org";
 if (!RELAYER_API_URL) {
   const hostname = window.location.hostname;
   if (hostname.endsWith("2fa.emailwallet.org")) {
