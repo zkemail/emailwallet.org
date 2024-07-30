@@ -10,6 +10,8 @@ const Deposit: React.FC<{
   const [currency, setCurrency] = useState<Currency>(Currency.TEST);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [address, setAddress] = useState<string>("");
+  const [isFetchAddressLoading, setIsFetchAddressLoading] =
+    useState<boolean>(false);
 
   const dropdownRef = useRef(null);
 
@@ -42,8 +44,10 @@ const Deposit: React.FC<{
     const fetchAddress = async () => {
       const email = getLoggedInEmail();
       if (email) {
+        setIsFetchAddressLoading(true);
         const addr = await getWalletFromEmail(email);
         setAddress(addr);
+        setIsFetchAddressLoading(false);
       }
     };
     fetchAddress();
@@ -58,26 +62,36 @@ const Deposit: React.FC<{
       <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
         Deposit Assets
       </h3>
-      {!address ? (
+      {isFetchAddressLoading ? (
         <div className="mx-auto w-1/2 self-center text-center text-white">
-          To optionally top-up your wallet address, send additional funds or
-          NFTs directly to your address mentioned in your confirmation emails.
+          Loading...
         </div>
       ) : (
-        <div className="mx-auto w-1/2 self-center text-center text-white">
-          <p>
-            To send assets to your wallet, send funds or NFTs to this address:
-          </p>
-          <br />
-          <div className="flex flex-col items-center">
-            <img
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${address}`}
-              alt="QR Code"
-            />
-            <br />
-            <p>{address}</p>
-          </div>
-        </div>
+        <>
+          {!address ? (
+            <div className="mx-auto w-1/2 self-center text-center text-white">
+              To optionally top-up your wallet address, send additional funds or
+              NFTs directly to your address mentioned in your confirmation
+              emails.
+            </div>
+          ) : (
+            <div className="mx-auto w-1/2 self-center text-center text-white">
+              <p>
+                To send assets to your wallet, send funds or NFTs to this
+                address:
+              </p>
+              <br />
+              <div className="flex flex-col items-center">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${address}`}
+                  alt="QR Code"
+                />
+                <br />
+                <p>{address}</p>
+              </div>
+            </div>
+          )}
+        </>
       )}
       <div className={"grid grid-cols-4 grid-rows-2 gap-2.5"}>
         {/* <input

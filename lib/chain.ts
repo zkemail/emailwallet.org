@@ -1,17 +1,15 @@
 import { Alchemy, Network } from "alchemy-sdk";
 import { getWalletFromEmail, isSignedIn } from "./send";
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
 
 // Enable when manually calculating balance on zksync sepolia due to no get all erc20 function
 const MOCK_TOKEN = false;
-const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY || "";
+const ALCHEMY_API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || "";
 
 // Deprecated ZKSync logic
 // TODO: Replace covalent with alchemy fully, now that zksync is supported
 const COVALENT_BASE_URL = "https://api.covalenthq.com/v1";
-const COVALENT_API_KEY = process.env.COVALENT_API_KEY || "";
+const COVALENT_API_KEY = process.env.NEXT_PUBLIC_COVALENT_API_KEY || "";
 const ZKSYNC_CHAIN_ID = "zksync-testnet"; // 300 is zkSync sepolia, 324 is zksync mainnet
 const ZKSYNC_SEPOLIA_MOCK_ADDRESS =
   "0x3C666Cb99F50F2D1D96237248D96bF724b63D9aF"; // 0xAa613c7149d0D9df442ae1eBaab9879A6D870506 on Sepolia
@@ -20,6 +18,11 @@ const BASE_SEPOLIA_MOCK_ADDRESS = "0x178061375Cd7e7dCe0aa712E80D968054Bf4E599";
 export const MOCK_ADDRESS = BASE_SEPOLIA_MOCK_ADDRESS;
 export const MOCK_EMAIL = "zkemailverify@gmail.com";
 const CHAIN_ID: number = 84532; // base sepolia
+const config = {
+  apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
+  network: Network.BASE_SEPOLIA, // Replace with your target network
+  // url: `https://base-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+};
 
 export type NFTOption = {
   contractAddress: string;
@@ -108,10 +111,6 @@ export async function getNftsForAddress(address?: string) {
     return getZkSyncNFTsForAddress(address);
   }
 
-  const config = {
-    apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
-    network: Network.BASE_SEPOLIA, // Replace with your target network
-  };
   const alchemy = new Alchemy(config);
   try {
     const response = await alchemy.nft.getNftsForOwner(address);
@@ -166,10 +165,6 @@ export async function getTokenBalancesForAddress(
     return getZkSyncTokensForAddress(address);
   }
 
-  const config = {
-    apiKey: ALCHEMY_API_KEY, // Replace with your Alchemy API Key
-    network: Network.BASE_SEPOLIA, // Replace with your target network
-  };
   const alchemy = new Alchemy(config);
 
   try {

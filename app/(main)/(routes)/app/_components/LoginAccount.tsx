@@ -7,7 +7,7 @@ import { isValidEmail, setAccountCode } from "@/lib/send";
 import ToolTip from "@/components/ToolTip";
 
 const LoginAccount: React.FC<{
-  setSelectedTab: (tab: "login" | "view" | "deposit") => void;
+  setSelectedTab: (tab: "login" | "view" | "deposit" | "send") => void;
   setSignedInState: (state: boolean) => void;
 }> = ({ setSelectedTab, setSignedInState }) => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -61,7 +61,7 @@ const LoginAccount: React.FC<{
     if (address !== "No address found") {
       setAccountCode(email, accountCode);
       setLoggedIn(true);
-      setSelectedTab("view");
+      setSelectedTab("send");
       setSignedInState(true);
     } else {
       setStatusMessage(
@@ -117,10 +117,10 @@ const LoginAccount: React.FC<{
             {loading
               ? "Logging in..."
               : loggedIn
-              ? "Logged In ✔"
-              : isManuallyEnteringCode
-              ? "Login"
-              : "Send Login Email"}
+                ? "Logged In ✔"
+                : isManuallyEnteringCode
+                  ? "Login"
+                  : "Send Login Email"}
           </ClickButton>
         </ToolTip>
         {statusMessage && (
