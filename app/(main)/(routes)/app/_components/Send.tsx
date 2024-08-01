@@ -11,6 +11,7 @@ import ClickButton from "./BlueButton";
 import TabButton from "./TabButtons";
 import SmallTabButton from "./SmallTabButtons";
 import { NFTOption, TokenOption } from "@/lib/chain";
+import Loader from "./Loader";
 
 const Send = () => {
   const [fromEmail, setFromEmail] = useState<string>("");
@@ -121,10 +122,10 @@ const Send = () => {
   }, [dropdownRef]);
 
   return (
-    <div className="flex w-full flex-col px-4 md:w-1/2">
+    <div className="z-50 flex w-full flex-col rounded-[calc(var(--radius)_+_10px)] border border-white bg-black md:w-2/3">
       <div
         className="flex w-full justify-between text-[1rem] font-medium text-primary"
-        style={{ borderRadius: "0.5625rem 0.5625rem 0 0" }}
+        // style={{ borderRadius: "0.5625rem 0.5625rem 0 0" }}
       >
         <div className="flex w-full justify-between">
           <SmallTabButton
@@ -141,32 +142,79 @@ const Send = () => {
           </SmallTabButton>
         </div>
       </div>
-      <div className="flex flex-col gap-4 rounded-b-[calc(var(--radius)_+_10px)] border-b border-l border-r border-white bg-black px-4">
+      <div className="flex flex-col gap-4   px-4">
         {isAssetLoading ? (
-          <div className="p-4">Loading...</div>
+          <Loader />
         ) : (
           <div>
-            <div className="flex w-full items-start rounded-md p-4 pt-8">
-              <div className="h-15 flex w-full justify-between rounded-md bg-secondary p-2.5 px-5">
-                <input
-                  type="number"
-                  placeholder="Amount to send"
-                  // onChange={(e) => {
-                  //   setAmount(Math.round(Number(e.target.value)));
-                  // }}
-                  onChange={handleAmountChange}
-                  onBlur={handleAmountChange}
-                  className="bg-secondary text-sm text-primary focus:outline-none"
-                  value={amount || ""}
-                />
+            <div className="flex w-full items-start px-3 pr-4 pt-4">
+              <input
+                id="to_email"
+                type="text"
+                className={`h-${
+                  assetType == "NFT" ? "15" : "20"
+                } block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 ${
+                  isValidEmail(recipient) || isValidAddress(recipient)
+                    ? "border-green-500 text-green-600"
+                    : "border-pink-500 text-pink-600"
+                } focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary`}
+                placeholder="To: recipient@... OR 0x..."
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const isEmail =
+                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/.test(
+                      value,
+                    );
+                  const isAddress = /^0x[a-fA-F0-9]{40}$/.test(value);
+                  if (isEmail || isAddress) {
+                    setRecipient(value);
+                  } else {
+                    setRecipient("");
+                    // Optionally, show some error feedback here
+                  }
+                }}
+                onBlur={(e) => {
+                  const value = e.target.value;
+                  const isEmail =
+                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/.test(
+                      value,
+                    );
+                  const isAddress = /^0x[a-fA-F0-9]{40}$/.test(value);
+                  if (isEmail || isAddress) {
+                    setRecipient(value);
+                  } else {
+                    setRecipient("");
+                    // Optionally, show some error feedback here
+                  }
+                }}
+              />
+            </div>
+            <div className="flex w-full items-start px-3 pr-4 pt-4">
+              <div className="flex w-full justify-between gap-4 rounded-md">
+                <div className="w-1/2">
+                  <input
+                    type="number"
+                    placeholder="Amount to send"
+                    onChange={handleAmountChange}
+                    onBlur={handleAmountChange}
+                    value={amount || ""}
+                    className={`h-${
+                      assetType == "NFT" ? "15" : "20"
+                    } block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 ${
+                      isValidEmail(recipient) || isValidAddress(recipient)
+                        ? "border-green-500 text-green-600"
+                        : "border-pink-500 text-pink-600"
+                    } focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary`}
+                  />
+                </div>
                 <div
-                  className="relative inline-block text-left"
+                  className={`relative inline-block w-1/2 text-left`}
                   ref={dropdownRef}
                 >
                   <div className="flex flex-col items-center justify-center">
                     <Button
                       type="button"
-                      className="gap-x-1 font-semibold shadow-sm"
+                      className="w-full gap-x-1 font-semibold shadow-sm p-7"
                       id="menu-button"
                       aria-expanded="true"
                       aria-haspopup="true"
@@ -174,9 +222,12 @@ const Send = () => {
                       onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
                       {selectedAssetString ??
-                        `No ${
-                          assetType === "ERC20" ? "tokens" : "NFTs"
-                        } available`}
+                        `No ${assetType === "ERC20" ? "tokens" : "NFTs"} available`}
+                      {assetType === "ERC20" && (
+                        <span className="ml-2 text-sm text-gray-500">
+                          (Max: {maxAmount.toFixed(2)})
+                        </span>
+                      )}
                       <svg
                         className="-mr-1 h-5 w-5 text-gray-400"
                         viewBox="0 0 20 20"
@@ -190,11 +241,6 @@ const Send = () => {
                         />
                       </svg>
                     </Button>
-                    {assetType === "ERC20" && (
-                      <span className="ml-2 text-sm text-gray-500">
-                        Max: {maxAmount.toFixed(2)}
-                      </span>
-                    )}
                   </div>
                   {dropdownOpen && (
                     <div
@@ -268,56 +314,7 @@ const Send = () => {
                 </div>
               </div>
             </div>
-            <div className="flex w-full items-start px-3 pr-4">
-              <label
-                htmlFor="to_email"
-                className={`mr-2 flex items-center justify-center px-2 my-${
-                  assetType == "NFT" ? "5" : "7"
-                } self-center text-sm font-bold text-primary text-white`}
-              >
-                To:
-              </label>
-              <input
-                id="to_email"
-                type="text"
-                className={`h-${
-                  assetType == "NFT" ? "15" : "20"
-                } block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 ${
-                  isValidEmail(recipient) || isValidAddress(recipient)
-                    ? "border-green-500 text-green-600"
-                    : "border-pink-500 text-pink-600"
-                } focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary`}
-                placeholder="recipient@... OR 0x..."
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const isEmail =
-                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/.test(
-                      value,
-                    );
-                  const isAddress = /^0x[a-fA-F0-9]{40}$/.test(value);
-                  if (isEmail || isAddress) {
-                    setRecipient(value);
-                  } else {
-                    setRecipient("");
-                    // Optionally, show some error feedback here
-                  }
-                }}
-                onBlur={(e) => {
-                  const value = e.target.value;
-                  const isEmail =
-                    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,16}$/.test(
-                      value,
-                    );
-                  const isAddress = /^0x[a-fA-F0-9]{40}$/.test(value);
-                  if (isEmail || isAddress) {
-                    setRecipient(value);
-                  } else {
-                    setRecipient("");
-                    // Optionally, show some error feedback here
-                  }
-                }}
-              />
-            </div>
+
             <div className="flex w-full items-center justify-center py-3">
               <ToolTip text="This will send an email to confirm the transaction.">
                 <ClickButton

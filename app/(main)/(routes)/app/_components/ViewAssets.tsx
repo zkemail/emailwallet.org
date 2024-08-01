@@ -10,6 +10,7 @@ import {
   getTokenBalancesForAddress,
 } from "@/lib/chain";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "./Loader";
 
 export type AssetsFetchingStatus = {
   nftsFetched: boolean;
@@ -121,12 +122,12 @@ const ViewAssets: React.FC<{
   }, [address]);
 
   return (
-    <div className="flex w-full flex-col px-4 py-8 md:w-2/3">
-      <h2 className="text-3xl font-medium text-gray-800 dark:text-white">
+    <div className="flex w-full flex-col rounded-[calc(var(--radius)_+_10px)] border border-white bg-black px-4 py-8 md:w-2/3">
+      <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
         Your Assets
-      </h2>
+      </h3>
       {isFetchAssetsLoading ? (
-        <>Loading...</>
+        <Loader />
       ) : (
         <>
           <section className="mt-6 w-full">
