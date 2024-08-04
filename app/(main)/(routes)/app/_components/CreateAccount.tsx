@@ -57,9 +57,9 @@ const CreateAccount: React.FC<{
         const result = await isAccountCreated(emailRef.current?.value || "");
         if (result === "Account exists") {
           accountCreated = true;
-          setStatus("Account successfully created! Please login.");
-          // setSelectedTab("send");
-          // setSignedInState(true);
+          setStatus("Account successfully created!");
+          setSelectedTab("view");
+          setSignedInState(true);
           break;
         } else {
           console.log(
