@@ -15,6 +15,7 @@ import NewBlogPostHeader from "@/components/NewBlogPostHeader";
 import Footer from "@/components/Footer";
 import { setAccountCode } from "@/lib/send";
 import useQueryParams from "@/hooks/useQueryParams";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,14 @@ export default function RootLayout({
         className={cn(inter.className, "overflow-x-clip overflow-y-scroll")}
       >
         <ParallaxProvider>
+          <Toaster
+            toastOptions={{
+              duration: 5000,
+              style: {
+                fontSize: "12px",
+              },
+            }}
+          />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
