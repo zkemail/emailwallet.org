@@ -2,13 +2,14 @@
 
 import MobileHeader from "./MobileHeader";
 import Logo from "./Logo";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, LogOutIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { isSignedIn } from "@/lib/send";
 
 const routes = [
   { name: "docs", pathname: "http://emailwallet.org/docs", isExternal: true },
@@ -17,8 +18,30 @@ const routes = [
 ];
 
 const Header = () => {
+  const router = useRouter();
+
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
+  const [signedInState, setSignedInState] = useState(false);
+
+  const checkSignIn = async () => {
+    const signedIn = await isSignedIn();
+    setSignedInState(signedIn);
+  };
+
+  useEffect(() => {
+    // Run once on load
+    checkSignIn();
+
+    window.addEventListener("storage", checkSignIn);
+    window.addEventListener("local-storage", checkSignIn);
+
+    // Cleanup listener when component unmounts
+    return () => {
+      window.removeEventListener("storage", checkSignIn);
+      window.removeEventListener("local-storage", checkSignIn);
+    };
+  }, []);
 
   useEffect(() => {
     setIsMounted(true);
@@ -59,8 +82,16 @@ const Header = () => {
             Github
             <ExternalLink size={20} />
           </Link>
-          <a
-            href={"/app"}
+          <button
+            onClick={() => {
+              if (signedInState) {
+                localStorage.clear();
+                setSignedInState(false);
+                return router.push("/");
+              }
+              router.push("/app");
+            }}
+            style={{ gap: "0.5rem" }}
             className={cn(
               buttonVariants({
                 className: "hidden px-6 md:flex",
@@ -68,8 +99,9 @@ const Header = () => {
               "bg-tertiary text-primary hover:bg-tertiary/80",
             )}
           >
-            Try Demo
-          </a>
+            {signedInState ? "Logout" : "Try Demo"}
+            {signedInState ? <LogOutIcon /> : null}
+          </button>
           <ModeToggle />
         </nav>
         <div className="flex items-center gap-x-2 md:hidden">

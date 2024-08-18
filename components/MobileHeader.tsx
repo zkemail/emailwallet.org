@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import Logo from "./Logo";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { buttonVariants } from "./ui/button";
-import { Menu } from "lucide-react";
+import { LogOutIcon, Menu } from "lucide-react";
+import { isSignedIn } from "@/lib/send";
 
 interface MobileHeaderProps {
   routes: {
@@ -22,8 +23,30 @@ interface MobileHeaderProps {
 }
 
 const MobileHeader = ({ routes }: MobileHeaderProps) => {
+  const router = useRouter();
+
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [signedInState, setSignedInState] = useState(false);
+
+  const checkSignIn = async () => {
+    const signedIn = await isSignedIn();
+    setSignedInState(signedIn);
+  };
+
+  useEffect(() => {
+    // Run once on load
+    checkSignIn();
+
+    window.addEventListener("storage", checkSignIn);
+    window.addEventListener("local-storage", checkSignIn);
+
+    // Cleanup listener when component unmounts
+    return () => {
+      window.removeEventListener("storage", checkSignIn);
+      window.removeEventListener("local-storage", checkSignIn);
+    };
+  }, []);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -49,8 +72,16 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
               </a>
             </div>
           ))}
-          <a
-            href={"/app"}
+          <button
+            onClick={() => {
+              if (signedInState) {
+                localStorage.clear();
+                setSignedInState(false);
+                return router.push("/");
+              }
+              router.push("/app");
+            }}
+            style={{ gap: "0.5rem" }}
             className={cn(
               buttonVariants({
                 variant: "outline",
@@ -58,8 +89,9 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
               }),
             )}
           >
-            Try Demo
-          </a>
+            {signedInState ? "Logout" : "Try Demo"}
+            {signedInState ? <LogOutIcon /> : null}
+          </button>
         </nav>
       </SheetContent>
     </Sheet>
