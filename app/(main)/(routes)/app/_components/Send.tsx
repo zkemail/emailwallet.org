@@ -214,37 +214,41 @@ const Send = () => {
                   <div className="flex flex-col items-center justify-center">
                     <Button
                       type="button"
-                      className="w-full gap-x-1 font-semibold shadow-sm p-7"
+                      className="w-full gap-x-1 p-7 font-semibold shadow-sm"
                       id="menu-button"
                       aria-expanded="true"
                       aria-haspopup="true"
                       disabled={!selectedAssetString}
                       onClick={() => setDropdownOpen(!dropdownOpen)}
                     >
-                      {selectedAssetString ??
-                        `No ${assetType === "ERC20" ? "tokens" : "NFTs"} available`}
-                      {assetType === "ERC20" && (
-                        <span className="ml-2 text-sm text-gray-500">
-                          (Max: {maxAmount.toFixed(2)})
-                        </span>
-                      )}
-                      <svg
-                        className="-mr-1 h-5 w-5 text-gray-400"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <div className="flex flex-col justify-center">
+                        <div className="flex flex-row">
+                          {selectedAssetString ??
+                            `No ${assetType === "ERC20" ? "tokens" : "NFTs"} available`}
+                          <svg
+                            className="-mr-1 h-5 w-5 text-gray-400"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                        {assetType === "ERC20" && (
+                          <span className="text-sm text-gray-500">
+                            (Max: {maxAmount.toFixed(2)})
+                          </span>
+                        )}
+                      </div>
                     </Button>
                   </div>
                   {dropdownOpen && (
                     <div
-                      className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      className="right--25 absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                       role="menu"
                       aria-orientation="vertical"
                       aria-labelledby="menu-button"

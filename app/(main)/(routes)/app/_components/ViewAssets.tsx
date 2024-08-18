@@ -122,7 +122,7 @@ const ViewAssets: React.FC<{
   }, [address]);
 
   return (
-    <div className="flex w-full flex-col rounded-[calc(var(--radius)_+_10px)] border border-white bg-black px-4 py-8 md:w-2/3">
+    <div className="flex w-full flex-col rounded-[calc(var(--radius)_+_10px)] border border-white bg-black text-white px-4 py-8 md:w-2/3">
       <h3 className={`text-center text-[1.625rem] font-bold text-white`}>
         Your Assets
       </h3>
