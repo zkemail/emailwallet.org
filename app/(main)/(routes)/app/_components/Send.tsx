@@ -12,6 +12,7 @@ import TabButton from "./TabButtons";
 import SmallTabButton from "./SmallTabButtons";
 import { NFTOption, TokenOption } from "@/lib/chain";
 import Loader from "./Loader";
+import Image from "next/image";
 
 const Send = () => {
   const [fromEmail, setFromEmail] = useState<string>("");
@@ -190,132 +191,129 @@ const Send = () => {
               />
             </div>
             <div className="flex w-full items-start px-3 pr-4 pt-4">
-              <div className="flex w-full justify-between gap-4 rounded-md">
-                <div className="w-1/2">
-                  <input
-                    type="number"
-                    placeholder="Amount to send"
-                    onChange={handleAmountChange}
-                    onBlur={handleAmountChange}
-                    value={amount || ""}
-                    className={`h-${
-                      assetType == "NFT" ? "15" : "20"
-                    } block w-full rounded-lg bg-secondary p-5 text-sm text-slate-700 ${
-                      isValidEmail(recipient) || isValidAddress(recipient)
-                        ? "border-green-500 text-green-600"
-                        : "border-pink-500 text-pink-600"
-                    } focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary`}
-                  />
-                </div>
-                <div
-                  className={`relative inline-block w-1/2 text-left`}
-                  ref={dropdownRef}
+              <div className="relative flex w-full items-center rounded-md">
+                <input
+                  type="number"
+                  placeholder="Amount to send"
+                  onChange={handleAmountChange}
+                  onBlur={handleAmountChange}
+                  value={amount || ""}
+                  className={`w-full rounded-lg border-gray-300 bg-secondary p-5 text-sm text-slate-700 shadow-sm ${
+                    isValidEmail(recipient) || isValidAddress(recipient)
+                      ? "border-green-500 text-green-600"
+                      : "border-pink-500 text-pink-600"
+                  } focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none dark:text-primary`}
+                />
+
+                <button
+                  type="button"
+                  className="absolute bottom-0 right-0 top-0 m-2 flex items-center justify-center rounded-lg border-gray-300 bg-gray-200 bg-opacity-10 p-2 shadow-sm"
+                  id="menu-button"
+                  aria-expanded={dropdownOpen}
+                  aria-haspopup="true"
+                  disabled={!selectedAssetString}
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <div className="flex flex-col items-center justify-center">
-                    <Button
-                      type="button"
-                      className="w-full gap-x-1 p-7 font-semibold shadow-sm"
-                      id="menu-button"
-                      aria-expanded="true"
-                      aria-haspopup="true"
-                      disabled={!selectedAssetString}
-                      onClick={() => setDropdownOpen(!dropdownOpen)}
-                    >
-                      <div className="flex flex-col justify-center">
-                        <div className="flex flex-row">
-                          {selectedAssetString ??
-                            `No ${assetType === "ERC20" ? "tokens" : "NFTs"} available`}
-                          <svg
-                            className="-mr-1 h-5 w-5 text-gray-400"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                        {assetType === "ERC20" && (
-                          <span className="text-sm text-gray-500">
-                            (Max: {maxAmount.toFixed(2)})
-                          </span>
-                        )}
-                      </div>
-                    </Button>
+                    <div className="flex flex-row">
+                      {selectedAssetString ??
+                        `No ${assetType === "ERC20" ? "tokens" : "NFTs"} available`}
+                      <svg
+                        className="-mr-1 h-5 w-5 text-gray-400"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    {assetType === "ERC20" && (
+                      <span className="text-xs text-gray-500">
+                        (Max: {maxAmount.toFixed(2)})
+                      </span>
+                    )}
                   </div>
-                  {dropdownOpen && (
-                    <div
-                      className="right--25 absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="menu-button"
-                      tabIndex={-1}
-                    >
-                      <div className="py-1" role="none">
-                        {assetType === "NFT"
-                          ? nftOptions.map((nft) => (
-                              <div
-                                key={
+                </button>
+
+                {dropdownOpen && (
+                  <div
+                    className="absolute right-0 top-full z-10 mt-1 max-h-60 min-w-40 overflow-y-auto rounded-b-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabIndex={-1}
+                  >
+                    <div className="py-1">
+                      {assetType === "NFT"
+                        ? nftOptions.map((nft) => (
+                            <div
+                              key={
+                                nft.id
+                                  ? `${nft.id} - #${nft.tokenId}`
+                                  : `#${nft.tokenId}`
+                              }
+                              className={`flex cursor-pointer items-center p-3 hover:bg-gray-100 ${
+                                selectedAssetString ===
+                                (nft.id
+                                  ? `${nft.id} - #${nft.tokenId}`
+                                  : `#${nft.tokenId}`)
+                                  ? "bg-gray-200"
+                                  : ""
+                              }`}
+                              role="menuitem"
+                              onClick={() => {
+                                setSelectedAssetString(
                                   nft.id
                                     ? `${nft.id} - #${nft.tokenId}`
-                                    : `#${nft.tokenId}`
+                                    : `#${nft.tokenId}`,
+                                );
+                                setSelectedNFT(nft);
+                                setDropdownOpen(false);
+                              }}
+                            >
+                              <Image
+                                src={
+                                  nft.url
+                                    ? nft.url
+                                    : "https://www.jubmoji.quest/images/logo.svg"
                                 }
-                                className={`flex items-center ${getCurrencyOptionClass(
-                                  selectedAssetString ===
-                                    (nft.id
-                                      ? `${nft.id} - #${nft.tokenId}`
-                                      : `#${nft.tokenId}`),
-                                )}`}
-                                role="menuitem"
-                                onClick={() => {
-                                  setSelectedAssetString(
-                                    nft.id
-                                      ? `${nft.id} - #${nft.tokenId}`
-                                      : `#${nft.tokenId}`,
-                                  );
-                                  setSelectedNFT(nft);
-                                  setDropdownOpen(false);
-                                }}
-                              >
-                                <img
-                                  src={
-                                    nft.url
-                                      ? nft.url
-                                      : "https://www.jubmoji.quest/images/logo.svg"
-                                  }
-                                  alt="NFT icon"
-                                  className="mr-2 h-6 w-6"
-                                />
+                                alt="NFT icon"
+                                className="mr-3 h-8 w-8"
+                              />
+                              <span className="text-sm font-medium">
                                 {nft.id
                                   ? `${nft.id} - #${nft.tokenId}`
                                   : `Unknown NFT - #${nft.tokenId}`}
-                              </div>
-                            ))
-                          : tokenOptions.map((token) => (
-                              <span
-                                key={token.contractAddress}
-                                className={getCurrencyOptionClass(
-                                  selectedAssetString === token.id,
-                                )}
-                                role="menuitem"
-                                onClick={() => {
-                                  setSelectedAssetString(
-                                    token.id || token.contractAddress,
-                                  );
-                                  setMaxAmount(Number(token.balance));
-                                  setDropdownOpen(false);
-                                }}
-                              >
-                                {token.id}
                               </span>
-                            ))}
-                      </div>
+                            </div>
+                          ))
+                        : tokenOptions.map((token) => (
+                            <span
+                              key={token.contractAddress}
+                              className={`block cursor-pointer px-4 py-3 text-sm hover:bg-gray-100 ${
+                                selectedAssetString === token.id
+                                  ? "bg-gray-200"
+                                  : ""
+                              }`}
+                              role="menuitem"
+                              onClick={() => {
+                                setSelectedAssetString(
+                                  token.id || token.contractAddress,
+                                );
+                                setMaxAmount(Number(token.balance));
+                                setDropdownOpen(false);
+                              }}
+                            >
+                              {token.id}
+                            </span>
+                          ))}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
 
