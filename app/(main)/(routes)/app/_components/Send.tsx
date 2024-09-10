@@ -217,7 +217,9 @@ const Send = () => {
                   <div className="flex flex-col items-center justify-center">
                     <div className="flex flex-row">
                       {selectedAssetString ??
-                        `No ${assetType === "ERC20" ? "tokens" : "NFTs"} available`}
+                        `No ${
+                          assetType === "ERC20" ? "tokens" : "NFTs"
+                        } available`}
                       <svg
                         className="-mr-1 h-5 w-5 text-gray-400"
                         viewBox="0 0 20 20"
@@ -241,7 +243,7 @@ const Send = () => {
 
                 {dropdownOpen && (
                   <div
-                    className="absolute right-0 top-full z-10 mt-1 max-h-60 min-w-40 overflow-y-auto rounded-b-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="min-w-40 absolute right-0 top-full z-10 mt-1 max-h-60 overflow-y-auto rounded-b-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="menu-button"

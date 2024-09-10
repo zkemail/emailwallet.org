@@ -13,10 +13,11 @@ const NewBlogPostHeader = () => {
   return (
     <div className="sticky inset-x-0 top-0 z-10 mx-auto mb-2 flex w-full justify-center gap-1 bg-tertiary p-2 py-1 text-sm drop-shadow">
       <p className="px-4 py-2 text-secondary-foreground sm:py-0">
-        Try out our experience with Cursive and IYK at EthDenver 2024!
+        Try using your email wallet address on safe.wallet to get an automatic
+        email signer!
       </p>
       <a
-        href={`http://prove.email/blog/ethDenverNFT`}
+        href={`http://prove.email/blog/2fa`}
         target="_blank"
         className="flex items-center font-bold text-slate-800"
       >
