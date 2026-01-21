@@ -82,26 +82,6 @@ const Header = () => {
             Github
             <ExternalLink size={20} />
           </Link>
-          <button
-            onClick={() => {
-              if (signedInState) {
-                localStorage.clear();
-                setSignedInState(false);
-                return router.push("/");
-              }
-              router.push("/app");
-            }}
-            style={{ gap: "0.5rem" }}
-            className={cn(
-              buttonVariants({
-                className: "hidden px-6 md:flex",
-              }),
-              "bg-tertiary text-primary hover:bg-tertiary/80",
-            )}
-          >
-            {signedInState ? "Logout" : "Try Demo"}
-            {signedInState ? <LogOutIcon /> : null}
-          </button>
           <ModeToggle />
         </nav>
         <div className="flex items-center gap-x-2 md:hidden">

@@ -72,26 +72,6 @@ const MobileHeader = ({ routes }: MobileHeaderProps) => {
               </a>
             </div>
           ))}
-          <button
-            onClick={() => {
-              if (signedInState) {
-                localStorage.clear();
-                setSignedInState(false);
-                return router.push("/");
-              }
-              router.push("/app");
-            }}
-            style={{ gap: "0.5rem" }}
-            className={cn(
-              buttonVariants({
-                variant: "outline",
-                className: "flex font-semibold lg:hidden",
-              }),
-            )}
-          >
-            {signedInState ? "Logout" : "Try Demo"}
-            {signedInState ? <LogOutIcon /> : null}
-          </button>
         </nav>
       </SheetContent>
     </Sheet>
