@@ -55,12 +55,6 @@ const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex gap-4"
           >
-            <a
-              href={"/app"}
-              className="flex items-center rounded-lg bg-tertiary px-8 text-primary drop-shadow hover:bg-tertiary/90"
-            >
-              Try Demo
-            </a>
             <Button
               className="rounded-lg border px-8 drop-shadow"
               variant={"outline"}

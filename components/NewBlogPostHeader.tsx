@@ -13,15 +13,14 @@ const NewBlogPostHeader = () => {
   return (
     <div className="sticky inset-x-0 top-0 z-10 mx-auto mb-2 flex w-full justify-center gap-1 bg-tertiary p-2 py-1 text-sm drop-shadow">
       <p className="px-4 py-2 text-secondary-foreground sm:py-0">
-        Try using your email wallet address on safe.wallet to get an automatic
-        email signer!
+      This project has been deprecated, you can checkout the demo at
       </p>
       <a
-        href={`http://prove.email/blog/2fa`}
+        href={`https://www.youtube.com/watch?v=qUYBja0glio`}
         target="_blank"
         className="flex items-center font-bold text-slate-800"
       >
-        Read blog <ArrowRight size={15} />
+        Watch demo <ArrowRight size={15} />
       </a>
     </div>
   );
